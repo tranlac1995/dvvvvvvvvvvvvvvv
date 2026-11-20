@@ -1,0 +1,495 @@
+﻿
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#06483e">
+<title>Thi đua Trung đội | Tiểu đoàn 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+:root{--green:#075447;--green2:#08775f;--dark:#063b34;--gold:#e6bd52;--ink:#18312e;--muted:#73827f;--bg:#f1f6f4;--line:#e1ebe7}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Be Vietnam Pro",Arial,sans-serif;font-size:13px}
+button,select,input{font:inherit}button{cursor:pointer}
+.topbar{min-height:62px;background:linear-gradient(90deg,#063b34,#08705a);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 max(18px,calc((100% - 1440px)/2));box-shadow:0 3px 14px #062f2930}
+.brand{display:flex;align-items:center;gap:11px}.brandmark{width:39px;height:39px;border:1px solid #e8c65c;border-radius:50%;display:grid;place-items:center;color:#f2d36c;font-size:19px}
+.brand b{display:block;font-size:14px;letter-spacing:.3px}.brand small{display:block;color:#c9e0d8;font-size:10px;margin-top:2px}
+.top-actions{display:flex;align-items:center;gap:15px}.top-actions a{color:#e9f4f0;text-decoration:none;font-size:11px}
+.user{background:#ffffff18;border:1px solid #ffffff30;border-radius:20px;padding:7px 12px;font-size:11px}
+.wrap{max-width:1440px;margin:0 auto;padding:20px 22px 38px}.crumb{font-size:11px;color:#7a8c87;margin-bottom:12px}.crumb a{color:#14735c;text-decoration:none}
+.heading{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:17px}.heading h1{font-size:22px;margin:0;color:#123f36;font-weight:800}.heading p{margin:5px 0 0;color:var(--muted);font-size:11px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid #d8e5df;background:#fff;color:#31524a;padding:9px 13px;border-radius:9px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:7px}.btn.primary{background:linear-gradient(100deg,#08745d,#075447);color:#fff;border-color:#08745d}.btn:hover{filter:brightness(.97);transform:translateY(-1px)}
+.card{background:#fff;border:1px solid var(--line);border-radius:13px;box-shadow:0 4px 16px #123e3509;margin-bottom:14px;overflow:hidden}
+.card-head{padding:13px 16px;border-bottom:1px solid #edf2ef;display:flex;justify-content:space-between;align-items:center;gap:10px}.card-head h2{margin:0;font-size:13px;color:#17483d}.card-head h2 i{color:#168466;margin-right:7px}.card-body{padding:16px}
+.period-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}.tab{border:1px solid #dce8e2;background:#f9fcfa;color:#536d64;border-radius:8px;padding:9px 15px;font-size:11px;font-weight:700}.tab.active{background:#e7f5ee;color:#087052;border-color:#8fc9ae}
+.filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;align-items:end}.field label{display:block;font-size:10px;font-weight:700;color:#637771;margin-bottom:6px}
+.field select,.field input{width:100%;border:1px solid #dce7e2;border-radius:8px;background:#fbfdfc;padding:10px 11px;color:#24423b;outline:none;min-height:39px}.field select:focus,.field input:focus{border-color:#65ad91;box-shadow:0 0 0 3px #08775f12}
+.period-range{margin-top:13px;padding:11px 13px;border-radius:9px;background:#eff7f3;border:1px solid #d8ebe1;display:flex;align-items:center;gap:9px;flex-wrap:wrap;color:#42685a;font-size:11px}.period-range i{color:#168466}.period-range strong{color:#17644d}.period-range span{color:#71877d}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-bottom:14px}.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 15px;box-shadow:0 4px 16px #123e3508}.stat small{font-size:10px;color:#72827c;display:block}.stat strong{font-size:23px;color:#087253;display:block;margin-top:4px;font-variant-numeric:tabular-nums}.stat em{font-style:normal;font-size:9px;color:#8a9993}.stat.gold strong{color:#9b741f}.stat.dark strong{color:#17483d}
+.rank-intro{padding:13px 16px;background:linear-gradient(110deg,#f0f8f3,#fffaf0);border-bottom:1px solid #edf2ef;color:#567166;font-size:10px;line-height:1.8}.rank-intro strong{color:#17644d}
+.platoon-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:16px}.platoon-card{border:1px solid #e3ece7;border-radius:13px;padding:15px;background:#fff;min-width:0;transition:.2s}.platoon-card:hover{transform:translateY(-2px);box-shadow:0 7px 20px #123e3510}.platoon-card.first{border-color:#e8cf83;background:linear-gradient(160deg,#fffdf5,#fff)}
+.platoon-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px}.platoon-name{display:flex;align-items:center;gap:9px;color:#17483d;font-size:14px;font-weight:800}.platoon-symbol{width:35px;height:35px;border-radius:10px;display:grid;place-items:center;background:#eaf5ef;color:#087253;font-size:15px}.platoon-card.first .platoon-symbol{background:#fff1c8;color:#a47a1d}
+.rank-label{font-size:9px;font-weight:800;color:#82918a;background:#f1f5f2;padding:5px 8px;border-radius:20px}.platoon-card.first .rank-label{color:#916b17;background:#fff1c8}
+.total-score{display:flex;align-items:baseline;gap:6px;margin-bottom:9px}.total-score strong{font-size:34px;line-height:1;color:#087253;font-weight:800;font-variant-numeric:tabular-nums}.platoon-card.first .total-score strong{color:#9b741f}.total-score span{font-size:10px;color:#899790}
+.score-track{height:11px;background:#edf3ef;border-radius:20px;overflow:hidden;margin-bottom:14px}.score-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#0b745b,#c9a33c);transition:width .35s}
+.card-foot{border-top:1px solid #edf2ef;padding-top:11px;display:flex;justify-content:space-between;gap:8px;font-size:10px;color:#81908a}.card-foot strong{color:#17644d}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:650px}th{text-align:left;background:#f5f8f6;color:#6b7d75;font-size:9px;padding:11px 12px;white-space:nowrap}td{border-top:1px solid #edf2ef;padding:11px 12px;font-size:11px;vertical-align:middle}tbody tr:hover{background:#fbfdfc}.num{text-align:right;font-variant-numeric:tabular-nums}
+.score{font-weight:800;color:#087253;font-size:13px}.rank{width:28px;height:28px;display:inline-grid;place-items:center;border-radius:8px;background:#edf5f1;color:#42695b;font-weight:800}.rank.first{background:#fff3cf;color:#986e14}.rank.second{background:#edf0f5;color:#647185}.rank.third{background:#f8e9dc;color:#9b6030}
+.status{display:inline-block;padding:4px 8px;border-radius:20px;background:#e8f5ed;color:#18704f;font-size:9px;font-weight:700}.status.wait{background:#fff5df;color:#99721c}
+.empty{color:#8b9994;text-align:center;padding:28px 12px;font-size:11px}.muted{color:#81908a;font-size:10px}.notice{padding:12px 14px;border-radius:9px;background:#eff7f3;border:1px solid #d8ebe1;color:#42685a;font-size:10px;line-height:1.8}.notice strong{color:#17644d}.loading{padding:25px;text-align:center;color:#6f8279;font-size:11px}
+.toast{position:fixed;right:20px;bottom:20px;background:#073f35;color:white;padding:12px 16px;border-radius:9px;box-shadow:0 8px 25px #0003;display:none;z-index:10;font-size:11px}.footer{text-align:center;color:#8a9a94;font-size:10px;padding:10px}
+@media(max-width:950px){.filters{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}.platoon-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.topbar{padding:0 12px;min-height:56px}.brand b{font-size:11px}.brand small{font-size:8px}.top-actions a{display:none}.wrap{padding:14px 10px 28px}.heading{display:block}.heading h1{font-size:18px}.actions{margin-top:12px}.filters{grid-template-columns:1fr 1fr}.stats{gap:7px}.stat{padding:10px}.stat strong{font-size:19px}.card-body{padding:12px}.platoon-grid{padding:10px;gap:10px;grid-template-columns:1fr}.platoon-card{padding:13px}.total-score strong{font-size:30px}}
+@media print{.topbar,.crumb,.actions,.filters-card,.footer{display:none!important}body{background:#fff}.wrap{max-width:none;padding:0}.card,.stat,.platoon-card{box-shadow:none;break-inside:avoid}.heading{margin:0 0 12px}.platoon-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="brandmark"><i class="fa-solid fa-star"></i></div><div><b>THI ĐUA QUYẾT THẮNG</b><small>TIỂU ĐOÀN 2 – LỮ ĐOÀN 7 CÔNG BINH</small></div></div>
+  <div class="top-actions">
+    <a href="index.html"><i class="fa-solid fa-house"></i> Trang chủ</a>
+    <a href="cham-diem.html"><i class="fa-solid fa-clipboard-check"></i> Chấm điểm</a>
+    <a href="tonghop.html"><i class="fa-solid fa-building"></i> Thi đua Đại đội</a>
+    <span class="user"><i class="fa-solid fa-user-shield"></i> Quản trị hệ thống</span>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="crumb"><a href="index.html">Trang chủ</a>　/　Thi đua giữa các Trung đội</div>
+  <div class="heading">
+    <div><h1><i class="fa-solid fa-trophy"></i> THI ĐUA GIỮA CÁC TRUNG ĐỘI</h1><p>Tổng hợp điểm, so sánh kết quả và xếp hạng 09 Trung đội trực thuộc Tiểu đoàn 2</p></div>
+    <div class="actions">
+      <button class="btn" id="refreshBtn"><i class="fa-solid fa-rotate"></i> Làm mới dữ liệu</button>
+      <button class="btn primary" id="printBtn"><i class="fa-solid fa-print"></i> In bảng thi đua</button>
+    </div>
+  </div>
+
+  <section class="card filters-card">
+    <div class="card-head"><h2><i class="fa-solid fa-calendar-days"></i> ĐIỀU KIỆN TỔNG HỢP</h2><span class="muted" id="periodLabel">Đang tổng hợp dữ liệu</span></div>
+    <div class="card-body">
+      <div class="period-tabs">
+        <button class="tab active" data-period="day">Theo ngày</button>
+        <button class="tab" data-period="week">Theo tuần</button>
+        <button class="tab" data-period="month">Theo tháng</button>
+        <button class="tab" data-period="year">Cả năm</button>
+      </div>
+      <div class="filters">
+        <div class="field" id="dayField"><label>CHỌN NGÀY CHẤM</label><input type="date" id="day"></div>
+        <div class="field" id="weekField" style="display:none"><label>TUẦN THI ĐUA</label><select id="week"></select></div>
+        <div class="field" id="monthField"><label>THÁNG</label><select id="month">
+          <option value="1">Tháng 1</option><option value="2">Tháng 2</option><option value="3">Tháng 3</option><option value="4">Tháng 4</option><option value="5">Tháng 5</option><option value="6">Tháng 6</option><option value="7">Tháng 7</option><option value="8">Tháng 8</option><option value="9">Tháng 9</option><option value="10">Tháng 10</option><option value="11">Tháng 11</option><option value="12">Tháng 12</option>
+        </select></div>
+        <div class="field" id="yearField"><label>NĂM</label><select id="year"></select></div>
+      </div>
+      <div class="period-range"><i class="fa-solid fa-calendar-check"></i><strong>Thời gian tổng hợp:</strong><span id="rangeText">Đang xác định khoảng thời gian...</span></div>
+      <div style="margin-top:13px;display:flex;justify-content:flex-end"><button class="btn primary" id="applyBtn"><i class="fa-solid fa-magnifying-glass"></i> Tổng hợp kết quả</button></div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat"><small>SỐ TRUNG ĐỘI THAM GIA</small><strong>09</strong><em>Trung đội 1 đến Trung đội 9</em></div>
+    <div class="stat"><small>ĐIỂM TRUNG BÌNH CÁC TRUNG ĐỘI</small><strong id="averageScore">—</strong><em>Thang điểm 10</em></div>
+    <div class="stat gold"><small>TRUNG ĐỘI DẪN ĐẦU</small><strong id="topUnit" style="font-size:16px">—</strong><em id="topScore">Chưa có kết quả</em></div>
+    <div class="stat dark"><small>SỐ TRUNG ĐỘI ĐÃ CÓ ĐIỂM</small><strong id="scoredCount">0/9</strong><em>Trong kỳ đang chọn</em></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><h2><i class="fa-solid fa-ranking-star"></i> BẢNG XẾP HẠNG THI ĐUA TRUNG ĐỘI</h2><span class="muted" id="rankCaption">So sánh điểm tổng hợp</span></div>
+    <div class="rank-intro"><strong>Phạm vi xếp hạng:</strong> Gồm 09 Trung đội thuộc 03 Đại đội. Điểm xếp hạng lấy trực tiếp từ kết quả chấm của Tổ thi đua. Chỉ những Trung đội có kết quả trong kỳ mới được xác định là có điểm.</div>
+    <div class="platoon-grid" id="platoonGrid"><div class="loading">Đang tải dữ liệu thi đua...</div></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><h2><i class="fa-solid fa-table-list"></i> BẢNG ĐIỂM TỔNG HỢP CÁC TRUNG ĐỘI</h2><span class="muted">Điểm theo kỳ đã chọn</span></div>
+    <div class="table-wrap"><table><thead><tr><th style="width:65px">THỨ HẠNG</th><th>TRUNG ĐỘI</th><th>ĐẠI ĐỘI</th><th class="num">ĐIỂM THI ĐUA</th><th>TRẠNG THÁI</th></tr></thead><tbody id="rankingBody"><tr><td colspan="5" class="loading">Đang tải dữ liệu...</td></tr></tbody></table></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><h2><i class="fa-solid fa-circle-info"></i> NGUYÊN TẮC TỔNG HỢP ĐIỂM THI ĐUA</h2></div>
+    <div class="card-body"><div class="notice">
+      <strong>1. Điểm ngày:</strong> Lấy điểm trung bình của 04 mặt công tác A, B, C, D trên phiếu chấm của Tổ thi đua.<br>
+      <strong>2. Điểm tuần:</strong> Lấy trung bình cộng điểm các ngày có kết quả trong tuần.<br>
+      <strong>3. Điểm tháng:</strong> Lấy trung bình cộng điểm các tuần có kết quả trong tháng. Tháng có thể có 4 hoặc 5 tuần thi đua.<br>
+      <strong>4. Điểm năm:</strong> Lấy trung bình cộng điểm các tháng có kết quả trong năm.<br>
+      <strong>5. Bộ phận chấm:</strong> Chỉ có Tổ thi đua. Không sử dụng điểm Trực ban và không áp dụng hệ số 1:2.<br>
+      <strong>6. Điểm thưởng:</strong> Được theo dõi riêng, không cộng vào điểm xếp hạng thi đua.
+    </div></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><h2><i class="fa-solid fa-file-lines"></i> PHIẾU CHẤM ĐƯỢC TỔNG HỢP TRONG KỲ</h2><span class="muted" id="detailCount">0 phiếu</span></div>
+    <div class="table-wrap"><table><thead><tr><th>NGÀY CHẤM</th><th>ĐẠI ĐỘI</th><th>TRUNG ĐỘI</th><th>TUẦN</th><th class="num">ĐIỂM 04 MẶT</th><th class="num">ĐIỂM THƯỞNG</th><th>NGƯỜI CHẤM</th></tr></thead><tbody id="recordsBody"><tr><td colspan="7" class="loading">Đang tải dữ liệu...</td></tr></tbody></table></div>
+  </section>
+  <div class="footer">★　TIỂU ĐOÀN 2 – LỮ ĐOÀN 7 CÔNG BINH　★　|　HỆ THỐNG THI ĐUA QUYẾT THẮNG</div>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+const API_URL="https://script.google.com/macros/s/AKfycbyqUwmHIaUE-mWl0BktkLlbGB-qomoPMCehHJUGzOoP9LwQWiFYYXDRdZOBO2y7giRU-Q/exec";
+const $=id=>document.getElementById(id);
+const fmt=n=>Number(n).toFixed(2).replace(".",",");
+const PLATOONS=Array.from({length:9},(_,i)=>({name:"Trung đội "+(i+1),company:"Đại đội "+(Math.floor(i/3)+1)}));
+
+let allRecords=[];
+let period="day";
+let loadError=false;
+
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function pad(n){return String(n).padStart(2,"0");}
+function localDateString(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());}
+
+function parseDate(value){
+  if(value instanceof Date && !isNaN(value.getTime())){
+    const year=value.getFullYear();
+    if(year<2000||year>2200)return null;
+    return {year,month:value.getMonth()+1,day:value.getDate()};
+  }
+  if(value===null||value===undefined||value==="")return null;
+  const s=String(value).trim();
+  let m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if(m)return validParts(+m[1],+m[2],+m[3]);
+  m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if(m)return validParts(+m[3],+m[2],+m[1]);
+  return null;
+}
+function validParts(year,month,day){
+  if(!Number.isInteger(year)||year<2000||year>2200||month<1||month>12||day<1||day>31)return null;
+  const d=new Date(year,month-1,day);
+  if(d.getFullYear()!==year||d.getMonth()!==month-1||d.getDate()!==day)return null;
+  return {year,month,day};
+}
+function dateISO(value){const p=parseDate(value);return p?p.year+"-"+pad(p.month)+"-"+pad(p.day):"";}
+function dateObject(value){const p=parseDate(value);return p?new Date(p.year,p.month-1,p.day):null;}
+function formatDate(value){const p=parseDate(value);return p?pad(p.day)+"/"+pad(p.month)+"/"+p.year:"—";}
+
+function competitionWeek(year,month,day){
+  const firstDay=new Date(year,month-1,1).getDay();
+  const mondayFirstDay=firstDay===0?7:firstDay;
+  if(mondayFirstDay<=4)return Math.floor((day-1+mondayFirstDay-1)/7)+1;
+  const firstMonday=8-mondayFirstDay;
+  if(day<firstMonday)return 0;
+  return Math.floor((day-firstMonday)/7)+1;
+}
+function getWeekRange(year,month,week){
+  if(!Number.isInteger(year)||year<2000||!Number.isInteger(month)||month<1||month>12||!Number.isInteger(week)||week<1||week>5)return null;
+  const firstDay=new Date(year,month-1,1).getDay();
+  const mondayFirstDay=firstDay===0?7:firstDay;
+  let startDay;
+  if(mondayFirstDay<=4)startDay=1+(week-1)*7;
+  else startDay=(8-mondayFirstDay)+(week-1)*7;
+  const lastDay=new Date(year,month,0).getDate();
+  if(startDay>lastDay)return null;
+  return {start:new Date(year,month-1,startDay),end:new Date(year,month-1,Math.min(startDay+6,lastDay))};
+}
+function getWeeksInMonth(year,month){
+  if(!year||!month)return 0;
+  const days=new Date(year,month,0).getDate();
+  let max=0;
+  for(let d=1;d<=days;d++)max=Math.max(max,competitionWeek(year,month,d));
+  return max;
+}
+
+function getRecordDate(r){
+  const candidates=[r.date,r.NGAY_CHAM,r.ngayCham,r.ngay,r.DATE,r.dateISO];
+  for(const value of candidates){
+    const parsed=dateISO(value);
+    if(parsed)return parsed;
+  }
+  return "";
+}
+function getRecordUnit(r){return String(r.unit??r.DON_VI??r.donVi??"").trim().replace(/\s+/g," ");}
+function getRecordLevel(r){
+  const v=String(r.level??r.CAP_DON_VI??r.capDonVi??"").trim().toUpperCase();
+  if(["TRUNG_DOI","TRUNG ĐỘI","PLATOON"].includes(v))return "platoon";
+  if(["DAI_DOI","ĐẠI ĐỘI","COMPANY"].includes(v))return "company";
+  return v.toLowerCase();
+}
+function getRecordMethod(r){
+  const v=String(r.method??r.PHUONG_THUC??r.phuongThuc??r.HINH_THUC_CHAM??r.HINH_THUC??"").trim().toUpperCase();
+  if(v.includes("TRUC_BAN")||v.includes("TRỰC BAN"))return "duty";
+  if(v.includes("TO_THI_DUA")||v.includes("TỔ THI ĐUA"))return "inspection";
+  return v.toLowerCase();
+}
+function toNumber(value){
+  if(value===null||value===undefined||value==="")return null;
+  const n=Number(String(value).replace(",","."));
+  return Number.isFinite(n)?n:null;
+}
+function scoreOf(r){
+  for(const v of [r.average,r.totalScore,r.DIEM_TONG_HOP,r.diemTongHop]){
+    const n=toNumber(v);
+    if(n!==null)return n;
+  }
+  const scores=r.scores||r.SCORES||{};
+  const vals=["A","B","C","D"].map(k=>toNumber(scores[k]));
+  if(vals.some(v=>v===null))return null;
+  return vals.reduce((a,b)=>a+b,0)/4;
+}
+function bonusOf(r){return toNumber(r.bonus??r.DIEM_THUONG??r.TONG_DIEM_THUONG)??0;}
+function scorerOf(r){return r.scorer??r.NGUOI_CHAM??r.nguoiCham??"—";}
+function getRecordWeek(r){
+  const stored=toNumber(r.week??r.TUAN??r.tuan);
+  if(stored!==null&&stored>=1&&stored<=5)return stored;
+  const p=parseDate(getRecordDate(r));
+  return p?competitionWeek(p.year,p.month,p.day):0;
+}
+function isValidRecord(r){
+  return getRecordLevel(r)==="platoon"&&getRecordMethod(r)==="inspection"&&/^Trung đội\s*[1-9]$/i.test(getRecordUnit(r))&&!!getRecordDate(r)&&scoreOf(r)!==null;
+}
+function average(values){
+  const valid=values.filter(v=>v!==null&&v!==undefined&&Number.isFinite(Number(v)));
+  return valid.length?valid.reduce((a,b)=>a+Number(b),0)/valid.length:null;
+}
+function companyFor(unit){
+  const m=String(unit).match(/(\d+)/);
+  if(!m)return "";
+  const n=Number(m[1]);
+  return n>=1&&n<=9?"Đại đội "+(Math.floor((n-1)/3)+1):"";
+}
+
+/* Khởi tạo bộ lọc năm: luôn cho phép chọn năm 2026 đến 2035 */
+function initYearOptions(){
+  const years=new Set();
+
+  for(let y=2026;y<=2035;y++){
+    years.add(y);
+  }
+
+  allRecords.forEach(r=>{
+    const p=parseDate(getRecordDate(r));
+    if(p)years.add(p.year);
+  });
+
+  const oldYear=$("year").value;
+  const sorted=[...years].sort((a,b)=>a-b);
+
+  $("year").innerHTML=sorted.map(y=>`<option value="${y}">${y}</option>`).join("");
+
+  if(oldYear&&years.has(Number(oldYear))){
+    $("year").value=oldYear;
+  }else{
+    $("year").value="2026";
+  }
+}
+function initMonthDefault(){
+  const y=Number($("year").value);
+  const months=allRecords.map(r=>parseDate(getRecordDate(r))).filter(p=>p&&p.year===y).map(p=>p.month);
+  $("month").value=String(months.length?Math.max(...months):new Date().getMonth()+1);
+}
+function updateWeekOptions(){
+  const year=Number($("year").value);
+  const month=Number($("month").value);
+  if(!Number.isInteger(year)||year<2000||!Number.isInteger(month)||month<1||month>12){
+    $("week").innerHTML='<option value="">Chưa xác định tuần</option>';
+    return;
+  }
+  const max=getWeeksInMonth(year,month);
+  const old=Number($("week").value)||1;
+  $("week").innerHTML=Array.from({length:max},(_,i)=>`<option value="${i+1}">Tuần ${i+1}</option>`).join("");
+  $("week").value=String(Math.min(old,max)||1);
+}
+function getSelectedRange(){
+  if(period==="day"){
+    const day=$("day").value;
+    if(!day||!parseDate(day))return null;
+    return {start:day,end:day};
+  }
+  const year=Number($("year").value);
+  if(!Number.isInteger(year)||year<2000)return null;
+
+  if(period==="week"){
+    const month=Number($("month").value),week=Number($("week").value);
+    const r=getWeekRange(year,month,week);
+    return r?{start:localDateString(r.start),end:localDateString(r.end)}:null;
+  }
+  if(period==="month"){
+    const month=Number($("month").value);
+    if(!Number.isInteger(month)||month<1||month>12)return null;
+    return {start:year+"-"+pad(month)+"-01",end:year+"-"+pad(month)+"-"+pad(new Date(year,month,0).getDate())};
+  }
+  if(period==="year"){
+    return {start:year+"-01-01",end:year+"-12-31"};
+  }
+  return null;
+}
+function updateRangeText(){
+  const range=getSelectedRange();
+  if(!range){$("rangeText").textContent="Vui lòng chọn đầy đủ ngày, tuần, tháng và năm hợp lệ.";return;}
+  $("rangeText").textContent=period==="day"?"Ngày "+formatDate(range.start):formatDate(range.start)+" đến "+formatDate(range.end);
+  $("periodLabel").textContent={day:"Tổng hợp theo ngày",week:"Tổng hợp theo tuần",month:"Tổng hợp theo tháng",year:"Tổng hợp cả năm"}[period];
+}
+function setPeriod(value){
+  period=value;
+  document.querySelectorAll("[data-period]").forEach(b=>b.classList.toggle("active",b.dataset.period===value));
+  $("dayField").style.display=value==="day"?"block":"none";
+  $("weekField").style.display=value==="week"?"block":"none";
+  $("monthField").style.display=(value==="day"||value==="year")?"none":"block";
+  $("yearField").style.display=value==="day"?"none":"block";
+  if(value!=="day"&&!$("year").value)initYearOptions();
+  updateWeekOptions();
+  updateRangeText();
+  render();
+}
+
+function buildDailyPlatoonScores(records){
+  const map={};
+  records.forEach(r=>{
+    const date=getRecordDate(r),unit=getRecordUnit(r),score=scoreOf(r);
+    if(!date||!unit||score===null)return;
+    if(!map[unit])map[unit]={};
+    if(!map[unit][date])map[unit][date]=[];
+    map[unit][date].push(score);
+  });
+  const result={};
+  Object.keys(map).forEach(unit=>{
+    result[unit]={};
+    Object.keys(map[unit]).forEach(date=>result[unit][date]=average(map[unit][date]));
+  });
+  return result;
+}
+function dailyValues(daily,start,end){
+  return Object.keys(daily||{}).sort().filter(d=>d>=start&&d<=end).map(d=>daily[d]);
+}
+function calculateWeekScore(daily,year,month,week){
+  const range=getWeekRange(year,month,week);
+  return range?average(dailyValues(daily,localDateString(range.start),localDateString(range.end))):null;
+}
+function calculateMonthScore(daily,year,month){
+  const scores=[];
+  for(let w=1;w<=getWeeksInMonth(year,month);w++){
+    const score=calculateWeekScore(daily,year,month,w);
+    if(score!==null)scores.push(score);
+  }
+  return average(scores);
+}
+function calculateYearScore(daily,year){
+  const scores=[];
+  for(let m=1;m<=12;m++){
+    const score=calculateMonthScore(daily,year,m);
+    if(score!==null)scores.push(score);
+  }
+  return average(scores);
+}
+function calculatePlatoon(unit,daily){
+  if(period==="day"){
+    const score=daily[$("day").value];
+    return score===undefined?null:score;
+  }
+  const year=Number($("year").value),month=Number($("month").value);
+  if(period==="week")return calculateWeekScore(daily,year,month,Number($("week").value));
+  if(period==="month")return calculateMonthScore(daily,year,month);
+  return calculateYearScore(daily,year);
+}
+function aggregate(){
+  const valid=allRecords.filter(isValidRecord);
+  const dailyMap=buildDailyPlatoonScores(valid);
+  const range=getSelectedRange();
+  if(!range)return [];
+  const periodRecords=valid.filter(r=>{const d=getRecordDate(r);return d>=range.start&&d<=range.end;});
+  return PLATOONS.map(p=>{
+    const score=calculatePlatoon(p.name,dailyMap[p.name]||{});
+    const records=periodRecords.filter(r=>getRecordUnit(r)===p.name);
+    return {name:p.name,company:p.company,score,ready:score!==null,records,bonus:records.reduce((s,r)=>s+bonusOf(r),0)};
+  });
+}
+
+function render(){
+  updateRangeText();
+  const rows=aggregate().sort((a,b)=>{
+    if(a.ready!==b.ready)return a.ready?-1:1;
+    return (b.score??0)-(a.score??0);
+  });
+  const ranked=rows.filter(x=>x.ready);
+  const avg=average(ranked.map(x=>x.score));
+  $("averageScore").textContent=avg===null?"—":fmt(avg);
+  $("scoredCount").textContent=ranked.length+"/9";
+  $("topUnit").textContent=ranked.length?ranked[0].name:"—";
+  $("topScore").textContent=ranked.length?fmt(ranked[0].score)+" điểm":"Chưa có kết quả";
+  $("rankCaption").textContent={day:"Xếp hạng theo điểm ngày",week:"Xếp hạng theo điểm tuần",month:"Xếp hạng theo điểm tháng",year:"Xếp hạng theo điểm năm"}[period];
+  renderCards(rows);renderTable(rows);renderRecords(rows);
+}
+function renderCards(rows){
+  $("platoonGrid").innerHTML=rows.map((x,index)=>{
+    const has=x.ready,scoreText=has?fmt(x.score):"—";
+    const width=has?Math.max(0,Math.min(100,x.score*10)):0;
+    const rank=has?rows.filter(r=>r.ready).indexOf(x)+1:null;
+    return `<div class="platoon-card ${rank===1?"first":""}">
+      <div class="platoon-top"><div class="platoon-name"><div class="platoon-symbol"><i class="fa-solid fa-shield-halved"></i></div>${esc(x.name)}</div><span class="rank-label">${has?"HẠNG "+rank:"CHƯA CÓ ĐIỂM"}</span></div>
+      <div class="total-score"><strong>${scoreText}</strong><span>/ 10 điểm</span></div>
+      <div class="score-track"><div class="score-fill" style="width:${width}%"></div></div>
+      <div class="card-foot"><span>${esc(x.company)}</span><strong>${has?"Đã có kết quả":"Chưa có kết quả"}</strong></div>
+    </div>`;
+  }).join("");
+}
+function renderTable(rows){
+  $("rankingBody").innerHTML=rows.map((x,index)=>{
+    const has=x.ready,rank=has?rows.filter(r=>r.ready).indexOf(x)+1:null;
+    const cls=rank===1?"first":rank===2?"second":rank===3?"third":"";
+    return `<tr><td><span class="rank ${cls}">${rank||"—"}</span></td><td><b>${esc(x.name)}</b></td><td>${esc(x.company)}</td><td class="num"><span class="score">${has?fmt(x.score):"—"}</span></td><td>${has?'<span class="status">Có kết quả</span>':'<span class="status wait">Chưa có điểm</span>'}</td></tr>`;
+  }).join("");
+}
+function renderRecords(rows){
+  const records=rows.flatMap(x=>x.records),unique=[],seen=new Set();
+  records.forEach(r=>{
+    const key=String(r.id??[getRecordDate(r),getRecordUnit(r),getRecordMethod(r)].join("|"));
+    if(!seen.has(key)){seen.add(key);unique.push(r);}
+  });
+  unique.sort((a,b)=>getRecordDate(b).localeCompare(getRecordDate(a)));
+  $("detailCount").textContent=unique.length+" phiếu";
+  $("recordsBody").innerHTML=unique.length?unique.map(r=>{
+    const unit=getRecordUnit(r);
+    return `<tr><td>${formatDate(getRecordDate(r))}</td><td><b>${esc(companyFor(unit))}</b></td><td>${esc(unit)}</td><td>Tuần ${getRecordWeek(r)||"—"}</td><td class="num">${fmt(scoreOf(r))}</td><td class="num">${fmt(bonusOf(r))}</td><td>${esc(scorerOf(r))}</td></tr>`;
+  }).join(""):'<tr><td colspan="7" class="empty">Chưa có phiếu Tổ thi đua trong khoảng thời gian đã chọn.</td></tr>';
+}
+
+async function loadData(){
+  $("platoonGrid").innerHTML='<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Đang kết nối Google Sheets...</div>';
+  $("rankingBody").innerHTML='<tr><td colspan="5" class="loading">Đang tải dữ liệu...</td></tr>';
+  $("recordsBody").innerHTML='<tr><td colspan="7" class="loading">Đang tải dữ liệu...</td></tr>';
+  try{
+    const response=await fetch(API_URL+"?action=list&_="+Date.now(),{method:"GET",cache:"no-store"});
+    if(!response.ok)throw new Error("Máy chủ trả về HTTP "+response.status);
+    const result=await response.json();
+    if(!result.success)throw new Error(result.message||"Không lấy được dữ liệu.");
+    allRecords=Array.isArray(result.data)?result.data:[];
+    initYearOptions();
+    initMonthDefault();
+    $("day").value=localDateString(new Date());
+    updateWeekOptions();
+    loadError=false;
+    render();
+    const count=allRecords.filter(isValidRecord).length;
+    toast("Đã tải dữ liệu. Có "+count+" kết quả Trung đội hợp lệ.");
+  }catch(err){
+    loadError=true;
+    $("platoonGrid").innerHTML=`<div class="empty">Không tải được dữ liệu: ${esc(err.message)}</div>`;
+    $("rankingBody").innerHTML=`<tr><td colspan="5" class="empty">Kiểm tra URL triển khai và quyền truy cập Web App.<br>${esc(err.message)}</td></tr>`;
+    $("recordsBody").innerHTML='<tr><td colspan="7" class="empty">Không có dữ liệu do kết nối thất bại.</td></tr>';
+    toast("Lỗi kết nối Google Sheets.");
+  }
+}
+function toast(message){
+  const t=$("toast");t.textContent=message;t.style.display="block";
+  clearTimeout(window._toastTimer);
+  window._toastTimer=setTimeout(()=>t.style.display="none",2800);
+}
+
+document.querySelectorAll("[data-period]").forEach(b=>b.addEventListener("click",()=>setPeriod(b.dataset.period)));
+$("applyBtn").addEventListener("click",()=>{updateWeekOptions();render();toast("Đã cập nhật kết quả theo thời gian đã chọn.");});
+$("refreshBtn").addEventListener("click",loadData);
+$("printBtn").addEventListener("click",()=>window.print());
+$("day").addEventListener("change",render);
+$("week").addEventListener("change",render);
+$("month").addEventListener("change",()=>{updateWeekOptions();render();});
+$("year").addEventListener("change",()=>{updateWeekOptions();render();});
+
+$("day").value=localDateString(new Date());
+initYearOptions();
+loadData();
+</script>
+</body>
+</html>

@@ -1,0 +1,1167 @@
+﻿
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#123d2b">
+<title>Lịch sử chấm điểm - Phòng Hồ Chí Minh</title>
+
+<style>
+:root {
+    --green:#123d2b;
+    --green2:#1d563d;
+    --gold:#d6b45c;
+    --bg:#f2f5f1;
+    --text:#26372d;
+    --muted:#718078;
+    --border:#e1e9e2;
+    --red:#bd4646;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+
+header{
+    background:linear-gradient(115deg,#0b2e20,#1c563b);
+    color:white;padding:22px 5%;
+    border-bottom:4px solid var(--gold)
+}
+.header-inner{
+    max-width:1450px;margin:auto;
+    display:flex;align-items:center;
+    justify-content:space-between;gap:15px
+}
+.brand{display:flex;align-items:center;gap:15px}
+.logo{
+    width:55px;height:55px;border:2px solid var(--gold);
+    border-radius:50%;display:grid;place-items:center;
+    color:#f0d98d;font-size:26px;flex-shrink:0
+}
+.brand h1{font-size:20px;margin:0 0 6px;text-transform:uppercase}
+.brand p{font-size:12px;color:#d5e5d9;margin:0}
+.header-right{text-align:right;font-size:12px;color:#e4eee7;line-height:1.7}
+
+nav{background:white;border-bottom:1px solid var(--border);padding:0 5%}
+.nav-inner{max-width:1450px;margin:auto;display:flex;overflow-x:auto}
+nav a{
+    padding:15px 16px;text-decoration:none;color:#52665a;
+    font-size:13px;font-weight:bold;white-space:nowrap;
+    border-bottom:3px solid transparent
+}
+nav a:hover,nav a.active{color:var(--green);border-color:var(--gold)}
+
+main{max-width:1450px;margin:25px auto;padding:0 20px 45px}
+.heading{
+    display:flex;justify-content:space-between;
+    align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:18px
+}
+.heading h2{color:var(--green);font-size:23px;margin:0 0 7px}
+.heading p{color:var(--muted);font-size:13px;margin:0}
+
+button,input,select{font-family:inherit}
+input,select{
+    padding:10px 12px;border:1px solid #ccd8ce;
+    border-radius:7px;background:white;color:var(--text);
+    outline:none;min-width:0
+}
+input:focus,select:focus{border-color:var(--green)}
+button{
+    border:0;border-radius:7px;padding:11px 15px;
+    font-weight:bold;cursor:pointer
+}
+.primary{background:var(--green);color:white}
+.primary:hover{background:var(--green2)}
+.light{background:white;color:var(--green);border:1px solid var(--border)}
+.danger{background:#fff1f1;color:#a43b3b;border:1px solid #f0cccc}
+
+.status{
+    padding:11px 14px;background:white;
+    border:1px solid var(--border);border-radius:8px;
+    color:var(--muted);font-size:13px;margin-bottom:18px
+}
+.status.error{background:#fff4f4;color:#a52e2e;border-color:#f0cccc}
+.status.success{color:var(--green)}
+
+.stats{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    gap:14px;margin-bottom:20px
+}
+.stat{
+    background:white;border:1px solid var(--border);
+    border-radius:10px;padding:17px;
+    box-shadow:0 3px 12px #173b2410
+}
+.stat-label{font-size:12px;color:var(--muted);margin-bottom:10px}
+.stat-value{font-size:27px;font-weight:bold;color:var(--green)}
+.stat-note{font-size:11px;color:#89968d;margin-top:6px}
+
+.panel{
+    background:white;border:1px solid var(--border);
+    border-radius:11px;overflow:hidden;margin-bottom:18px;
+    box-shadow:0 3px 12px #173b2409
+}
+.panel-head{
+    padding:16px 19px;border-bottom:1px solid var(--border);
+    display:flex;justify-content:space-between;
+    align-items:center;gap:10px;flex-wrap:wrap
+}
+.panel-head h3{margin:0;color:var(--green);font-size:16px}
+.panel-head small{color:var(--muted);font-size:12px}
+
+.filter-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:13px;padding:18px
+}
+.field{display:flex;flex-direction:column;gap:7px}
+.field label{font-size:12px;font-weight:bold;color:#52665a}
+.field input,.field select{width:100%}
+.filter-actions{
+    display:flex;gap:9px;align-items:end;
+    padding:0 18px 18px;flex-wrap:wrap
+}
+.filter-note{
+    padding:0 18px 15px;
+    color:var(--muted);font-size:12px;line-height:1.6
+}
+
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:850px}
+th{
+    background:#f5f8f5;color:#52665a;text-align:left;
+    font-size:12px;padding:13px 12px;white-space:nowrap
+}
+td{
+    border-top:1px solid #edf1ed;
+    padding:12px;font-size:13px;vertical-align:middle
+}
+tbody tr:hover{background:#f8fbf8}
+.unit-name{font-weight:bold;color:var(--green)}
+.score{font-weight:bold;color:var(--green)}
+.method{
+    display:inline-block;padding:5px 8px;border-radius:20px;
+    font-size:11px;font-weight:bold;background:#e9f1eb;color:#286044
+}
+.detail-btn{
+    background:#edf3ed;color:var(--green);
+    padding:7px 10px;font-size:12px
+}
+.detail-row{background:#f8faf8!important}
+.detail-content{padding:14px 12px}
+.score-grid{
+    display:grid;grid-template-columns:repeat(4,minmax(100px,1fr));
+    gap:10px
+}
+.score-box{
+    background:white;border:1px solid var(--border);
+    border-radius:8px;padding:12px;text-align:center
+}
+.score-box strong{display:block;color:var(--green);font-size:19px;margin-top:6px}
+.score-box span{font-size:11px;color:var(--muted)}
+.detail-extra{margin-top:12px;font-size:12px;color:var(--muted);line-height:1.7}
+.empty{text-align:center;padding:28px;color:#89968d;font-size:13px}
+.pagination{
+    display:flex;justify-content:space-between;
+    align-items:center;gap:12px;padding:14px 17px;
+    flex-wrap:wrap;border-top:1px solid var(--border)
+}
+.pagination-info{font-size:12px;color:var(--muted)}
+.pagination-buttons{display:flex;gap:7px}
+.pagination-buttons button:disabled{opacity:.4;cursor:not-allowed}
+.page-btn{
+    background:white;border:1px solid var(--border);
+    color:var(--green);padding:8px 12px
+}
+.page-btn.current{background:var(--green);color:white}
+
+footer{text-align:center;padding:20px;color:#89968d;font-size:12px}
+
+@media(max-width:900px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .filter-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:600px){
+    header{padding:16px}
+    .header-right{display:none}
+    .logo{width:44px;height:44px;font-size:20px}
+    .brand h1{font-size:15px}
+    .brand p{font-size:10px}
+    main{padding:0 12px 30px;margin-top:18px}
+    .heading h2{font-size:19px}
+    .stats{gap:9px}
+    .stat{padding:13px}
+    .stat-value{font-size:23px}
+    .filter-grid{grid-template-columns:1fr 1fr;padding:13px}
+    .score-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media print{
+    nav,.controls,.filter-actions,.filter-grid,.filter-note,.status,
+    .detail-btn,.pagination,footer{display:none!important}
+    body{background:white}
+    main{max-width:none;margin:10px;padding:0}
+    .panel,.stat{box-shadow:none;break-inside:avoid}
+    .detail-row{display:table-row!important}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="brand">
+            <div class="logo">★</div>
+            <div>
+                <h1>Phòng Hồ Chí Minh</h1>
+                <p>HỆ THỐNG CHẤM ĐIỂM THI ĐUA ĐIỆN TỬ</p>
+            </div>
+        </div>
+        <div class="header-right">
+            <div>ĐOÀN KẾT - KỶ LUẬT - TRÁCH NHIỆM</div>
+            <div id="headerDate"></div>
+        </div>
+    </div>
+</header>
+
+<nav>
+    <div class="nav-inner">
+        <a href="index.html">Trang chủ</a>
+        <a href="cham-diem.html">Chấm điểm</a>
+        <a href="tonghop.html">Tổng hợp</a>
+        <a href="quan-ly-don-vi.html">Quản lý đơn vị</a>
+        <a href="dieuhanh.html">Điều hành</a>
+        <a href="xephang.html">Xếp hạng</a>
+        <a href="lichsu.html" class="active">Lịch sử</a>
+        <a href="baocao.html">Báo cáo</a>
+    </div>
+</nav>
+
+<main>
+
+    <div class="heading">
+        <div>
+            <h2>LỊCH SỬ CHẤM ĐIỂM THI ĐUA</h2>
+            <p>Tra cứu, theo dõi và kiểm tra các phiếu chấm điểm Trung đội đã lưu</p>
+        </div>
+        <div class="controls">
+            <button class="primary" onclick="loadHistory()">↻ Tải dữ liệu</button>
+            <button class="light" onclick="window.print()">In lịch sử</button>
+            <button class="light" onclick="exportCSV()">↓ Xuất CSV</button>
+        </div>
+    </div>
+
+    <div id="status" class="status">Đang kết nối dữ liệu...</div>
+
+    <section class="stats">
+        <div class="stat">
+            <div class="stat-label">TỔNG SỐ PHIẾU</div>
+            <div class="stat-value" id="totalCount">--</div>
+            <div class="stat-note">Số phiếu Tổ thi đua đã lưu</div>
+        </div>
+        <div class="stat">
+            <div class="stat-label">ĐẠI ĐỘI CÓ PHIẾU</div>
+            <div class="stat-value" id="companyCount">--</div>
+            <div class="stat-note">Đại đội có Trung đội phát sinh phiếu</div>
+        </div>
+        <div class="stat">
+            <div class="stat-label">TRUNG ĐỘI CÓ PHIẾU</div>
+            <div class="stat-value" id="platoonCount">--</div>
+            <div class="stat-note">Số Trung đội phát sinh phiếu</div>
+        </div>
+        <div class="stat">
+            <div class="stat-label">ĐIỂM TRUNG BÌNH</div>
+            <div class="stat-value" id="averageScore">--</div>
+            <div class="stat-note">Trung bình điểm các phiếu đang hiển thị</div>
+        </div>
+    </section>
+
+    <section class="panel">
+        <div class="panel-head">
+            <h3>🔎 BỘ LỌC TRA CỨU</h3>
+            <small>Lọc lịch sử chấm điểm theo thời gian và đơn vị</small>
+        </div>
+
+        <div class="filter-grid">
+            <div class="field">
+                <label for="dateFrom">TỪ NGÀY</label>
+                <input type="date" id="dateFrom">
+            </div>
+
+            <div class="field">
+                <label for="dateTo">ĐẾN NGÀY</label>
+                <input type="date" id="dateTo">
+            </div>
+
+            <div class="field">
+                <label for="yearFilter">NĂM</label>
+                <select id="yearFilter">
+                    <option value="">Tất cả các năm</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="monthFilter">THÁNG</label>
+                <select id="monthFilter">
+                    <option value="">Tất cả các tháng</option>
+                    <option value="1">Tháng 1</option>
+                    <option value="2">Tháng 2</option>
+                    <option value="3">Tháng 3</option>
+                    <option value="4">Tháng 4</option>
+                    <option value="5">Tháng 5</option>
+                    <option value="6">Tháng 6</option>
+                    <option value="7">Tháng 7</option>
+                    <option value="8">Tháng 8</option>
+                    <option value="9">Tháng 9</option>
+                    <option value="10">Tháng 10</option>
+                    <option value="11">Tháng 11</option>
+                    <option value="12">Tháng 12</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="weekFilter">TUẦN THI ĐUA</label>
+                <select id="weekFilter">
+                    <option value="">Tất cả các tuần</option>
+                    <option value="1">Tuần 1</option>
+                    <option value="2">Tuần 2</option>
+                    <option value="3">Tuần 3</option>
+                    <option value="4">Tuần 4</option>
+                    <option value="5">Tuần 5</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="unitFilter">TRUNG ĐỘI</label>
+                <select id="unitFilter">
+                    <option value="">Tất cả Trung đội</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="companyFilter">ĐẠI ĐỘI</label>
+                <select id="companyFilter">
+                    <option value="">Tất cả Đại đội</option>
+                    <option value="Đại đội 1">Đại đội 1</option>
+                    <option value="Đại đội 2">Đại đội 2</option>
+                    <option value="Đại đội 3">Đại đội 3</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="keyword">TÌM KIẾM</label>
+                <input type="text" id="keyword" placeholder="Tên Trung đội, người chấm...">
+            </div>
+
+            <div class="field">
+                <label for="pageSize">SỐ PHIẾU MỖI TRANG</label>
+                <select id="pageSize">
+                    <option value="10">10 phiếu</option>
+                    <option value="20" selected>20 phiếu</option>
+                    <option value="50">50 phiếu</option>
+                    <option value="100">100 phiếu</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="filter-note">
+            Lưu ý: Hệ thống chỉ lưu phiếu chấm trực tiếp ở cấp Trung đội do Tổ thi đua thực hiện.
+            Điểm Đại đội được tổng hợp từ 3 Trung đội trực thuộc, không phải phiếu chấm trực tiếp.
+            Khi lọc theo tuần, cần chọn thêm tháng và năm để xác định đúng tuần thi đua.
+        </div>
+
+        <div class="filter-actions">
+            <button class="primary" onclick="applyFilters()">Tra cứu</button>
+            <button class="light" onclick="resetFilters()">Xóa bộ lọc</button>
+        </div>
+    </section>
+
+    <section class="panel">
+        <div class="panel-head">
+            <h3>📋 DANH SÁCH PHIẾU CHẤM</h3>
+            <small id="resultLabel">Đang tải...</small>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:55px">STT</th>
+                        <th>NGÀY CHẤM</th>
+                        <th>TUẦN</th>
+                        <th>TRUNG ĐỘI</th>
+                        <th>ĐẠI ĐỘI</th>
+                        <th>HÌNH THỨC</th>
+                        <th>NGƯỜI CHẤM</th>
+                        <th>ĐIỂM TỔNG HỢP</th>
+                        <th>CHI TIẾT</th>
+                    </tr>
+                </thead>
+                <tbody id="historyBody">
+                    <tr>
+                        <td colspan="9" class="empty">Đang tải dữ liệu...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            <div class="pagination-info" id="paginationInfo">Chưa có dữ liệu</div>
+            <div class="pagination-buttons" id="paginationButtons"></div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    PHÒNG HỒ CHÍ MINH · HỆ THỐNG CHẤM ĐIỂM THI ĐUA ĐIỆN TỬ
+</footer>
+
+<script>
+// =====================================================
+// CẤU HÌNH API - CODE.GS PHIÊN BẢN HIỆN TẠI
+// =====================================================
+
+const API_URL = "https://script.google.com/macros/s/AKfycbyqUwmHIaUE-mWl0BktkLlbGB-qomoPMCehHJUGzOoP9LwQWiFYYXDRdZOBO2y7giRU-Q/exec";
+
+let allRecords = [];
+let filteredRecords = [];
+let currentPage = 1;
+
+// =====================================================
+// HÀM TIỆN ÍCH
+// =====================================================
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, ch => ({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+    })[ch]);
+}
+
+function numberValue(value) {
+    if (value === null || value === undefined || value === "") return 0;
+    const n = Number(value);
+    return Number.isFinite(n) ? n : 0;
+}
+
+function formatScore(value) {
+    if (value === null || value === undefined || value === "") return "--";
+    return numberValue(value).toFixed(2);
+}
+
+function getValue(record, keys) {
+    for (const key of keys) {
+        if (
+            record &&
+            record[key] !== undefined &&
+            record[key] !== null &&
+            record[key] !== ""
+        ) {
+            return record[key];
+        }
+    }
+    return "";
+}
+
+function normalizeDate(value) {
+    if (!value) return "";
+
+    const str = String(value).trim();
+
+    const iso = str.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+    if (iso) {
+        return iso[1] + "-" +
+            String(iso[2]).padStart(2,"0") + "-" +
+            String(iso[3]).padStart(2,"0");
+    }
+
+    const vn = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+    if (vn) {
+        return vn[3] + "-" +
+            String(vn[2]).padStart(2,"0") + "-" +
+            String(vn[1]).padStart(2,"0");
+    }
+
+    const d = new Date(str);
+    if (!isNaN(d.getTime())) {
+        return d.getFullYear() + "-" +
+            String(d.getMonth()+1).padStart(2,"0") + "-" +
+            String(d.getDate()).padStart(2,"0");
+    }
+
+    return "";
+}
+
+function displayDate(value) {
+    const iso = normalizeDate(value);
+    if (!iso) return value || "--";
+
+    const [y,m,d] = iso.split("-");
+    return `${d}/${m}/${y}`;
+}
+
+function getCompanyForPlatoon(unitName) {
+    const match = String(unitName || "").match(/trung\s*đội\s*(\d+)/i);
+    if (!match) return "";
+
+    const number = Number(match[1]);
+
+    if (number >= 1 && number <= 3) return "Đại đội 1";
+    if (number >= 4 && number <= 6) return "Đại đội 2";
+    if (number >= 7 && number <= 9) return "Đại đội 3";
+
+    return "";
+}
+
+function getPlatoonNumber(unitName) {
+    const match = String(unitName || "").match(/trung\s*đội\s*(\d+)/i);
+    return match ? Number(match[1]) : 999;
+}
+
+function levelName() {
+    return "Trung đội";
+}
+
+function methodName() {
+    return "Tổ thi đua";
+}
+
+function getRecordScores(record) {
+    const source = record.scores || record.SCORES || {};
+
+    return {
+        A: getValue(source, ["A","a"]) !== ""
+            ? getValue(source, ["A","a"])
+            : getValue(record, ["DIEM_A","diem_a","A"]),
+
+        B: getValue(source, ["B","b"]) !== ""
+            ? getValue(source, ["B","b"])
+            : getValue(record, ["DIEM_B","diem_b","B"]),
+
+        C: getValue(source, ["C","c"]) !== ""
+            ? getValue(source, ["C","c"])
+            : getValue(record, ["DIEM_C","diem_c","C"]),
+
+        D: getValue(source, ["D","d"]) !== ""
+            ? getValue(source, ["D","d"])
+            : getValue(record, ["DIEM_D","diem_d","D"])
+    };
+}
+
+// =====================================================
+// CHUẨN HÓA DỮ LIỆU PHIẾU
+// =====================================================
+
+function normalizeRecord(record, index) {
+    const date = getValue(record, ["date","NGAY_CHAM"]);
+    const unit = getValue(record, ["unit","DON_VI"]);
+    const scores = getRecordScores(record);
+
+    return {
+        id: getValue(record, ["id","ID"]),
+        date,
+        dateISO: normalizeDate(date),
+
+        week: getValue(record, ["week","TUAN"]),
+        month: getValue(record, ["month","THANG"]),
+        year: getValue(record, ["year","NAM"]),
+
+        level: "TRUNG_DOI",
+        unit,
+        parent: getCompanyForPlatoon(unit),
+
+        method: "TO_THI_DUA",
+        scorer: getValue(record, ["scorer","NGUOI_CHAM"]),
+        average: getValue(record, ["average","DIEM_TONG_HOP"]),
+
+        scores,
+        raw: record,
+        originalIndex: index
+    };
+}
+
+// =====================================================
+// TRẠNG THÁI VÀ API
+// =====================================================
+
+function setStatus(message, error = false) {
+    const el = document.getElementById("status");
+    el.textContent = message;
+    el.className = error ? "status error" : "status success";
+}
+
+async function apiGet(params) {
+    const url = new URL(API_URL);
+
+    Object.entries(params || {}).forEach(([key,value]) => {
+        if (value !== undefined && value !== null && value !== "") {
+            url.searchParams.set(key,value);
+        }
+    });
+
+    const response = await fetch(url.toString(), {
+        method:"GET",
+        redirect:"follow"
+    });
+
+    if (!response.ok) {
+        throw new Error("Lỗi kết nối máy chủ: " + response.status);
+    }
+
+    const result = await response.json();
+
+    if (result.success === false) {
+        throw new Error(result.message || "Không lấy được dữ liệu.");
+    }
+
+    if (Array.isArray(result)) return result;
+    if (Array.isArray(result.data)) return result.data;
+    if (Array.isArray(result.records)) return result.records;
+
+    return [];
+}
+
+// =====================================================
+// TẢI LỊCH SỬ
+// =====================================================
+
+async function loadHistory() {
+    const body = document.getElementById("historyBody");
+
+    body.innerHTML = `
+        <tr>
+            <td colspan="9" class="empty">Đang tải dữ liệu từ máy chủ...</td>
+        </tr>
+    `;
+
+    setStatus("Đang tải lịch sử phiếu chấm...");
+
+    try {
+        // Chỉ lấy phiếu chấm Trung đội do Tổ thi đua thực hiện.
+        const records = await apiGet({
+            action:"list",
+            method:"TO_THI_DUA",
+            level:"TRUNG_DOI"
+        });
+
+        allRecords = records
+            .map((record,index) => normalizeRecord(record,index))
+            .filter(record => {
+                // Loại bỏ các bản ghi không đúng mô hình chấm hiện tại.
+                return record.unit &&
+                    getPlatoonNumber(record.unit) >= 1 &&
+                    getPlatoonNumber(record.unit) <= 9;
+            });
+
+        allRecords.sort((a,b) => {
+            const dateCompare = (b.dateISO || "").localeCompare(a.dateISO || "");
+            if (dateCompare !== 0) return dateCompare;
+
+            return b.originalIndex - a.originalIndex;
+        });
+
+        populateUnitFilter();
+        populateYearFilter();
+        applyFilters();
+
+        setStatus(
+            "Đã tải " + allRecords.length +
+            " phiếu chấm Trung đội do Tổ thi đua thực hiện. Cập nhật lúc " +
+            new Date().toLocaleTimeString("vi-VN")
+        );
+
+    } catch(error) {
+        console.error(error);
+
+        body.innerHTML = `
+            <tr>
+                <td colspan="9" class="empty">
+                    ${escapeHTML(error.message)}
+                </td>
+            </tr>
+        `;
+
+        setStatus("Không tải được lịch sử: " + error.message, true);
+    }
+}
+
+// =====================================================
+// TẠO DANH SÁCH ĐƠN VỊ VÀ NĂM
+// =====================================================
+
+function populateUnitFilter() {
+    const select = document.getElementById("unitFilter");
+    const oldValue = select.value;
+
+    const units = [...new Set(
+        allRecords.map(r => r.unit).filter(Boolean)
+    )].sort((a,b) => getPlatoonNumber(a) - getPlatoonNumber(b));
+
+    select.innerHTML =
+        '<option value="">Tất cả Trung đội</option>' +
+        units.map(unit =>
+            `<option value="${escapeHTML(unit)}">${escapeHTML(unit)}</option>`
+        ).join("");
+
+    if (units.includes(oldValue)) select.value = oldValue;
+}
+
+function populateYearFilter() {
+    const select = document.getElementById("yearFilter");
+    const oldValue = select.value;
+
+    const years = [...new Set(
+        allRecords.map(r => {
+            const date = r.dateISO;
+            return date ? date.slice(0,4) : "";
+        }).filter(Boolean)
+    )].sort((a,b) => Number(b) - Number(a));
+
+    select.innerHTML =
+        '<option value="">Tất cả các năm</option>' +
+        years.map(year =>
+            `<option value="${year}">${year}</option>`
+        ).join("");
+
+    if (years.includes(oldValue)) select.value = oldValue;
+}
+
+// =====================================================
+// LỌC DỮ LIỆU
+// =====================================================
+
+function applyFilters() {
+    const from = document.getElementById("dateFrom").value;
+    const to = document.getElementById("dateTo").value;
+
+    const year = document.getElementById("yearFilter").value;
+    const month = document.getElementById("monthFilter").value;
+    const week = document.getElementById("weekFilter").value;
+
+    const unit = document.getElementById("unitFilter").value;
+    const company = document.getElementById("companyFilter").value;
+    const keyword = document.getElementById("keyword").value.trim().toLowerCase();
+
+    // Tuần thi đua phải xác định bằng tháng và năm.
+    if (week && (!month || !year)) {
+        setStatus("Khi lọc theo tuần, bạn cần chọn cả tháng và năm.", true);
+        return;
+    }
+
+    if (from && to && from > to) {
+        setStatus("Ngày bắt đầu không được lớn hơn ngày kết thúc.", true);
+        return;
+    }
+
+    filteredRecords = allRecords.filter(record => {
+        if (from && (!record.dateISO || record.dateISO < from)) return false;
+        if (to && (!record.dateISO || record.dateISO > to)) return false;
+
+        if (year && (!record.dateISO || record.dateISO.slice(0,4) !== year)) {
+            return false;
+        }
+
+        if (month && Number(record.month || (record.dateISO || "").slice(5,7)) !== Number(month)) {
+            return false;
+        }
+
+        if (week && Number(record.week) !== Number(week)) {
+            return false;
+        }
+
+        if (unit && record.unit !== unit) return false;
+
+        if (company && record.parent !== company) return false;
+
+        if (keyword) {
+            const text = [
+                record.unit,
+                record.parent,
+                record.scorer,
+                record.date,
+                record.week
+            ].join(" ").toLowerCase();
+
+            if (!text.includes(keyword)) return false;
+        }
+
+        return true;
+    });
+
+    currentPage = 1;
+
+    renderStatistics();
+    renderTable();
+
+    setStatus(
+        "Đang hiển thị " + filteredRecords.length +
+        " phiếu phù hợp với điều kiện tra cứu."
+    );
+}
+
+// =====================================================
+// THỐNG KÊ
+// =====================================================
+
+function renderStatistics() {
+    const total = filteredRecords.length;
+
+    const companies = new Set(
+        filteredRecords.map(r => r.parent).filter(Boolean)
+    );
+
+    const platoons = new Set(
+        filteredRecords.map(r => r.unit).filter(Boolean)
+    );
+
+    const scores = filteredRecords
+        .filter(r =>
+            r.average !== "" &&
+            r.average !== null &&
+            r.average !== undefined
+        )
+        .map(r => numberValue(r.average));
+
+    const average = scores.length
+        ? scores.reduce((sum,value) => sum + value,0) / scores.length
+        : null;
+
+    document.getElementById("totalCount").textContent = total;
+    document.getElementById("companyCount").textContent = companies.size;
+    document.getElementById("platoonCount").textContent = platoons.size;
+
+    document.getElementById("averageScore").textContent =
+        average === null ? "--" : average.toFixed(2);
+
+    document.getElementById("resultLabel").textContent =
+        `${total} phiếu phù hợp`;
+}
+
+// =====================================================
+// HIỂN THỊ BẢNG
+// =====================================================
+
+function renderTable() {
+    const body = document.getElementById("historyBody");
+    const pageSize = Number(document.getElementById("pageSize").value);
+
+    const totalPages = Math.max(
+        1,
+        Math.ceil(filteredRecords.length / pageSize)
+    );
+
+    if (currentPage > totalPages) currentPage = totalPages;
+
+    const start = (currentPage - 1) * pageSize;
+    const pageData = filteredRecords.slice(start,start + pageSize);
+
+    if (!pageData.length) {
+        body.innerHTML = `
+            <tr>
+                <td colspan="9" class="empty">
+                    Không tìm thấy phiếu chấm phù hợp với điều kiện tra cứu.
+                </td>
+            </tr>
+        `;
+
+        renderPagination(0,0,0);
+        return;
+    }
+
+    body.innerHTML = pageData.map((record,index) => {
+        const globalIndex = start + index;
+
+        return `
+            <tr>
+                <td>${globalIndex + 1}</td>
+
+                <td>${escapeHTML(displayDate(record.date))}</td>
+
+                <td>
+                    <span class="method">
+                        ${record.week ? "Tuần " + escapeHTML(record.week) : "--"}
+                    </span>
+                </td>
+
+                <td>
+                    <div class="unit-name">
+                        ${escapeHTML(record.unit || "--")}
+                    </div>
+                </td>
+
+                <td>${escapeHTML(record.parent || "--")}</td>
+
+                <td>
+                    <span class="method">Tổ thi đua</span>
+                </td>
+
+                <td>${escapeHTML(record.scorer || "--")}</td>
+
+                <td class="score">${formatScore(record.average)}</td>
+
+                <td>
+                    <button class="detail-btn"
+                        onclick="toggleDetail(${globalIndex},this)">
+                        Xem điểm
+                    </button>
+                </td>
+            </tr>
+        `;
+    }).join("");
+
+    renderPagination(
+        start + 1,
+        start + pageData.length,
+        filteredRecords.length
+    );
+}
+
+// =====================================================
+// XEM CHI TIẾT PHIẾU
+// =====================================================
+
+function toggleDetail(index,button) {
+    const record = filteredRecords[index];
+    if (!record) return;
+
+    const existing = document.getElementById("detail-" + index);
+
+    if (existing) {
+        existing.remove();
+        button.textContent = "Xem điểm";
+        return;
+    }
+
+    const scores = record.scores;
+
+    const values = ["A","B","C","D"].map(key => {
+        const value = scores[key];
+
+        return `
+            <div class="score-box">
+                <span>MẶT ${key}</span>
+                <strong>${value === "" ? "--" : escapeHTML(value)}</strong>
+            </div>
+        `;
+    }).join("");
+
+    const extra = [
+        record.week ? "Tuần thi đua: " + record.week : "",
+        record.month ? "Tháng: " + record.month : "",
+        record.year ? "Năm: " + record.year : "",
+        record.id ? "Mã phiếu: " + record.id : ""
+    ].filter(Boolean).join(" · ");
+
+    const row = document.createElement("tr");
+    row.id = "detail-" + index;
+    row.className = "detail-row";
+
+    row.innerHTML = `
+        <td colspan="9">
+            <div class="detail-content">
+                <div class="score-grid">${values}</div>
+
+                <div class="detail-extra">
+                    ${extra
+                        ? escapeHTML(extra)
+                        : "Thông tin chi tiết phiếu chấm"
+                    }
+                </div>
+            </div>
+        </td>
+    `;
+
+    button.closest("tr").after(row);
+    button.textContent = "Thu gọn";
+}
+
+// =====================================================
+// PHÂN TRANG
+// =====================================================
+
+function renderPagination(from,to,total) {
+    const info = document.getElementById("paginationInfo");
+    const buttons = document.getElementById("paginationButtons");
+
+    const pageSize = Number(document.getElementById("pageSize").value);
+    const totalPages = Math.max(1,Math.ceil(total/pageSize));
+
+    info.textContent = total
+        ? `Hiển thị ${from}–${to} trong tổng số ${total} phiếu`
+        : "Không có dữ liệu";
+
+    let html = `
+        <button class="page-btn"
+            onclick="changePage(${currentPage-1})"
+            ${currentPage <= 1 ? "disabled" : ""}>‹</button>
+    `;
+
+    const pages = new Set([
+        1,
+        totalPages,
+        currentPage-1,
+        currentPage,
+        currentPage+1
+    ]);
+
+    [...pages]
+        .filter(p => p >= 1 && p <= totalPages)
+        .sort((a,b) => a-b)
+        .forEach(page => {
+            html += `
+                <button class="page-btn ${page === currentPage ? "current" : ""}"
+                    onclick="changePage(${page})">
+                    ${page}
+                </button>
+            `;
+        });
+
+    html += `
+        <button class="page-btn"
+            onclick="changePage(${currentPage+1})"
+            ${currentPage >= totalPages ? "disabled" : ""}>›</button>
+    `;
+
+    buttons.innerHTML = html;
+}
+
+function changePage(page) {
+    const pageSize = Number(document.getElementById("pageSize").value);
+    const totalPages = Math.max(
+        1,
+        Math.ceil(filteredRecords.length / pageSize)
+    );
+
+    if (page < 1 || page > totalPages) return;
+
+    currentPage = page;
+    renderTable();
+
+    document.querySelector(".panel:last-of-type")
+        ?.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+// =====================================================
+// XÓA BỘ LỌC
+// =====================================================
+
+function resetFilters() {
+    document.getElementById("dateFrom").value = "";
+    document.getElementById("dateTo").value = "";
+
+    document.getElementById("yearFilter").value = "";
+    document.getElementById("monthFilter").value = "";
+    document.getElementById("weekFilter").value = "";
+
+    document.getElementById("unitFilter").value = "";
+    document.getElementById("companyFilter").value = "";
+
+    document.getElementById("keyword").value = "";
+    document.getElementById("pageSize").value = "20";
+
+    applyFilters();
+}
+
+// =====================================================
+// XUẤT FILE CSV
+// =====================================================
+
+function exportCSV() {
+    if (!filteredRecords.length) {
+        alert("Không có dữ liệu để xuất.");
+        return;
+    }
+
+    const rows = [
+        [
+            "STT",
+            "Ngày chấm",
+            "Năm",
+            "Tháng",
+            "Tuần thi đua",
+            "Trung đội",
+            "Đại đội",
+            "Cấp đơn vị",
+            "Hình thức chấm",
+            "Người chấm",
+            "Điểm A",
+            "Điểm B",
+            "Điểm C",
+            "Điểm D",
+            "Điểm tổng hợp",
+            "Mã phiếu"
+        ]
+    ];
+
+    filteredRecords.forEach((r,index) => {
+        rows.push([
+            index + 1,
+            displayDate(r.date),
+            r.year,
+            r.month,
+            r.week,
+            r.unit,
+            r.parent,
+            "Trung đội",
+            "Tổ thi đua",
+            r.scorer,
+            r.scores.A,
+            r.scores.B,
+            r.scores.C,
+            r.scores.D,
+            r.average,
+            r.id
+        ]);
+    });
+
+    const csv = "\uFEFF" + rows.map(row =>
+        row.map(value =>
+            '"' + String(value ?? "").replace(/"/g,'""') + '"'
+        ).join(",")
+    ).join("\r\n");
+
+    const blob = new Blob([csv],{
+        type:"text/csv;charset=utf-8;"
+    });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download = "lich-su-cham-diem-" +
+        new Date().toISOString().slice(0,10) + ".csv";
+
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    URL.revokeObjectURL(url);
+}
+
+// =====================================================
+// SỰ KIỆN
+// =====================================================
+
+document.getElementById("pageSize").addEventListener("change",() => {
+    currentPage = 1;
+    renderTable();
+});
+
+document.getElementById("headerDate").textContent =
+    new Date().toLocaleDateString("vi-VN",{
+        weekday:"long",
+        day:"2-digit",
+        month:"2-digit",
+        year:"numeric"
+    });
+
+// Khởi chạy
+loadHistory();
+
+</script>
+
+</body>
+</html>

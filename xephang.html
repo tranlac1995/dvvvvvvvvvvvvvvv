@@ -1,0 +1,1239 @@
+﻿
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#123d2b">
+<title>Xếp hạng thi đua - Phòng Hồ Chí Minh</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root {
+    --green:#123d2b;
+    --green2:#1d563d;
+    --green3:#28734f;
+    --gold:#d6b45d;
+    --gold2:#f0d98c;
+    --bg:#f3f5f2;
+    --white:#fff;
+    --text:#26352c;
+    --muted:#77847b;
+    --border:#e3e9e3;
+    --red:#b94336;
+    --shadow:0 8px 25px rgba(18,61,43,.08);
+}
+* {box-sizing:border-box}
+body {
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:'Be Vietnam Pro',Arial,sans-serif;
+}
+header {
+    background:linear-gradient(115deg,#0b3022,#174d35 65%,#286346);
+    color:white;padding:22px 5%;position:relative;overflow:hidden;
+}
+header:after {
+    content:"";position:absolute;width:320px;height:320px;
+    border:1px solid rgba(240,217,140,.16);border-radius:50%;
+    right:-80px;top:-190px;
+    box-shadow:0 0 0 25px rgba(240,217,140,.035),
+               0 0 0 55px rgba(240,217,140,.025);
+}
+.header-inner {
+    max-width:1450px;margin:auto;display:flex;align-items:center;
+    justify-content:space-between;gap:20px;position:relative;z-index:1;
+}
+.brand {display:flex;align-items:center;gap:15px}
+.brand-icon {
+    width:58px;height:58px;border:2px solid var(--gold);
+    border-radius:50%;display:flex;align-items:center;
+    justify-content:center;color:var(--gold2);font-size:27px;flex-shrink:0;
+}
+.brand h1 {margin:0;font-size:21px;font-weight:800;letter-spacing:.4px}
+.brand p {margin:5px 0 0;color:#d6e5d9;font-size:12px;letter-spacing:1.2px}
+.header-date {color:var(--gold2);font-size:13px;font-weight:600;text-align:right}
+nav {
+    background:white;border-bottom:1px solid var(--border);
+    box-shadow:0 3px 12px rgba(0,0,0,.035);padding:0 5%;overflow-x:auto;
+}
+.nav-inner {
+    max-width:1450px;margin:auto;display:flex;gap:5px;white-space:nowrap;
+}
+nav a {
+    display:block;padding:15px 13px;text-decoration:none;color:#56645a;
+    font-size:12px;font-weight:700;border-bottom:3px solid transparent;
+    transition:.2s;
+}
+nav a:hover,nav a.active {color:var(--green);border-bottom-color:var(--gold)}
+main {max-width:1450px;margin:28px auto;padding:0 22px 45px}
+.page-heading {
+    display:flex;align-items:flex-end;justify-content:space-between;
+    gap:15px;margin-bottom:22px;
+}
+.page-heading h2 {margin:0;color:var(--green);font-size:25px;font-weight:800}
+.page-heading p {margin:7px 0 0;color:var(--muted);font-size:13px}
+.heading-mark {width:65px;height:4px;background:var(--gold);border-radius:10px;margin-top:12px}
+
+.mode-panel {
+    display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;
+}
+.mode-btn {
+    border:1px solid #dce5dc;background:white;color:#56645a;
+    border-radius:9px;padding:11px 22px;font-family:inherit;
+    font-size:12px;font-weight:800;cursor:pointer;transition:.2s;
+}
+.mode-btn:hover {border-color:var(--green3);color:var(--green)}
+.mode-btn.active {
+    background:var(--green);border-color:var(--green);
+    color:white;box-shadow:0 4px 12px rgba(18,61,43,.15);
+}
+.filter-panel {
+    background:white;border:1px solid var(--border);border-radius:14px;
+    padding:18px;display:flex;align-items:flex-end;gap:15px;
+    flex-wrap:wrap;box-shadow:var(--shadow);margin-bottom:20px;
+}
+.filter-group {display:flex;flex-direction:column;gap:7px;min-width:160px}
+.filter-group label {
+    font-size:11px;color:#65746a;font-weight:800;
+    text-transform:uppercase;letter-spacing:.5px;
+}
+select,input,button {font-family:inherit}
+select,input[type="date"] {
+    height:42px;border:1px solid #dce5dc;border-radius:8px;
+    padding:0 12px;background:#fff;color:var(--text);
+    font-size:13px;outline:none;
+}
+select:focus,input:focus {
+    border-color:var(--green3);box-shadow:0 0 0 3px rgba(40,115,79,.1);
+}
+.btn {
+    height:42px;padding:0 20px;border:0;border-radius:8px;
+    background:var(--green);color:white;font-size:12px;
+    font-weight:800;cursor:pointer;transition:.2s;
+}
+.btn:hover {background:var(--green2);transform:translateY(-1px)}
+.btn:disabled {opacity:.6;cursor:wait;transform:none}
+.status {
+    padding:12px 15px;border-radius:9px;background:#edf4ef;
+    color:var(--green);font-size:12px;font-weight:600;
+    margin-bottom:20px;border:1px solid #dce9df;
+}
+.status.error {background:#fff0ee;color:var(--red);border-color:#f2d4d0}
+.status.warning {background:#fff8e8;color:#8a6719;border-color:#f1e2b9}
+.status:empty {display:none}
+.stats {
+    display:grid;grid-template-columns:repeat(4,1fr);
+    gap:16px;margin-bottom:24px;
+}
+.stat-card {
+    background:white;border-radius:13px;padding:19px;
+    border:1px solid var(--border);box-shadow:var(--shadow);
+    position:relative;overflow:hidden;
+}
+.stat-card:after {
+    content:"";position:absolute;width:65px;height:65px;
+    border-radius:50%;background:rgba(214,180,93,.12);
+    right:-20px;bottom:-25px;
+}
+.stat-label {
+    color:var(--muted);font-size:11px;font-weight:800;
+    text-transform:uppercase;letter-spacing:.4px;
+}
+.stat-value {margin-top:9px;color:var(--green);font-size:27px;font-weight:800}
+.stat-note {margin-top:4px;color:#8b968e;font-size:10px}
+.chart-grid {
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:20px;margin-bottom:24px;
+}
+.chart-card {
+    background:white;border:1px solid var(--border);border-radius:15px;
+    box-shadow:var(--shadow);overflow:hidden;min-width:0;
+}
+.chart-header {
+    padding:19px 21px;border-bottom:1px solid var(--border);
+    background:linear-gradient(180deg,#fff,#fbfcfb);
+}
+.chart-title-row {display:flex;align-items:center;gap:11px}
+.chart-icon {
+    width:38px;height:38px;border-radius:10px;display:flex;
+    align-items:center;justify-content:center;background:#eaf2ec;
+    color:var(--green);font-size:19px;flex-shrink:0;
+}
+.chart-icon.gold {background:#fbf3df;color:#a47b20}
+.chart-header h3 {margin:0;color:var(--green);font-size:14px;font-weight:800}
+.chart-header p {margin:6px 0 0;color:var(--muted);font-size:11px}
+.chart-body {height:355px;padding:22px 18px 18px;position:relative}
+.chart-empty {
+    display:none;position:absolute;inset:20px;align-items:center;
+    justify-content:center;text-align:center;color:#87938a;
+    font-size:12px;background:rgba(255,255,255,.95);z-index:2;
+}
+.chart-empty.show {display:flex}
+.section-card {
+    background:white;border:1px solid var(--border);border-radius:14px;
+    box-shadow:var(--shadow);overflow:hidden;margin-bottom:22px;
+}
+.section-header {
+    padding:17px 20px;border-bottom:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+}
+.section-header h3 {margin:0;color:var(--green);font-size:15px;font-weight:800}
+.section-header span {color:var(--muted);font-size:11px}
+.top-three {
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:16px;padding:20px;
+}
+.top-card {
+    border:1px solid var(--border);border-radius:12px;padding:20px 15px;
+    text-align:center;background:linear-gradient(180deg,#fff,#f8faf7);
+}
+.top-card.first {border-color:#dfc477;background:linear-gradient(180deg,#fffaf0,#fff)}
+.top-medal {font-size:30px;margin-bottom:8px}
+.top-rank {color:#8a7650;font-size:11px;font-weight:800;letter-spacing:1px}
+.top-name {margin-top:8px;color:var(--green);font-size:16px;font-weight:800}
+.top-score {margin-top:7px;color:#a47b20;font-size:23px;font-weight:800}
+.top-detail {margin-top:5px;color:var(--muted);font-size:10px}
+.top-section-label {
+    padding:12px 20px 0;color:#7b897f;font-size:10px;
+    font-weight:800;letter-spacing:.7px;
+}
+.empty-row {padding:30px!important;color:#87938a;text-align:center!important}
+.footer-note {
+    padding:15px 20px;background:#f8faf8;border-top:1px solid var(--border);
+    color:#77847b;font-size:11px;line-height:1.8;
+}
+footer {text-align:center;color:#89948c;font-size:11px;padding:10px 15px 25px}
+@media(max-width:1000px) {
+    .chart-grid {grid-template-columns:1fr}
+    .chart-body {height:350px}
+}
+@media(max-width:900px) {
+    .stats {grid-template-columns:repeat(2,1fr)}
+    .header-date {display:none}
+}
+@media(max-width:600px) {
+    header {padding:17px 18px}
+    .brand-icon {width:46px;height:46px;font-size:22px}
+    .brand h1 {font-size:16px}
+    .brand p {font-size:9px}
+    main {margin:20px auto;padding:0 12px 30px}
+    .page-heading h2 {font-size:20px}
+    .filter-panel {padding:14px;gap:12px}
+    .filter-group {flex:1;min-width:125px}
+    .filter-group select,.filter-group input {width:100%}
+    .btn {width:100%}
+    .mode-btn {flex:1;padding:11px 8px}
+    .stats {gap:10px}
+    .stat-card {padding:14px}
+    .stat-value {font-size:23px}
+    .chart-grid {gap:14px}
+    .chart-header {padding:15px}
+    .chart-header h3 {font-size:12px}
+    .chart-body {height:300px;padding:15px 10px}
+    .top-three {grid-template-columns:1fr;padding:13px;gap:10px}
+    .top-card {padding:15px}
+    .section-header {padding:14px}
+    .footer-note {padding:13px;font-size:10px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="brand">
+            <div class="brand-icon">★</div>
+            <div>
+                <h1>PHÒNG HỒ CHÍ MINH</h1>
+                <p>HỆ THỐNG CHẤM ĐIỂM THI ĐUA ĐIỆN TỬ</p>
+            </div>
+        </div>
+        <div class="header-date" id="headerDate"></div>
+    </div>
+</header>
+
+<nav>
+    <div class="nav-inner">
+        <a href="index.html">Trang chủ</a>
+        <a href="cham-diem.html">Chấm điểm</a>
+        <a href="tonghop.html">Tổng hợp</a>
+        <a href="quan-ly-don-vi.html">Quản lý đơn vị</a>
+        <a href="dieuhanh.html">Điều hành</a>
+        <a href="xephang.html" class="active">Xếp hạng</a>
+        <a href="lichsu.html">Lịch sử</a>
+        <a href="baocao.html">Báo cáo</a>
+    </div>
+</nav>
+
+<main>
+
+    <div class="page-heading">
+        <div>
+            <h2>BẢNG XẾP HẠNG THI ĐUA</h2>
+            <p id="pageDescription">Biểu đồ so sánh kết quả thi đua các Đại đội và Trung đội</p>
+            <div class="heading-mark"></div>
+        </div>
+    </div>
+
+    <div class="mode-panel">
+        <button class="mode-btn active" id="modeDay" onclick="changeMode('day')">▣ Theo ngày</button>
+        <button class="mode-btn" id="modeWeek" onclick="changeMode('week')">▦ Theo tuần</button>
+        <button class="mode-btn" id="modeMonth" onclick="changeMode('month')">▤ Theo tháng</button>
+    </div>
+
+    <section class="filter-panel">
+
+        <div class="filter-group" id="dateGroup">
+            <label for="datePicker">Ngày xếp hạng</label>
+            <input type="date" id="datePicker">
+        </div>
+
+        <div class="filter-group" id="weekGroup" style="display:none">
+            <label for="weekPicker">Tuần thi đua</label>
+            <select id="weekPicker"></select>
+        </div>
+
+        <div class="filter-group" id="monthGroup" style="display:none">
+            <label for="monthPicker">Tháng thi đua</label>
+            <select id="monthPicker"></select>
+        </div>
+
+        <div class="filter-group" id="yearGroup">
+            <label for="yearPicker">Năm xếp hạng</label>
+            <select id="yearPicker"></select>
+        </div>
+
+        <button class="btn" id="refreshBtn" onclick="loadRanking()">↻ CẬP NHẬT DỮ LIỆU</button>
+
+    </section>
+
+    <div class="status" id="status"></div>
+
+    <section class="stats">
+        <div class="stat-card">
+            <div class="stat-label">Tổng số đơn vị</div>
+            <div class="stat-value" id="totalUnits">0</div>
+            <div class="stat-note">Đại đội và Trung đội</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Đơn vị có điểm</div>
+            <div class="stat-value" id="scoredUnits">0</div>
+            <div class="stat-note" id="scoredNote">Có kết quả trong ngày</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Đơn vị hoàn thành</div>
+            <div class="stat-value" id="completedUnits">0</div>
+            <div class="stat-note" id="completedNote">Theo kỳ được chọn</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Điểm trung bình</div>
+            <div class="stat-value" id="averageScore">--</div>
+            <div class="stat-note">Trên các đơn vị có điểm</div>
+        </div>
+    </section>
+
+    <div class="chart-grid">
+
+        <section class="chart-card">
+            <div class="chart-header">
+                <div class="chart-title-row">
+                    <div class="chart-icon">📊</div>
+                    <div>
+                        <h3>XẾP HẠNG THI ĐUA CẤP ĐẠI ĐỘI</h3>
+                        <p id="companyChartSubtitle">So sánh điểm giữa các Đại đội</p>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-body">
+                <canvas id="companyChart"></canvas>
+                <div class="chart-empty" id="companyChartEmpty">Chưa có dữ liệu điểm Đại đội.</div>
+            </div>
+        </section>
+
+        <section class="chart-card">
+            <div class="chart-header">
+                <div class="chart-title-row">
+                    <div class="chart-icon gold">📊</div>
+                    <div>
+                        <h3>XẾP HẠNG THI ĐUA CẤP TRUNG ĐỘI</h3>
+                        <p id="platoonChartSubtitle">So sánh điểm giữa các Trung đội</p>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-body">
+                <canvas id="platoonChart"></canvas>
+                <div class="chart-empty" id="platoonChartEmpty">Chưa có dữ liệu điểm Trung đội.</div>
+            </div>
+        </section>
+
+    </div>
+
+    <section class="section-card">
+        <div class="section-header">
+            <h3>🏆 TOP 3 ĐƠN VỊ DẪN ĐẦU</h3>
+            <span id="topPeriodLabel"></span>
+        </div>
+
+        <div class="top-section-label">XẾP HẠNG CẤP ĐẠI ĐỘI</div>
+        <div class="top-three" id="topCompany">
+            <div class="empty-row">Đang tải dữ liệu...</div>
+        </div>
+
+        <div class="top-section-label">XẾP HẠNG CẤP TRUNG ĐỘI</div>
+        <div class="top-three" id="topPlatoon">
+            <div class="empty-row">Đang tải dữ liệu...</div>
+        </div>
+
+        <div class="footer-note">
+            <strong>Quy tắc tính điểm:</strong><br>
+            Chỉ sử dụng điểm chấm của Tổ thi đua. Điểm ngày Trung đội là trung bình cộng
+            các phiếu Tổ thi đua trong ngày. Điểm tuần là trung bình các ngày có chấm.
+            Điểm tháng là trung bình các tuần có kết quả chấm.<br>
+            Đại đội không có phiếu chấm riêng, điểm Đại đội được tổng hợp từ 3 Trung đội trực thuộc.
+            Trung đội chưa có điểm được tính là 0 khi tổng hợp điểm Đại đội và Đại đội luôn chia cho 3.
+            Xếp hạng Đại đội và Trung đội được thực hiện riêng biệt.
+        </div>
+    </section>
+
+</main>
+
+<footer>PHÒNG HỒ CHÍ MINH · HỆ THỐNG CHẤM ĐIỂM THI ĐUA ĐIỆN TỬ</footer>
+
+<script>
+
+const API_URL = "https://script.google.com/macros/s/AKfycbyqUwmHIaUE-mWl0BktkLlbGB-qomoPMCehHJUGzOoP9LwQWiFYYXDRdZOBO2y7giRU-Q/exec";
+
+let currentMode = "day";
+let allUnits = [];
+let companyChartInstance = null;
+let platoonChartInstance = null;
+
+const $ = id => document.getElementById(id);
+
+
+/* =========================
+   HÀM TIỆN ÍCH
+========================= */
+
+function num(value) {
+    if (value === null || value === undefined || value === "") return 0;
+    const result = Number(value);
+    return Number.isFinite(result) ? result : 0;
+}
+
+function escapeHTML(value) {
+    return String(value === null || value === undefined ? "" : value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function formatScore(value) {
+    return value === null || value === undefined ? "--" : Number(value).toFixed(2);
+}
+
+function setStatus(message, type) {
+    const el = $("status");
+    el.textContent = message || "";
+    el.className = "status";
+    if (type) el.classList.add(type);
+}
+
+function normalizeLevel(level) {
+    const value = String(level || "").toUpperCase().trim();
+
+    if (["DAI_DOI", "DAI DOI", "COMPANY"].includes(value)) return "DAI_DOI";
+    if (["TRUNG_DOI", "TRUNG DOI", "PLATOON"].includes(value)) return "TRUNG_DOI";
+
+    return value;
+}
+
+function hasScore(item) {
+    return item.score !== null &&
+           item.score !== undefined &&
+           Number.isFinite(Number(item.score));
+}
+
+function sortAndRank(data) {
+    const sorted = data.slice();
+
+    sorted.sort((a, b) => {
+        const ah = hasScore(a);
+        const bh = hasScore(b);
+
+        if (ah && !bh) return -1;
+        if (!ah && bh) return 1;
+
+        if (ah && bh) return num(b.score) - num(a.score);
+
+        return String(a.unit).localeCompare(String(b.unit), "vi", {numeric:true});
+    });
+
+    let rank = 0;
+
+    sorted.forEach(item => {
+        item.displayRank = hasScore(item) ? ++rank : "";
+    });
+
+    return sorted;
+}
+
+async function apiGet(params) {
+    const query = new URLSearchParams();
+
+    Object.keys(params).forEach(key => {
+        if (params[key] !== undefined && params[key] !== null && params[key] !== "") {
+            query.append(key, params[key]);
+        }
+    });
+
+    const response = await fetch(API_URL + "?" + query.toString(), {
+        method: "GET",
+        cache: "no-store"
+    });
+
+    if (!response.ok) {
+        throw new Error("Máy chủ trả về lỗi HTTP " + response.status);
+    }
+
+    const result = await response.json();
+
+    if (!result || result.success === false) {
+        throw new Error(result && result.message ? result.message : "API trả về dữ liệu không hợp lệ.");
+    }
+
+    return result;
+}
+
+
+/* =========================
+   XÁC ĐỊNH QUAN HỆ ĐẠI ĐỘI - TRUNG ĐỘI
+
+   Đại đội 1: Trung đội 1, 2, 3
+   Đại đội 2: Trung đội 4, 5, 6
+   Đại đội 3: Trung đội 7, 8, 9
+
+   Không sử dụng trường parent trong Google Sheets
+   để tránh dữ liệu parent khai báo nhầm.
+========================= */
+
+function getPlatoonNumber(unitName) {
+    const match = String(unitName || "").match(/trung\s*đội\s*(\d+)/i);
+    return match ? Number(match[1]) : null;
+}
+
+function getCompanyNumber(companyName) {
+    const match = String(companyName || "").match(/đại\s*đội\s*(\d+)/i);
+    return match ? Number(match[1]) : null;
+}
+
+function getCompanyForPlatoon(platoon) {
+    const number = getPlatoonNumber(platoon.unit);
+
+    if (!number || number < 1 || number > 9) return null;
+
+    const companyNumber = Math.ceil(number / 3);
+
+    return allUnits.find(unit =>
+        unit.level === "DAI_DOI" &&
+        getCompanyNumber(unit.unit) === companyNumber
+    ) || null;
+}
+
+function getChildren(company) {
+    const companyNumber = getCompanyNumber(company.unit);
+
+    if (!companyNumber) return [];
+
+    const firstNumber = (companyNumber - 1) * 3 + 1;
+    const lastNumber = firstNumber + 2;
+
+    return allUnits
+        .filter(unit => {
+            if (unit.level !== "TRUNG_DOI" || unit.status !== "ACTIVE") {
+                return false;
+            }
+
+            const number = getPlatoonNumber(unit.unit);
+
+            return number >= firstNumber && number <= lastNumber;
+        })
+        .sort((a, b) =>
+            getPlatoonNumber(a.unit) - getPlatoonNumber(b.unit)
+        );
+}
+
+
+/* =========================
+   KHỞI TẠO BỘ LỌC
+========================= */
+
+function initFilters() {
+    const now = new Date();
+
+    $("headerDate").textContent = "HÔM NAY: " + now.toLocaleDateString("vi-VN");
+
+    $("datePicker").value = [
+        now.getFullYear(),
+        String(now.getMonth() + 1).padStart(2, "0"),
+        String(now.getDate()).padStart(2, "0")
+    ].join("-");
+
+    const monthSelect = $("monthPicker");
+
+    for (let month = 1; month <= 12; month++) {
+        const option = document.createElement("option");
+        option.value = month;
+        option.textContent = "Tháng " + month;
+        monthSelect.appendChild(option);
+    }
+
+    monthSelect.value = now.getMonth() + 1;
+
+    const yearSelect = $("yearPicker");
+    const firstYear = Math.min(2026, now.getFullYear() - 2);
+    const lastYear = Math.max(now.getFullYear() + 5, 2031);
+
+    for (let year = firstYear; year <= lastYear; year++) {
+        const option = document.createElement("option");
+        option.value = year;
+        option.textContent = "Năm " + year;
+        yearSelect.appendChild(option);
+    }
+
+    yearSelect.value = now.getFullYear();
+
+    updateWeekOptions();
+}
+
+
+/* =========================
+   TÍNH SỐ TUẦN THEO CODE.GS
+========================= */
+
+function getFirstCompetitionDay(year, month) {
+    const firstDay = new Date(year, month - 1, 1, 12, 0, 0);
+    const dayOfWeek = firstDay.getDay();
+
+    if (dayOfWeek >= 1 && dayOfWeek <= 4) return 1;
+
+    const daysUntilMonday = (8 - dayOfWeek) % 7;
+    return 1 + daysUntilMonday;
+}
+
+function getCompetitionWeekCount(year, month) {
+    const daysInMonth = new Date(year, month, 0).getDate();
+    const firstDay = getFirstCompetitionDay(year, month);
+
+    if (firstDay > daysInMonth) return 0;
+
+    return Math.ceil((daysInMonth - firstDay + 1) / 7);
+}
+
+function updateWeekOptions() {
+    const month = Number($("monthPicker").value);
+    const year = Number($("yearPicker").value);
+    const totalWeeks = getCompetitionWeekCount(year, month);
+    const select = $("weekPicker");
+    const oldValue = Number(select.value);
+
+    select.innerHTML = "";
+
+    if (totalWeeks === 0) {
+        const option = document.createElement("option");
+        option.value = "";
+        option.textContent = "Tháng này không có tuần thi đua";
+        select.appendChild(option);
+        return;
+    }
+
+    for (let week = 1; week <= totalWeeks; week++) {
+        const option = document.createElement("option");
+        option.value = week;
+        option.textContent = "Tuần " + week;
+        select.appendChild(option);
+    }
+
+    select.value = oldValue >= 1 && oldValue <= totalWeeks
+        ? oldValue
+        : totalWeeks;
+}
+
+
+/* =========================
+   CHUYỂN CHẾ ĐỘ
+========================= */
+
+function changeMode(mode) {
+    currentMode = mode;
+
+    $("modeDay").classList.toggle("active", mode === "day");
+    $("modeWeek").classList.toggle("active", mode === "week");
+    $("modeMonth").classList.toggle("active", mode === "month");
+
+    $("dateGroup").style.display = mode === "day" ? "flex" : "none";
+    $("weekGroup").style.display = mode === "week" ? "flex" : "none";
+    $("monthGroup").style.display = mode === "month" || mode === "week" ? "flex" : "none";
+
+    if (mode === "day") {
+        $("pageDescription").textContent = "Xếp hạng kết quả thi đua theo ngày";
+        $("scoredNote").textContent = "Đã có điểm trong ngày";
+        $("completedNote").textContent = "Đơn vị có kết quả trong ngày";
+        $("companyChartSubtitle").textContent = "So sánh điểm ngày giữa các Đại đội";
+        $("platoonChartSubtitle").textContent = "So sánh điểm ngày giữa các Trung đội";
+    } else if (mode === "week") {
+        $("pageDescription").textContent = "Xếp hạng kết quả thi đua theo tuần";
+        $("scoredNote").textContent = "Đã có điểm trong tuần";
+        $("completedNote").textContent = "Đơn vị đủ điều kiện có điểm tuần";
+        $("companyChartSubtitle").textContent = "So sánh điểm tuần giữa các Đại đội";
+        $("platoonChartSubtitle").textContent = "So sánh điểm tuần giữa các Trung đội";
+    } else {
+        $("pageDescription").textContent = "Xếp hạng kết quả thi đua theo tháng";
+        $("scoredNote").textContent = "Đã có điểm trong tháng";
+        $("completedNote").textContent = "Đủ tất cả các tuần thi đua";
+        $("companyChartSubtitle").textContent = "So sánh điểm tháng giữa các Đại đội";
+        $("platoonChartSubtitle").textContent = "So sánh điểm tháng giữa các Trung đội";
+    }
+
+    loadRanking();
+}
+
+
+/* =========================
+   LẤY ĐƠN VỊ
+========================= */
+
+async function loadUnits() {
+    const result = await apiGet({action:"unitsAll"});
+
+    if (!Array.isArray(result.data)) {
+        throw new Error("Không lấy được danh sách đơn vị.");
+    }
+
+    allUnits = result.data.map(unit => ({
+        id: unit.id,
+        unit: unit.name,
+        level: normalizeLevel(unit.level),
+        parent: unit.parent || "",
+        status: unit.status || "ACTIVE"
+    }));
+
+    return allUnits;
+}
+
+function getActiveUnits(level) {
+    return allUnits.filter(unit =>
+        unit.status === "ACTIVE" && (!level || unit.level === level)
+    );
+}
+
+
+/* =========================
+   XẾP HẠNG THEO NGÀY
+========================= */
+
+async function loadDailyRanking() {
+    const date = $("datePicker").value;
+
+    if (!date) throw new Error("Vui lòng chọn ngày xếp hạng.");
+
+    const result = await apiGet({
+        action:"list",
+        date:date,
+        method:"TO_THI_DUA",
+        level:"TRUNG_DOI"
+    });
+
+    const records = Array.isArray(result.data) ? result.data : [];
+
+    const activeTeams = getActiveUnits("TRUNG_DOI");
+    const activeCompanies = getActiveUnits("DAI_DOI");
+
+    const teamResults = activeTeams.map(team => {
+        const teamRecords = records.filter(record =>
+            record.unit === team.unit &&
+            record.method === "TO_THI_DUA"
+        );
+
+        const score = teamRecords.length
+            ? teamRecords.reduce((sum, record) => sum + num(record.average), 0) / teamRecords.length
+            : null;
+
+        const correctCompany = getCompanyForPlatoon(team);
+
+        return {
+            unitId: team.id,
+            unit: team.unit,
+            level: "TRUNG_DOI",
+            parent: correctCompany ? correctCompany.id : "",
+            parentName: correctCompany ? correctCompany.unit : "",
+            score: score,
+            complete: teamRecords.length > 0,
+            recordCount: teamRecords.length
+        };
+    });
+
+    const companyResults = activeCompanies.map(company => {
+        const children = getChildren(company);
+
+        const childResults = [];
+
+        for (let i = 0; i < 3; i++) {
+            const child = children[i] || null;
+
+            const childResult = child
+                ? teamResults.find(item => item.unitId === child.id)
+                : null;
+
+            childResults.push({
+                unit: child ? child.unit : "Trung đội chưa khai báo",
+                score: childResult && childResult.score !== null
+                    ? childResult.score
+                    : 0,
+                complete: !!(childResult && childResult.complete)
+            });
+        }
+
+        const hasAnyScore = childResults.some(item => item.complete);
+        const companyScore = childResults.reduce((sum, item) => sum + item.score, 0) / 3;
+
+        return {
+            unitId: company.id,
+            unit: company.unit,
+            level: "DAI_DOI",
+            score: hasAnyScore ? companyScore : null,
+            complete: hasAnyScore,
+            children: childResults
+        };
+    });
+
+    return {
+        companies: companyResults,
+        platoons: teamResults,
+        totalRecords: records.length
+    };
+}
+
+
+/* =========================
+   XẾP HẠNG THEO TUẦN
+========================= */
+
+async function loadWeeklyRanking() {
+    const week = Number($("weekPicker").value);
+    const month = Number($("monthPicker").value);
+    const year = Number($("yearPicker").value);
+
+    if (!week) throw new Error("Vui lòng chọn tuần thi đua.");
+
+    const activeTeams = getActiveUnits("TRUNG_DOI");
+    const activeCompanies = getActiveUnits("DAI_DOI");
+    const allActive = activeCompanies.concat(activeTeams);
+
+    const results = await Promise.all(allActive.map(async unit => {
+        const result = await apiGet({
+            action: "weekly",
+            unit: unit.unit,
+            week: week,
+            month: month,
+            year: year
+        });
+
+        const correctCompany = unit.level === "TRUNG_DOI"
+            ? getCompanyForPlatoon(unit)
+            : null;
+
+        return {
+            unitId: unit.id,
+            unit: unit.unit,
+            level: unit.level,
+            parent: correctCompany ? correctCompany.id : unit.parent,
+            parentName: correctCompany ? correctCompany.unit : "",
+            score: result.weeklyScore === null || result.weeklyScore === undefined
+                ? null
+                : num(result.weeklyScore),
+            complete: unit.level === "DAI_DOI"
+                ? Array.isArray(result.children) && result.children.some(child => child.complete === true)
+                : result.complete === true,
+            allComplete: result.complete === true,
+            children: result.children || [],
+            dailyCount: result.dailyCount || 0
+        };
+    }));
+
+    return {
+        companies: results.filter(item => item.level === "DAI_DOI"),
+        platoons: results.filter(item => item.level === "TRUNG_DOI")
+    };
+}
+
+
+/* =========================
+   XẾP HẠNG THEO THÁNG
+========================= */
+
+async function loadMonthlyRanking() {
+    const month = Number($("monthPicker").value);
+    const year = Number($("yearPicker").value);
+
+    const result = await apiGet({
+        action: "summary",
+        month: month,
+        year: year
+    });
+
+    if (!Array.isArray(result.data)) {
+        throw new Error("Dữ liệu summary không đúng định dạng.");
+    }
+
+    const companies = result.data
+        .filter(item => normalizeLevel(item.level) === "DAI_DOI")
+        .map(item => {
+            const children = Array.isArray(item.children) ? item.children : [];
+            const hasAnyChildScore = children.some(child =>
+                child.monthlyScore !== null &&
+                child.monthlyScore !== undefined
+            );
+
+            return {
+                unitId: item.unitId,
+                unit: item.unit,
+                level: "DAI_DOI",
+                parent: item.parent || "",
+                score: hasAnyChildScore ? num(item.monthlyScore) : null,
+                complete: item.complete === true,
+                completedWeeks: item.completedWeeks,
+                totalWeeks: item.totalWeeks,
+                children: children
+            };
+        });
+
+    const platoons = result.data
+        .filter(item => normalizeLevel(item.level) === "TRUNG_DOI")
+        .map(item => {
+            const correctCompany = getCompanyForPlatoon({
+                unit: item.unit
+            });
+
+            return {
+                unitId: item.unitId,
+                unit: item.unit,
+                level: "TRUNG_DOI",
+                parent: correctCompany ? correctCompany.id : "",
+                parentName: correctCompany ? correctCompany.unit : "",
+                score: item.monthlyScore === null || item.monthlyScore === undefined
+                    ? null
+                    : num(item.monthlyScore),
+                complete: item.complete === true,
+                completedWeeks: item.completedWeeks,
+                totalWeeks: item.totalWeeks
+            };
+        });
+
+    return {companies, platoons};
+}
+
+
+/* =========================
+   TẢI DỮ LIỆU XẾP HẠNG
+========================= */
+
+async function loadRanking() {
+    const button = $("refreshBtn");
+
+    button.disabled = true;
+    button.textContent = "ĐANG TẢI...";
+    setStatus("Đang kết nối và tải dữ liệu xếp hạng...");
+
+    try {
+        await loadUnits();
+
+        let result;
+
+        if (currentMode === "day") {
+            result = await loadDailyRanking();
+        } else if (currentMode === "week") {
+            result = await loadWeeklyRanking();
+        } else {
+            result = await loadMonthlyRanking();
+        }
+
+        const companies = sortAndRank(result.companies);
+        const platoons = sortAndRank(result.platoons);
+
+        renderCharts(companies, platoons);
+        renderStats(companies.concat(platoons));
+        renderTopThree(companies, platoons);
+        updatePeriodLabel();
+
+        const all = companies.concat(platoons);
+        const scored = all.filter(hasScore).length;
+        const completed = all.filter(item => item.complete).length;
+
+        if (all.length === 0) {
+            setStatus("Không có đơn vị đang hoạt động trong dữ liệu.", "warning");
+        } else if (scored === 0) {
+            setStatus("Đã tải dữ liệu thành công. Hiện chưa có đơn vị nào có điểm trong kỳ được chọn.", "warning");
+        } else {
+            setStatus(
+                "Đã tải thành công " + all.length +
+                " đơn vị. Có " + scored +
+                " đơn vị có điểm và " + completed +
+                " đơn vị có kết quả hoàn thành theo kỳ."
+            );
+        }
+
+    } catch (error) {
+        console.error("Lỗi tải xếp hạng:", error);
+
+        resetStats();
+        renderCharts([], []);
+
+        $("topCompany").innerHTML =
+            '<div class="empty-row">Không có dữ liệu để hiển thị.</div>';
+
+        $("topPlatoon").innerHTML =
+            '<div class="empty-row">Không có dữ liệu để hiển thị.</div>';
+
+        setStatus("Lỗi tải dữ liệu: " + error.message, "error");
+
+    } finally {
+        button.disabled = false;
+        button.textContent = "↻ CẬP NHẬT DỮ LIỆU";
+    }
+}
+
+
+/* =========================
+   BIỂU ĐỒ CỘT
+========================= */
+
+function createBarChart(canvasId, items, color, emptyId) {
+    const canvas = $(canvasId);
+    const emptyBox = $(emptyId);
+
+    const scoredItems = items
+        .filter(hasScore)
+        .slice()
+        .sort((a, b) => num(b.score) - num(a.score));
+
+    if (scoredItems.length === 0) {
+        emptyBox.classList.add("show");
+        canvas.style.display = "none";
+        return null;
+    }
+
+    emptyBox.classList.remove("show");
+    canvas.style.display = "block";
+
+    return new Chart(canvas, {
+        type: "bar",
+        data: {
+            labels: scoredItems.map(item => item.unit),
+            datasets: [{
+                label: "Điểm",
+                data: scoredItems.map(item => Number(num(item.score).toFixed(2))),
+                backgroundColor: color,
+                borderRadius: 7,
+                borderSkipped: false,
+                maxBarThickness: 65
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {duration: 600},
+            plugins: {
+                legend: {display: false},
+                tooltip: {
+                    callbacks: {
+                        label: context => " Điểm: " + Number(context.raw).toFixed(2)
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    suggestedMax: 10,
+                    ticks: {
+                        font: {family: "Be Vietnam Pro", size: 10}
+                    },
+                    title: {
+                        display: true,
+                        text: "Điểm số",
+                        font: {family: "Be Vietnam Pro", size: 11, weight: "bold"}
+                    },
+                    grid: {color: "#edf0ed"}
+                },
+                x: {
+                    ticks: {
+                        font: {family: "Be Vietnam Pro", size: 10, weight: "bold"}
+                    },
+                    grid: {display: false}
+                }
+            }
+        }
+    });
+}
+
+function renderCharts(companies, platoons) {
+    if (companyChartInstance) {
+        companyChartInstance.destroy();
+        companyChartInstance = null;
+    }
+
+    if (platoonChartInstance) {
+        platoonChartInstance.destroy();
+        platoonChartInstance = null;
+    }
+
+    if (typeof Chart === "undefined") {
+        $("companyChartEmpty").textContent = "Không tải được thư viện biểu đồ.";
+        $("platoonChartEmpty").textContent = "Không tải được thư viện biểu đồ.";
+        $("companyChartEmpty").classList.add("show");
+        $("platoonChartEmpty").classList.add("show");
+        return;
+    }
+
+    companyChartInstance = createBarChart(
+        "companyChart", companies, "#1d563d", "companyChartEmpty"
+    );
+
+    platoonChartInstance = createBarChart(
+        "platoonChart", platoons, "#c49a36", "platoonChartEmpty"
+    );
+}
+
+
+/* =========================
+   THỐNG KÊ
+========================= */
+
+function renderStats(data) {
+    const scored = data.filter(hasScore);
+    const completed = data.filter(item => item.complete === true);
+
+    const average = scored.length
+        ? scored.reduce((sum, item) => sum + num(item.score), 0) / scored.length
+        : null;
+
+    $("totalUnits").textContent = data.length;
+    $("scoredUnits").textContent = scored.length;
+    $("completedUnits").textContent = completed.length;
+    $("averageScore").textContent = average === null ? "--" : average.toFixed(2);
+}
+
+function resetStats() {
+    $("totalUnits").textContent = "0";
+    $("scoredUnits").textContent = "0";
+    $("completedUnits").textContent = "0";
+    $("averageScore").textContent = "--";
+}
+
+
+/* =========================
+   TOP 3
+========================= */
+
+function updatePeriodLabel() {
+    if (currentMode === "day") {
+        const date = $("datePicker").value;
+        $("topPeriodLabel").textContent = date
+            ? "Ngày " + date.split("-").reverse().join("/")
+            : "";
+    } else if (currentMode === "week") {
+        $("topPeriodLabel").textContent =
+            "Tuần " + $("weekPicker").value +
+            " · Tháng " + $("monthPicker").value +
+            "/" + $("yearPicker").value;
+    } else {
+        $("topPeriodLabel").textContent =
+            "Tháng " + $("monthPicker").value +
+            "/" + $("yearPicker").value;
+    }
+}
+
+function renderTopThree(companies, platoons) {
+    renderTopGroup(companies, "topCompany");
+    renderTopGroup(platoons, "topPlatoon");
+}
+
+function renderTopGroup(data, containerId) {
+    const medals = ["🥇", "🥈", "🥉"];
+    const labels = ["DẪN ĐẦU", "THỨ HAI", "THỨ BA"];
+
+    const leaders = data.filter(hasScore).slice(0, 3);
+
+    if (leaders.length === 0) {
+        $(containerId).innerHTML =
+            '<div class="empty-row">Chưa có đơn vị đủ điều kiện xếp hạng.</div>';
+        return;
+    }
+
+    $(containerId).innerHTML = leaders.map((item, index) => {
+        let parentText = "Tổng hợp từ 3 Trung đội trực thuộc";
+
+        if (item.level === "TRUNG_DOI") {
+            const correctCompany = getCompanyForPlatoon(item);
+
+            parentText = correctCompany
+                ? "Trực thuộc " + escapeHTML(correctCompany.unit)
+                : "Chưa xác định Đại đội trực thuộc";
+        }
+
+        return `
+            <div class="top-card ${index === 0 ? "first" : ""}">
+                <div class="top-medal">${medals[index]}</div>
+                <div class="top-rank">${labels[index]}</div>
+                <div class="top-name">${escapeHTML(item.unit)}</div>
+                <div class="top-score">${formatScore(item.score)}</div>
+                <div class="top-detail">${parentText}</div>
+            </div>
+        `;
+    }).join("");
+}
+
+
+/* =========================
+   SỰ KIỆN
+========================= */
+
+$("datePicker").addEventListener("change", function() {
+    if (currentMode === "day") loadRanking();
+});
+
+$("weekPicker").addEventListener("change", function() {
+    if (currentMode === "week") loadRanking();
+});
+
+$("monthPicker").addEventListener("change", function() {
+    updateWeekOptions();
+    if (currentMode !== "day") loadRanking();
+});
+
+$("yearPicker").addEventListener("change", function() {
+    updateWeekOptions();
+    if (currentMode !== "day") loadRanking();
+});
+
+
+/* =========================
+   KHỞI ĐỘNG
+========================= */
+
+initFilters();
+loadRanking();
+
+</script>
+</body>
+</html>

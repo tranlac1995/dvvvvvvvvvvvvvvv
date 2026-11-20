@@ -1,0 +1,1632 @@
+﻿
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#092f27">
+<title>Hệ thống điều hành thi đua quyết thắng | Bộ CHQS tỉnh Hưng Yên</title>
+
+<!-- CẤU HÌNH CÀI ĐẶT ỨNG DỤNG -->
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Thi đua quyết thắng">
+<meta name="mobile-web-app-capable" content="yes">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root{--green:#075447;--green2:#08745e;--dark:#063d35;--gold:#e8bd48;--ink:#172b2b;--muted:#718080;--line:#e5ecea;--bg:#edf3f1}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:"Be Vietnam Pro",Arial,sans-serif;color:var(--ink);background:var(--bg)}
+.app{min-height:100vh;display:grid;grid-template-columns:198px minmax(0,1fr);grid-template-rows:minmax(0,1fr) 40px}
+.sidebar{grid-row:1/3;background:linear-gradient(180deg,#06483e,#052f2d 70%,#063b35);color:#fff;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.brand{padding:15px 12px 12px;text-align:center;border-bottom:1px solid #ffffff20;position:relative;z-index:1}
+.emblem{width:68px;height:68px;border:2px solid #e8bd48;border-radius:50%;display:grid;place-items:center;margin:0 auto 8px;color:#f3cf59;font-size:35px;background:radial-gradient(circle,#16765e,#06483e);box-shadow:0 0 0 5px #e8bd4820}
+.brand h2{font-size:17px;line-height:1.2;color:#f2cf62;margin:0;font-weight:800}
+.brand p{font-size:11px;margin:4px 0 0;font-weight:600}
+.brand .stars{color:#e8bd48;margin-top:8px;letter-spacing:5px}
+.menu{padding:12px 8px;display:grid;gap:5px;position:relative;z-index:1}
+.menu a{color:#e8f1ee;text-decoration:none;display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:11px;font-size:11.5px;font-weight:600;transition:.2s;white-space:nowrap}
+.menu a i{font-size:17px;width:18px;text-align:center}
+.menu a:hover,.menu a.active{background:linear-gradient(90deg,#ffffff25,#ffffff12);color:#ffdc73;box-shadow:inset 3px 0 #e8bd48}
+.side-art{margin-top:auto;height:126px;position:relative;background:linear-gradient(0deg,#052f2d,#052f2d00),linear-gradient(135deg,#0a604c,#092f35);overflow:hidden}
+.side-art:before{content:"";position:absolute;inset:35px -20px -25px;background:radial-gradient(ellipse at 20% 100%,#142f28 0 24%,transparent 25%),radial-gradient(ellipse at 50% 100%,#17382d 0 30%,transparent 31%),radial-gradient(ellipse at 85% 100%,#102c25 0 34%,transparent 35%)}
+.flag{position:absolute;left:50%;top:12px;transform:translateX(-50%);font-size:38px;filter:drop-shadow(0 2px 2px #0006)}
+.main{min-width:0;padding:0 0 12px;display:flex;flex-direction:column}
+.banner{height:150px;flex-shrink:0;position:relative;overflow:hidden;background:#06483e url('banner-bo-doi.png') center 48%/cover no-repeat;border-bottom:4px solid #d8b54b;box-shadow:0 5px 18px #073e3530}
+.banner:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#052f2d12,transparent 55%,#052f2d08);pointer-events:none}
+.banner-flag,.banner-copy,.soldiers,.userbox{display:none}
+.content{padding:13px 18px 0;max-width:1600px;width:100%;margin:0 auto}
+.page-title{display:flex;align-items:center;gap:10px;margin:0 0 9px}
+.page-title i{font-size:25px;color:#064b40}
+.page-title h2{font-size:17px;margin:0;font-weight:800;color:#182d2c}
+.page-title small{display:block;font-size:10px;color:#7a8988;font-weight:500;margin-top:1px}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.date-select{border:1px solid #dfe8e5;background:#fff;border-radius:8px;padding:8px 11px;font:600 11px inherit;color:#344b49}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:10px 0 16px}
+.stat{min-height:91px;border:1px solid #e5ecea;border-radius:15px;padding:14px 16px;display:flex;align-items:center;gap:12px;background:#fff;box-shadow:0 8px 22px #123c3512;position:relative;overflow:hidden}
+.stat:after{content:"";position:absolute;width:100px;height:100px;border-radius:50%;right:-30px;top:-45px;background:#ffffff70}
+.stat.green{background:linear-gradient(120deg,#e3f5eb,#f8fffb)}
+.stat.red{background:linear-gradient(120deg,#fff0ef,#fff)}
+.stat.blue{background:linear-gradient(120deg,#e9f1ff,#fff)}
+.stat.gold{background:linear-gradient(120deg,#fff6df,#fff)}
+.stat-icon{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:white;font-size:19px;flex-shrink:0}
+.green .stat-icon{background:#15966a}
+.red .stat-icon{background:#df3b3b}
+.blue .stat-icon{background:#216bb5}
+.gold .stat-icon{background:#dba62e}
+.stat label{font-size:10px;font-weight:600;color:#304341;display:block}
+.stat strong{font-size:21px;display:block;line-height:1.5;white-space:nowrap}
+.green strong{color:#08784f}
+.red strong{color:#c92727}
+.blue strong{color:#145da5}
+.gold strong{color:#bb861c}
+.stat small{font-size:9px;color:#70817e}
+.progress{height:6px;background:#dce8e3;border-radius:10px;margin-top:5px;width:100%;overflow:hidden}
+.progress span{display:block;height:100%;width:0;background:#15966a;border-radius:10px;transition:width .3s}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:3px 0 7px}
+.section-head h3{font-size:14px;margin:0;font-weight:800}
+.section-head h3 i{color:#e3b52e;margin-right:6px}
+.section-head a{font-size:10px;color:#175d50;text-decoration:none;font-weight:700}
+.quick{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px;margin-bottom:16px}
+.quick-card{min-height:112px;border:1px solid #dce8e7;border-radius:14px;padding:11px 11px 10px;background:linear-gradient(145deg,#e8f4f5,#fff 65%);box-shadow:0 3px 10px #123c3510;position:relative;overflow:hidden;cursor:pointer;transition:.18s;text-decoration:none;color:inherit;display:block}
+.quick-card:hover{transform:translateY(-2px);box-shadow:0 7px 17px #123c3520;border-color:#8bbeb1}
+.quick-card:before{content:"";position:absolute;right:-12px;top:-22px;width:95px;height:62px;border-radius:50%;background:linear-gradient(135deg,#a9d1df80,#fff0)}
+.quick-card .qicon{font-size:29px;color:#176a9c;position:relative;margin-bottom:3px}
+.quick-card strong{display:block;font-size:11px;line-height:1.35;max-width:145px}
+.quick-card small{font-size:9px;color:#667b7a;display:block;margin-top:4px}
+.quick-card .go{position:absolute;right:9px;bottom:10px;background:#176c9c;color:#fff;border-radius:50%;width:19px;height:19px;display:grid;place-items:center;font-size:10px}
+.quick-card.gold-card{background:linear-gradient(145deg,#fff1ce,#fff 75%)}
+.gold-card .qicon{color:#c79524}
+.gold-card .go{background:#8a641e}
+.lower{display:grid;grid-template-columns:minmax(300px,.95fr) minmax(400px,1.55fr);gap:12px}
+.panel{background:#fff;border:1px solid #e0e9e6;border-radius:13px;overflow:hidden;box-shadow:0 8px 22px #123c3510}
+.panel-head{height:37px;background:linear-gradient(100deg,#063f36,#08765f);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 13px;font-size:12px;font-weight:800}
+.panel-head i{margin-right:7px}
+.periods{display:flex;gap:4px}
+.periods button{border:0;border-radius:14px;padding:4px 10px;background:#ffffff16;color:#e7f4ef;font:600 9px inherit;cursor:pointer}
+.periods button.active{background:#279d68;color:#fff}
+table{border-collapse:collapse;width:100%;font-size:10px}
+th{background:#f0f5f3;color:#344b48;text-align:left;font-size:9px;padding:8px 9px}
+td{padding:8px 9px;border-top:1px solid #edf1ef}
+td:first-child,th:first-child{text-align:center;width:42px}
+.rank{display:inline-grid;place-items:center;width:19px;height:19px;border-radius:50%;background:#e9f0f5;color:#55718a;font-weight:800}
+.rank.first{background:#f6cf53;color:#855c0c}
+.rank.third{background:#e9b36b;color:#fff}
+.score{font-weight:800}
+.tag{padding:3px 7px;border-radius:10px;font-size:9px;font-weight:700;background:#fff1c8;color:#93670e;white-space:nowrap}
+.tag.blue{background:#e3f0ff;color:#2266a0}
+.tag.green{background:#e1f5e7;color:#23824d}
+.tag.gray{background:#edf1ef;color:#66736f}
+.panel-foot{text-align:right;padding:7px 11px;border-top:1px solid #edf1ef}
+.panel-foot a{font-size:9px;color:#176354;text-decoration:none;font-weight:700}
+.chart-wrap{height:180px;padding:9px 12px 8px}
+.footer{grid-column:1/3;background:linear-gradient(90deg,#063b35,#075447,#063b35);border-top:3px solid #b99638;color:#f2d16a;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;letter-spacing:.5px}
+.footer span{margin:0 12px}
+.notice{display:none;position:fixed;right:18px;bottom:55px;background:#083f36;color:#fff;padding:12px 16px;border-radius:10px;box-shadow:0 8px 25px #0003;font-size:12px;z-index:10;max-width:calc(100% - 36px)}
+.loading{color:#718080;text-align:center;padding:18px}
+@media(max-width:1050px){
+.app{grid-template-columns:175px minmax(0,1fr)}
+.stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+.quick{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:700px){
+.app{display:block}
+.sidebar{display:none}
+.main{padding-bottom:12px}
+.banner{height:105px;background-position:52% center}
+.content{padding:12px 10px}
+.page-title h2{font-size:15px}
+.stats{gap:7px;margin:9px 0 13px}
+.stat{min-height:78px;padding:9px;gap:8px}
+.stat-icon{width:34px;height:34px;font-size:15px}
+.stat label{font-size:9px}
+.stat strong{font-size:17px}
+.stat small{font-size:8px}
+.quick{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.quick-card{min-height:105px}
+.lower{grid-template-columns:1fr}
+.chart-wrap{height:190px}
+.footer{height:38px;font-size:9px}
+.date-select{font-size:9px;padding:7px}
+.section-head h3{font-size:12px}
+}
+
+/* GIAO DIỆN BỘ CHỈ HUY QUÂN SỰ TỈNH HƯNG YÊN */
+:root{
+  --green:#123d30;--green2:#1c6248;--dark:#082b24;
+  --gold:#d8b45a;--ink:#1b302b;--muted:#71817a;
+  --line:#dfe8e2;--bg:#eef2ed;
+}
+body{background:#edf1ec}
+.app{grid-template-columns:224px minmax(0,1fr);grid-template-rows:minmax(0,1fr) 42px}
+.sidebar{
+  background:linear-gradient(180deg,#0b382d 0%,#092c25 62%,#061f1b 100%);
+  box-shadow:8px 0 28px #0b2c2418;z-index:2
+}
+.brand{padding:20px 13px 17px;border-bottom:1px solid #d9c17b38}
+.emblem{
+  width:74px;height:74px;border:2px solid #d9bd69;border-radius:22px;
+  background:linear-gradient(145deg,#1c6a4c,#082e25);
+  color:#f4d77e;font-size:34px;box-shadow:0 0 0 5px #d9bd6918,0 12px 25px #0003
+}
+.brand h2{font-size:14px;letter-spacing:1.1px;color:#f2d47c;margin-top:12px}
+.brand p{font-size:12px;letter-spacing:2.6px;color:#fff;font-weight:800;margin-top:5px}
+.brand .stars{color:#d9bd69;margin-top:11px}
+.menu{padding:16px 10px;gap:6px}
+.menu a{
+  padding:12px 13px;border:1px solid transparent;border-radius:10px;
+  font-size:11.5px;color:#e2eee7;letter-spacing:.05px
+}
+.menu a i{font-size:16px;color:#d9bd69}
+.menu a:hover,.menu a.active{
+  background:linear-gradient(100deg,#d7b75a24,#ffffff0a);
+  border-color:#d7b75a38;color:#ffe39a;box-shadow:inset 3px 0 #dfc16d
+}
+.side-art{
+  height:208px;flex-shrink:0;position:relative;isolation:isolate;
+  background:linear-gradient(180deg,#174b3b 0%,#0a3028 65%,#061f1b 100%);
+  overflow:hidden;border-top:1px solid #d9bd6938
+}
+.art-sky{position:absolute;inset:0;background:radial-gradient(ellipse at 70% 24%,#e5c66c55 0,transparent 36%),linear-gradient(160deg,#1d6049,#0a3028 72%)}
+.art-sun{position:absolute;width:66px;height:66px;border-radius:50%;right:26px;top:25px;background:#e3c36e;box-shadow:0 0 38px #e3c36e70}
+.art-hill{position:absolute;left:-12%;width:130%;border-radius:50% 50% 0 0}
+.hill-back{height:100px;bottom:25px;background:#174c39;transform:rotate(-7deg)}
+.hill-front{height:78px;bottom:-5px;background:linear-gradient(160deg,#0e3b2c,#061f1b);transform:rotate(5deg)}
+.art-flag{position:absolute;right:52px;top:36px;color:#b58d37;font-size:26px;text-shadow:0 2px 8px #0007}
+.art-soldier{position:absolute;left:27px;bottom:19px;width:85px;height:118px;display:flex;align-items:flex-end;justify-content:center;color:#071e18;font-size:105px;filter:drop-shadow(3px 3px 1px #0005);z-index:2}
+.art-caption{position:absolute;right:12px;bottom:16px;color:#f2d78d;font-size:10px;line-height:1.55;font-weight:800;letter-spacing:1.1px;text-align:right;z-index:3}
+.main{background:#edf1ec}
+.banner{
+  height:166px;display:flex;align-items:center;gap:28px;padding:18px 34px;
+  background:radial-gradient(circle at 80% 15%,#d5b45a24 0 2px,transparent 3px),
+    radial-gradient(ellipse at 82% 40%,#d5b45a18,transparent 34%),
+    linear-gradient(112deg,#082d25 0%,#104b37 48%,#092d25 100%);
+  background-size:26px 26px,auto,auto;
+  border-bottom:4px solid #d3b15c;box-shadow:0 8px 24px #082d252b
+}
+.banner:before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;
+  background:linear-gradient(125deg,transparent 0 57%,#d8bd7130 57.2%,transparent 57.6%),
+             linear-gradient(145deg,transparent 0 73%,#ffffff12 73.2%,transparent 73.6%)
+}
+.banner-brand,.banner-copy,.banner-mark{position:relative;z-index:1}
+.banner-brand{display:flex;align-items:center;gap:14px;min-width:255px}
+.banner-emblem{
+  width:76px;height:76px;border:2px solid #e2c56f;border-radius:22px;
+  display:grid;place-items:center;color:#f3d987;font-size:34px;
+  background:linear-gradient(145deg,#1d6b4c,#082d25);
+  box-shadow:0 0 0 5px #e2c56f20,0 9px 24px #0004
+}
+.banner-brand-text{display:flex;flex-direction:column;gap:5px;color:#fff}
+.banner-brand-text strong{font-size:12px;letter-spacing:1px;white-space:nowrap}
+.banner-brand-text span{font-size:17px;letter-spacing:2.2px;font-weight:800;color:#f0d17b}
+.banner-copy{padding-left:27px;border-left:1px solid #e4cb814d}
+.banner-kicker{font-size:9px;letter-spacing:3px;color:#d8c17e;font-weight:800;margin-bottom:7px}
+.banner-copy h1{font-size:clamp(21px,2.1vw,30px);line-height:1.15;margin:0;color:#fff0c2;font-weight:800;letter-spacing:1.2px;text-shadow:0 3px 12px #0005}
+.banner-copy p{font-size:10px;letter-spacing:1.6px;color:#dce9df;font-weight:600;margin:9px 0 0}
+.banner-mark{margin-left:auto;display:flex;align-items:center;gap:10px;color:#e5ca7b;opacity:.92}
+.banner-mark i{font-size:43px}
+.banner-mark span{font-size:9px;line-height:1.5;letter-spacing:1px;font-weight:800}
+.content{padding:18px 22px 0;max-width:1680px}
+.page-title i{color:#b38d38}
+.page-title h2{font-size:18px;letter-spacing:.3px;color:#16382d}
+.page-title small{font-size:10px}
+.date-select{border:1px solid #d4dfd7;border-radius:9px;padding:9px 13px}
+.stat{border:1px solid #e0e8e1;border-radius:16px;box-shadow:0 8px 24px #183c2b0d}
+.stat.green{background:linear-gradient(125deg,#e4f1e7,#fff)}
+.stat.blue{background:linear-gradient(125deg,#eaf0ed,#fff)}
+.stat.gold{background:linear-gradient(125deg,#fbf3df,#fff)}
+.green .stat-icon{background:#246b4b}.blue .stat-icon{background:#466c75}.gold .stat-icon{background:#b58d38}
+.section-head h3{color:#193c30;letter-spacing:.3px}
+.section-head h3 i{color:#bd9a4b}
+.quick-card{
+  border:1px solid #dce5dc;border-radius:15px;
+  background:linear-gradient(145deg,#f4f7f1,#fff 72%);
+  box-shadow:0 5px 15px #183c2b0b
+}
+.quick-card:hover{border-color:#b99a54;box-shadow:0 10px 24px #183c2b17}
+.quick-card .qicon{color:#28664a}
+.quick-card .go{background:#245d43}
+.quick-card.gold-card{background:linear-gradient(145deg,#f8f0dc,#fff 78%)}
+.gold-card .qicon{color:#ad8531}.gold-card .go{background:#99752e}
+.panel{border:1px solid #dfe7df;border-radius:15px;box-shadow:0 8px 22px #183c2b0c}
+.panel-head{background:linear-gradient(100deg,#103e30,#1b6347);height:41px;letter-spacing:.2px}
+.periods button.active{background:#c2a04d;color:#142c22}
+th{background:#f0f4ee}
+.rank.first{background:#f3d982;color:#745316}
+.footer{
+  background:linear-gradient(90deg,#071f1a,#103e30,#071f1a);
+  border-top:3px solid #c7a653;color:#ecd58f;font-size:10px;letter-spacing:1.2px
+}
+@media(max-width:1050px){
+  .app{grid-template-columns:190px minmax(0,1fr)}
+  .banner{padding:16px 22px;gap:17px}
+  .banner-brand{min-width:210px}.banner-emblem{width:64px;height:64px}
+  .banner-brand-text strong{font-size:10px}.banner-brand-text span{font-size:14px}
+  .banner-mark{display:none}
+}
+@media(max-width:700px){
+  .app{display:block}
+  .banner{height:auto;min-height:132px;padding:15px 14px;gap:13px;align-items:flex-start;flex-direction:column}
+  .banner-brand{min-width:0;gap:10px}
+  .banner-emblem{width:48px;height:48px;border-radius:14px;font-size:23px}
+  .banner-brand-text strong{font-size:9px}.banner-brand-text span{font-size:13px}
+  .banner-copy{padding-left:0;border-left:0}
+  .banner-kicker{font-size:8px;margin-bottom:4px}
+  .banner-copy h1{font-size:19px}
+  .banner-copy p{font-size:8px;letter-spacing:.7px;margin-top:5px}
+  .content{padding:12px 10px}
+  .side-art{display:none}
+  .footer{height:38px;font-size:8px;letter-spacing:.5px}
+}
+
+/* BANNER ẢNH THỰC TẾ & NHẬN DIỆN BỘ CHQS TỈNH HƯNG YÊN */
+.emblem{
+  width:88px;height:88px;border-radius:50%;border:2px solid #e5c66d;
+  background:radial-gradient(circle at 50% 38%,#27684c 0,#103d30 58%,#08291f 100%);
+  box-shadow:0 0 0 5px #d9bd6920,0 9px 26px #0005,inset 0 0 0 4px #ffffff12;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  color:#f6d982;position:relative
+}
+.emblem:before,.emblem:after{content:"";position:absolute;inset:7px;border:1px solid #e5c66d80;border-radius:50%}
+.emblem:after{inset:13px;border-color:#e5c66d35}
+.emblem-ring{font-size:31px;line-height:1;z-index:1;text-shadow:0 2px 8px #0008}
+.brand h2{margin-top:13px}
+.emblem small{font-size:7px;letter-spacing:1.4px;font-weight:900;z-index:1;color:#f5e5b3}
+.side-art{
+  height:218px;flex-shrink:0;position:relative;overflow:hidden;
+  background-image:linear-gradient(0deg,#061f1bdc 0%,#061f1b15 48%,#061f1b00 100%),url("hinh-bo-doi-sidebar.png");
+  background-size:cover;background-position:center 44%;
+  border-top:1px solid #d9bd6970
+}
+.side-art:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#061f1b22,transparent 70%)}
+.side-art-caption{
+  position:absolute;left:12px;right:12px;bottom:12px;z-index:1;
+  padding:9px 10px;border-left:3px solid #e2c56f;
+  background:linear-gradient(90deg,#061f1bdc,#061f1b80);
+  color:#fff;display:flex;flex-direction:column;gap:4px
+}
+.side-art-caption strong{font-size:10px;letter-spacing:1.5px;color:#f4d783}
+.side-art-caption span{font-size:7px;letter-spacing:.5px;color:#e5eee8}
+.banner{
+  height:auto;aspect-ratio:1418/208;min-height:145px;max-height:208px;
+  width:100%;padding:0;display:block;position:relative;overflow:hidden;
+  background:#092e29 url("banner-bo-doi.png") center center/100% 100% no-repeat;
+  border-bottom:4px solid #d7b65f;box-shadow:0 8px 25px #082d2530
+}
+.banner:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 70%,#082c2a25);pointer-events:none}
+.banner:after{content:"";position:absolute;inset:auto 0 0;height:3px;background:linear-gradient(90deg,#f6df9a,#b18b36,#f6df9a);pointer-events:none}
+.banner-unit{
+  position:absolute;right:8px;top:12px;z-index:3;min-width:260px;
+  display:flex;align-items:center;gap:10px;padding:8px 13px;
+  border:1px solid #f2d78b9c;border-radius:13px;
+  background:linear-gradient(110deg,#062f2bef,#0b4b40ef);
+  box-shadow:0 6px 20px #001b1a70,inset 0 1px #ffffff25;
+  backdrop-filter:blur(8px)
+}
+.unit-crest{
+  width:38px;height:38px;flex:0 0 38px;border:1.5px solid #f1d17a;
+  border-radius:11px 11px 15px 15px;display:grid;place-items:center;
+  color:#f6d982;background:linear-gradient(145deg,#276c4e,#082c25);
+  box-shadow:0 0 0 3px #f1d17a20
+}
+.unit-crest i{font-size:19px;text-shadow:0 2px 5px #0008}
+.unit-label{display:flex;flex-direction:column;gap:3px;color:#fff}
+.unit-label strong{font-size:9px;letter-spacing:1px;white-space:nowrap}
+.unit-label span{font-size:13px;letter-spacing:1.6px;font-weight:900;color:#f4d783;white-space:nowrap}
+@media(max-width:900px){
+  .banner-unit{right:9px;top:8px;min-width:0;padding:6px 9px;gap:7px}
+  .unit-crest{width:31px;height:31px;flex-basis:31px}
+  .unit-label strong{font-size:7px}.unit-label span{font-size:10px}
+}
+@media(max-width:700px){
+  .banner{aspect-ratio:1418/208;min-height:100px;height:auto;max-height:none;background-size:100% 100%}
+  .banner-unit{right:6px;top:6px;padding:4px 6px;border-radius:8px;gap:5px}
+  .unit-crest{width:24px;height:24px;flex-basis:24px;border-radius:7px}
+  .unit-crest i{font-size:13px}
+  .unit-label strong{font-size:6px;letter-spacing:.4px}
+  .unit-label span{font-size:8px;letter-spacing:.6px}
+  .side-art{display:none}
+}
+
+/* ===== BỔ SUNG NÚT CÀI APP VÀ PHÁT NHẠC ===== */
+.app-tools{
+  position:fixed;
+  right:16px;
+  bottom:55px;
+  z-index:1000;
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+.app-tool-btn{
+  border:1px solid #d9bd69;
+  border-radius:30px;
+  padding:10px 15px;
+  background:linear-gradient(135deg,#0b4938,#082c25);
+  color:#f5dc91;
+  font-family:inherit;
+  font-size:11px;
+  font-weight:800;
+  box-shadow:0 5px 16px #0003;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  transition:.2s;
+}
+.app-tool-btn:hover{
+  transform:translateY(-2px);
+  background:#176448;
+}
+.app-tool-btn i{font-size:15px}
+#musicBtn.playing{
+  background:linear-gradient(135deg,#a17a29,#76551c);
+  color:#fff;
+}
+@media(max-width:700px){
+  .app-tools{right:10px;bottom:48px;gap:7px}
+  .app-tool-btn{padding:9px 12px;font-size:10px}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="emblem"><span class="emblem-ring"><i class="fa-solid fa-star"></i></span><small>QUYẾT THẮNG</small></div>
+      <h2>BỘ CHQS TỈNH</h2>
+      <p>HƯNG YÊN</p>
+      <div class="stars">— ★ —</div>
+    </div>
+
+    <nav class="menu">
+      <a class="active" href="index.html"><i class="fa-solid fa-house"></i>Trang chủ</a>
+      <a href="cham-diem.html"><i class="fa-regular fa-clipboard"></i>Chấm điểm thi đua</a>
+      <a href="tonghop.html?level=DAI_DOI"><i class="fa-solid fa-building"></i>Thi đua cấp đại đội</a>
+      <a href="tonghop.html?level=TRUNG_DOI"><i class="fa-solid fa-people-group"></i>Thi đua cấp trung đội</a>
+      <a href="xephang.html"><i class="fa-solid fa-trophy"></i>Bảng xếp hạng</a>
+      <a href="baocao.html"><i class="fa-solid fa-chart-column"></i>Tổng hợp báo cáo</a>
+      <a href="lichsu.html"><i class="fa-regular fa-clock"></i>Lịch sử chấm điểm</a>
+      <a href="quan-ly-don-vi.html"><i class="fa-solid fa-gear"></i>Quản lý đơn vị</a>
+    </nav>
+
+    <div class="side-art" aria-label="Hình ảnh cán bộ, chiến sĩ">
+      <div class="side-art-caption">
+        <strong>NGƯỜI CHIẾN SĨ</strong>
+        <span>BẢN LĨNH · KỶ LUẬT · TRÁCH NHIỆM</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="banner" aria-label="Thi đua quyết thắng - Bộ Chỉ huy Quân sự tỉnh Hưng Yên">
+      <div class="banner-unit">
+        <div class="unit-crest"><i class="fa-solid fa-star"></i></div>
+        <div class="unit-label">
+          <strong>BỘ CHỈ HUY QUÂN SỰ TỈNH</strong>
+          <span>HƯNG YÊN</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="content">
+      <div class="topline">
+        <div class="page-title">
+          <i class="fa-solid fa-house"></i>
+          <div>
+            <h2>BẢNG ĐIỀU HÀNH THI ĐUA</h2>
+            <small id="updated">Đang kết nối dữ liệu...</small>
+          </div>
+        </div>
+
+        <select class="date-select" id="dateFilter" aria-label="Chọn thời gian">
+          <option value="month">Tháng này</option>
+          <option value="today">Hôm nay</option>
+          <option value="yesterday">Hôm qua</option>
+          <option value="week">Tuần này</option>
+        </select>
+      </div>
+
+      <div class="stats">
+        <div class="stat green">
+          <div class="stat-icon"><i class="fa-solid fa-check"></i></div>
+          <div style="flex:1">
+            <label>Đơn vị đã chấm</label>
+            <strong id="scoredCount">— / —</strong>
+            <div class="progress"><span id="progressBar"></span></div>
+            <small id="progressText">Đang tải...</small>
+          </div>
+        </div>
+
+        <div class="stat red">
+          <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
+          <div>
+            <label>Đơn vị chưa chấm</label>
+            <strong id="unscoredCount">— / —</strong>
+            <small id="unscoredText">Đang chờ cập nhật</small>
+          </div>
+        </div>
+
+        <div class="stat blue">
+          <div class="stat-icon"><i class="fa-solid fa-star"></i></div>
+          <div>
+            <label>Điểm trung bình</label>
+            <strong id="averageScore">— <small>điểm</small></strong>
+            <small id="averageText">Theo kết quả tháng</small>
+          </div>
+        </div>
+
+        <div class="stat gold">
+          <div class="stat-icon"><i class="fa-solid fa-trophy"></i></div>
+          <div>
+            <label>Đơn vị dẫn đầu</label>
+            <strong id="leaderName" style="font-size:16px">—</strong>
+            <small id="leaderScore">Chưa có kết quả</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <h3><i class="fa-solid fa-star"></i> CHỨC NĂNG NHANH</h3>
+        <a href="baocao.html">Xem tất cả <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <div class="quick">
+        <a class="quick-card" href="cham-diem.html">
+          <div class="qicon"><i class="fa-solid fa-clipboard-check"></i></div>
+          <strong>Chấm điểm<br>thi đua hằng ngày</strong>
+          <small>Nhập điểm, nhận xét</small>
+          <span class="go"><i class="fa-solid fa-chevron-right"></i></span>
+        </a>
+
+        <a class="quick-card" href="tonghop.html?level=DAI_DOI">
+          <div class="qicon"><i class="fa-solid fa-building-columns"></i></div>
+          <strong>Thi đua cấp<br>đại đội</strong>
+          <small>Theo dõi kết quả</small>
+          <span class="go"><i class="fa-solid fa-chevron-right"></i></span>
+        </a>
+
+        <a class="quick-card" href="tonghop.html?level=TRUNG_DOI">
+          <div class="qicon"><i class="fa-solid fa-people-group"></i></div>
+          <strong>Thi đua cấp<br>trung đội</strong>
+          <small>Theo dõi kết quả</small>
+          <span class="go"><i class="fa-solid fa-chevron-right"></i></span>
+        </a>
+
+        <a class="quick-card gold-card" href="xephang.html">
+          <div class="qicon"><i class="fa-solid fa-trophy"></i></div>
+          <strong>Bảng xếp hạng<br>thi đua</strong>
+          <small>Thứ tự các đơn vị</small>
+          <span class="go"><i class="fa-solid fa-chevron-right"></i></span>
+        </a>
+
+        <a class="quick-card" href="baocao.html">
+          <div class="qicon"><i class="fa-solid fa-chart-line"></i></div>
+          <strong>Tổng hợp báo cáo</strong>
+          <small>Thống kê, biểu đồ</small>
+          <span class="go"><i class="fa-solid fa-chevron-right"></i></span>
+        </a>
+
+        <a class="quick-card" href="lichsu.html">
+          <div class="qicon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+          <strong>Lịch sử chấm điểm</strong>
+          <small>Tra cứu kết quả</small>
+          <span class="go"><i class="fa-solid fa-chevron-right"></i></span>
+        </a>
+      </div>
+
+      <div class="lower">
+        <section class="panel">
+          <div class="panel-head">
+            <span><i class="fa-solid fa-chart-simple"></i>BẢNG XẾP HẠNG THI ĐUA</span>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>TT</th>
+                <th>Đơn vị</th>
+                <th>Điểm</th>
+                <th>Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody id="rankingBody">
+              <tr><td colspan="4" class="loading">Đang tải dữ liệu...</td></tr>
+            </tbody>
+          </table>
+
+          <div class="panel-foot">
+            <a href="xephang.html">Xem chi tiết <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <span><i class="fa-solid fa-chart-line"></i>BIỂU ĐỒ KẾT QUẢ THI ĐUA</span>
+            <div class="periods">
+              <button class="active" data-period="week">Tuần</button>
+              <button data-period="month">Tháng</button>
+              <button data-period="year">Năm</button>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="scoreChart"></canvas>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>★</span> BỘ CHỈ HUY QUÂN SỰ TỈNH HƯNG YÊN <span>★</span>
+  </footer>
+</div>
+
+<div class="notice" id="notice"></div>
+
+<!-- NÚT CÀI ỨNG DỤNG VÀ PHÁT NHẠC -->
+<div class="app-tools">
+  <button class="app-tool-btn" id="installBtn">
+    <i class="fa-solid fa-download"></i>
+    <span>CÀI ỨNG DỤNG</span>
+  </button>
+
+  <button class="app-tool-btn" id="musicBtn">
+    <i class="fa-solid fa-play"></i>
+    <span>PHÁT NHẠC</span>
+  </button>
+</div>
+
+<!-- ĐẶT FILE NHAC-NEN.MP3 CÙNG THƯ MỤC VỚI INDEX.HTML -->
+<audio id="backgroundMusic" src="./nhac-nen.mp3" loop preload="none"></audio>
+
+<script>
+/* =====================================================
+   KẾT NỐI GOOGLE APPS SCRIPT
+===================================================== */
+
+const API_URL = "https://script.google.com/macros/s/AKfycbyqUwmHIaUE-mWl0BktkLlbGB-qomoPMCehHJUGzOoP9LwQWiFYYXDRdZOBO2y7giRU-Q/exec";
+
+const CACHE_KEY = "THI_DUA_DASHBOARD_CACHE_V2";
+const CACHE_TIME = 60 * 1000;
+
+const $ = id => document.getElementById(id);
+
+let unitsData = [];
+let summaryData = [];
+let recordsData = [];
+
+let chartInstance = null;
+let chartPeriod = "week";
+let recordsLoaded = false;
+let hasCachedData = false;
+
+const today = new Date();
+const currentMonth = today.getMonth() + 1;
+const currentYear = today.getFullYear();
+
+/* =====================================================
+   TIỆN ÍCH
+===================================================== */
+
+function formatNumber(value) {
+  if (value === null || value === undefined || !Number.isFinite(Number(value))) {
+    return "—";
+  }
+
+  return Number(value).toFixed(2).replace(".", ",");
+}
+
+function showNotice(message) {
+  const notice = $("notice");
+  notice.textContent = message;
+  notice.style.display = "block";
+
+  clearTimeout(window.noticeTimer);
+
+  window.noticeTimer = setTimeout(() => {
+    notice.style.display = "none";
+  }, 3000);
+}
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[char]);
+}
+
+function updateTimeText(prefix = "Cập nhật lúc: ") {
+  const now = new Date();
+
+  $("updated").textContent =
+    prefix +
+    now.toLocaleDateString("vi-VN") +
+    " " +
+    now.toLocaleTimeString("vi-VN", {
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+}
+
+/* =====================================================
+   CACHE TRÌNH DUYỆT
+===================================================== */
+
+function readDashboardCache() {
+  try {
+    const raw = sessionStorage.getItem(CACHE_KEY);
+
+    if (!raw) return null;
+
+    const cache = JSON.parse(raw);
+
+    if (!cache || !cache.savedAt || !cache.data) {
+      return null;
+    }
+
+    return cache;
+  } catch (error) {
+    console.warn("Không đọc được cache:", error);
+    return null;
+  }
+}
+
+function saveDashboardCache() {
+  try {
+    const cache = {
+      savedAt: Date.now(),
+      data: {
+        units: unitsData,
+        summary: summaryData,
+        records: recordsData
+      }
+    };
+
+    sessionStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+  } catch (error) {
+    console.warn("Không lưu được cache:", error);
+  }
+}
+
+function applyDashboardData(data) {
+  unitsData = Array.isArray(data.units) ? data.units : [];
+  summaryData = Array.isArray(data.summary) ? data.summary : [];
+  recordsData = Array.isArray(data.records) ? data.records : [];
+
+  recordsLoaded = Array.isArray(data.records);
+
+  renderDashboard();
+
+  if (recordsLoaded) {
+    renderChart();
+  }
+}
+
+/* =====================================================
+   GỌI API
+===================================================== */
+
+async function apiGet(action, params = {}) {
+  const url = new URL(API_URL);
+
+  url.searchParams.set("action", action);
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== "") {
+      url.searchParams.set(key, value);
+    }
+  });
+
+  const response = await fetch(url.toString(), {
+    method: "GET",
+    cache: "no-store"
+  });
+
+  if (!response.ok) {
+    throw new Error("Không kết nối được máy chủ dữ liệu.");
+  }
+
+  const result = await response.json();
+
+  if (!result.success) {
+    throw new Error(result.message || "Không lấy được dữ liệu.");
+  }
+
+  return result;
+}
+
+/* =====================================================
+   CHUẨN HÓA DỮ LIỆU ĐƠN VỊ
+===================================================== */
+
+function getUnitName(item) {
+  return String(
+    item.unit ||
+    item.DON_VI ||
+    item.name ||
+    item.TEN_DON_VI ||
+    ""
+  ).trim();
+}
+
+function getUnitLevel(item) {
+  return String(
+    item.level ||
+    item.CAP_DON_VI ||
+    item.capDonVi ||
+    ""
+  ).trim().toUpperCase();
+}
+
+function isCompany(item) {
+  const level = getUnitLevel(item);
+
+  return level === "DAI_DOI" ||
+    level === "ĐẠI ĐỘI" ||
+    level === "COMPANY";
+}
+
+function getCompanyNames() {
+  const names = new Set();
+
+  summaryData.forEach(item => {
+    if (isCompany(item)) {
+      const name = getUnitName(item);
+      if (name) names.add(name);
+    }
+  });
+
+  unitsData.forEach(item => {
+    if (isCompany(item)) {
+      const name = getUnitName(item);
+      if (name) names.add(name);
+    }
+  });
+
+  return [...names].sort((a, b) =>
+    a.localeCompare(b, "vi")
+  );
+}
+
+/* =====================================================
+   XỬ LÝ NGÀY THÁNG
+===================================================== */
+
+function parseDate(value) {
+  if (!value) return null;
+
+  const parts = String(value).substring(0, 10).split("-");
+
+  if (parts.length !== 3) return null;
+
+  const date = new Date(
+    Number(parts[0]),
+    Number(parts[1]) - 1,
+    Number(parts[2]),
+    12
+  );
+
+  return isNaN(date.getTime()) ? null : date;
+}
+
+function sameDate(a, b) {
+  return a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate();
+}
+
+function getMonday(date) {
+  const d = new Date(date);
+  const day = d.getDay() || 7;
+
+  d.setDate(d.getDate() - day + 1);
+  d.setHours(12, 0, 0, 0);
+
+  return d;
+}
+
+function competitionWeekCount(year, month) {
+  const firstDay = new Date(year, month - 1, 1).getDay();
+
+  const firstCompetitionDay =
+    firstDay >= 1 && firstDay <= 4
+      ? 1
+      : 1 + ((8 - firstDay) % 7);
+
+  const daysInMonth = new Date(year, month, 0).getDate();
+
+  return Math.ceil(
+    (daysInMonth - firstCompetitionDay + 1) / 7
+  );
+}
+
+/* =====================================================
+   CHUẨN HÓA PHIẾU CHẤM
+===================================================== */
+
+function normalizeRecord(record) {
+  const date = parseDate(
+    record.date ||
+    record.NGAY_CHAM ||
+    record.ngayCham
+  );
+
+  const unit = String(
+    record.unit ||
+    record.DON_VI ||
+    record.donVi ||
+    ""
+  ).trim();
+
+  const level = String(
+    record.level ||
+    record.CAP_DON_VI ||
+    record.capDonVi ||
+    ""
+  ).trim().toUpperCase();
+
+  const method = String(
+    record.method ||
+    record.PHUONG_THUC ||
+    record.phuongThuc ||
+    ""
+  ).trim().toUpperCase();
+
+  const rawWeek =
+    record.week ??
+    record.TUAN ??
+    record.tuan;
+
+  const week = Number(rawWeek) || 0;
+
+  const rawScore =
+    record.average ??
+    record.DIEM_TONG_HOP ??
+    record.diemTongHop ??
+    record.monthlyScore;
+
+  const score = Number(rawScore);
+
+  return {
+    ...record,
+    date,
+    unit,
+    level,
+    method,
+    week,
+    score: Number.isFinite(score) ? score : null
+  };
+}
+
+function getValidRecords() {
+  return recordsData
+    .map(normalizeRecord)
+    .filter(record =>
+      record.date &&
+      record.unit &&
+      record.level === "TRUNG_DOI" &&
+      record.score !== null
+    );
+}
+
+function getCompanyRecords() {
+  const companyNames = new Set(getCompanyNames());
+
+  return getValidRecords().filter(record =>
+    companyNames.has(record.unit)
+  );
+}
+
+/* =====================================================
+   TÍNH ĐIỂM XẾP HẠNG
+===================================================== */
+
+function getCompanyRanking() {
+  const names = getCompanyNames();
+  const records = getCompanyRecords();
+
+  const ranking = names.map(name => {
+    const summary = summaryData.find(item =>
+      isCompany(item) && getUnitName(item) === name
+    );
+
+    const monthlyScore = summary
+      ? summary.monthlyScore
+      : null;
+
+    let score = 0;
+    let hasScore = false;
+
+    if (
+      monthlyScore !== null &&
+      monthlyScore !== undefined &&
+      monthlyScore !== "" &&
+      Number.isFinite(Number(monthlyScore))
+    ) {
+      score = Number(monthlyScore);
+      hasScore = true;
+    } else {
+      const unitRecords = records.filter(record =>
+        record.unit === name &&
+        record.date.getFullYear() === currentYear &&
+        record.date.getMonth() + 1 === currentMonth
+      );
+
+      const scores = unitRecords
+        .map(record => record.score)
+        .filter(value => value !== null);
+
+      if (scores.length) {
+        score = scores.reduce((sum, value) => sum + value, 0) /
+          scores.length;
+        hasScore = true;
+      }
+    }
+
+    return {
+      unit: name,
+      monthlyScore: score,
+      hasScore,
+      complete: summary ? summary.complete === true : false,
+      completedWeeks: summary
+        ? Number(summary.completedWeeks || 0)
+        : 0
+    };
+  });
+
+  return ranking.sort((a, b) =>
+    b.monthlyScore - a.monthlyScore ||
+    a.unit.localeCompare(b.unit, "vi")
+  );
+}
+
+/* =====================================================
+   TẢI DỮ LIỆU THEO TỪNG GIAI ĐOẠN
+===================================================== */
+
+async function loadDashboard() {
+  const cache = readDashboardCache();
+
+  if (cache && cache.data) {
+    hasCachedData = true;
+
+    applyDashboardData(cache.data);
+
+    const age = Date.now() - cache.savedAt;
+
+    if (age <= CACHE_TIME) {
+      updateTimeText("Dữ liệu lưu tạm · ");
+    } else {
+      updateTimeText("Đang làm mới dữ liệu · ");
+    }
+  } else {
+    $("updated").textContent = "Đang tải thông tin đơn vị...";
+  }
+
+  try {
+    const [unitsResult, summaryResult] = await Promise.all([
+      apiGet("units"),
+      apiGet("summary", {
+        month: currentMonth,
+        year: currentYear
+      })
+    ]);
+
+    unitsData = unitsResult.data || [];
+    summaryData = summaryResult.data || [];
+
+    renderDashboard();
+
+    $("updated").textContent = "Đang tải lịch sử chấm điểm...";
+  } catch (error) {
+    console.error("Lỗi tải dữ liệu tổng hợp:", error);
+
+    if (!hasCachedData) {
+      $("updated").textContent =
+        "Không thể tải dữ liệu: " + error.message;
+
+      $("rankingBody").innerHTML =
+        `<tr><td colspan="4" class="loading">${escapeHtml(error.message)}</td></tr>`;
+
+      showNotice("Lỗi kết nối dữ liệu: " + error.message);
+      return;
+    }
+
+    showNotice("Không làm mới được dữ liệu tổng hợp. Đang hiển thị dữ liệu đã lưu.");
+  }
+
+  try {
+    const listResult = await apiGet("list", {
+      method: "TO_THI_DUA",
+      level: "TRUNG_DOI"
+    });
+
+    recordsData = listResult.data || [];
+    recordsLoaded = true;
+
+    renderDashboard();
+    renderChart();
+
+    saveDashboardCache();
+    updateTimeText();
+
+  } catch (error) {
+    console.error("Lỗi tải lịch sử:", error);
+
+    if (recordsLoaded) {
+      $("updated").textContent =
+        "Đang hiển thị dữ liệu đã lưu · Không làm mới được lịch sử";
+
+      showNotice("Không tải mới được lịch sử chấm điểm.");
+    } else {
+      $("updated").textContent =
+        "Đã tải tổng hợp, nhưng chưa tải được lịch sử chấm điểm.";
+
+      $("scoredCount").textContent = "—";
+      $("unscoredCount").textContent = "—";
+      $("progressText").textContent = "Chưa tải được lịch sử";
+      $("unscoredText").textContent = "Chưa có dữ liệu lịch sử";
+      showNotice("Không tải được lịch sử chấm điểm.");
+    }
+  }
+}
+
+/* =====================================================
+   THỐNG KÊ TRANG CHỦ
+===================================================== */
+
+function renderDashboard() {
+  updateActivityStats($("dateFilter").value || "month");
+
+  const ranking = getCompanyRanking();
+
+  const average = ranking.length
+    ? ranking.reduce((sum, unit) =>
+        sum + unit.monthlyScore, 0
+      ) / ranking.length
+    : null;
+
+  $("averageScore").innerHTML =
+    average === null
+      ? "— <small>điểm</small>"
+      : `${formatNumber(average)} <small>điểm</small>`;
+
+  $("averageText").textContent =
+    `${ranking.length} đại đội, tính cả đơn vị 0 điểm`;
+
+  if (ranking.length) {
+    const leader = ranking[0];
+
+    $("leaderName").textContent = leader.unit;
+    $("leaderScore").textContent =
+      `${formatNumber(leader.monthlyScore)} điểm tháng`;
+  } else {
+    $("leaderName").textContent = "—";
+    $("leaderScore").textContent = "Chưa có đơn vị";
+  }
+
+  renderRanking(ranking);
+}
+
+/* =====================================================
+   THỐNG KÊ ĐƠN VỊ ĐÃ CHẤM THEO PHIẾU THỰC TẾ
+===================================================== */
+
+function updateActivityStats(mode) {
+  if (!recordsLoaded) {
+    $("scoredCount").textContent = "— / —";
+    $("unscoredCount").textContent = "— / —";
+    $("progressBar").style.width = "0%";
+
+    $("progressText").textContent =
+      "Đang tải lịch sử chấm điểm...";
+
+    $("unscoredText").textContent =
+      "Đang chờ dữ liệu lịch sử";
+
+    return;
+  }
+
+  const records = getValidRecords();
+
+  let startDate;
+  let endDate;
+
+  if (mode === "today") {
+    startDate = new Date(today);
+    endDate = new Date(today);
+  } else if (mode === "yesterday") {
+    startDate = new Date(today);
+    startDate.setDate(startDate.getDate() - 1);
+    endDate = new Date(startDate);
+  } else if (mode === "week") {
+    startDate = getMonday(today);
+    endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + 6);
+  } else {
+    startDate = new Date(currentYear, currentMonth - 1, 1, 12);
+    endDate = new Date(currentYear, currentMonth, 0, 12);
+  }
+
+  startDate.setHours(0, 0, 0, 0);
+  endDate.setHours(23, 59, 59, 999);
+
+  const filtered = records.filter(record => {
+    const date = record.date;
+    return date >= startDate && date <= endDate;
+  });
+
+  const touchedUnits = new Set(
+    filtered.map(record => record.unit).filter(Boolean)
+  );
+
+  const total = getCompanyNames().length;
+  const scored = Math.min(touchedUnits.size, total);
+  const unscored = Math.max(0, total - scored);
+  const percent = total ? scored / total * 100 : 0;
+
+  $("scoredCount").textContent = `${scored} / ${total}`;
+  $("unscoredCount").textContent = `${unscored} / ${total}`;
+
+  $("progressBar").style.width = `${percent}%`;
+
+  $("progressText").textContent =
+    `${Math.round(percent)}% đại đội có phiếu chấm`;
+
+  $("unscoredText").textContent =
+    unscored
+      ? "Còn đơn vị chưa có phiếu chấm"
+      : "Tất cả đại đội đã có phiếu chấm";
+}
+
+/* =====================================================
+   BẢNG XẾP HẠNG
+===================================================== */
+
+function renderRanking(companies) {
+  const body = $("rankingBody");
+
+  if (!companies.length) {
+    body.innerHTML =
+      `<tr><td colspan="4" class="loading">Chưa có đơn vị trong danh sách.</td></tr>`;
+    return;
+  }
+
+  body.innerHTML = companies.slice(0, 5).map((unit, index) => {
+    const rankClass =
+      index === 0 ? "first" :
+      index === 2 ? "third" : "";
+
+    const status = unit.hasScore
+      ? `<span class="tag green">Đã có điểm</span>`
+      : `<span class="tag gray">Chưa chấm · 0 điểm</span>`;
+
+    return `
+      <tr>
+        <td><span class="rank ${rankClass}">${index + 1}</span></td>
+        <td><b>${escapeHtml(unit.unit)}</b></td>
+        <td class="score">${formatNumber(unit.monthlyScore)}</td>
+        <td>${status}</td>
+      </tr>
+    `;
+  }).join("");
+}
+
+/* =====================================================
+   TÍNH ĐIỂM BIỂU ĐỒ
+===================================================== */
+
+function average(values) {
+  if (!values.length) return null;
+
+  return values.reduce((sum, value) => sum + value, 0) /
+    values.length;
+}
+
+function getPlatoonNumber(unitName) {
+  const match = String(unitName || "").match(/trung\s*đội\s*(\d+)/i);
+  return match ? Number(match[1]) : 0;
+}
+
+function getPlatoonRecords(records, platoonNumber) {
+  return records.filter(record =>
+    getPlatoonNumber(record.unit) === platoonNumber
+  );
+}
+
+function getPlatoonDailyScore(records, platoonNumber, date) {
+  const dayRecords = getPlatoonRecords(records, platoonNumber)
+    .filter(record => sameDate(record.date, date));
+
+  if (!dayRecords.length) return null;
+
+  return average(dayRecords.map(record => record.score));
+}
+
+function getPlatoonWeeklyScore(records, platoonNumber, week, month, year) {
+  const weekRecords = records.filter(record =>
+    record.date.getFullYear() === year &&
+    record.date.getMonth() + 1 === month &&
+    record.week === week &&
+    getPlatoonNumber(record.unit) === platoonNumber
+  );
+
+  if (!weekRecords.length) return null;
+
+  const dailyGroups = new Map();
+
+  weekRecords.forEach(record => {
+    const key = [
+      record.date.getFullYear(),
+      record.date.getMonth() + 1,
+      record.date.getDate()
+    ].join("-");
+
+    if (!dailyGroups.has(key)) dailyGroups.set(key, []);
+    dailyGroups.get(key).push(record.score);
+  });
+
+  const dailyScores = [...dailyGroups.values()].map(scores =>
+    average(scores)
+  ).filter(value => value !== null);
+
+  return average(dailyScores);
+}
+
+function getOverallCompanyAverage(platoonScores) {
+  const companyScores = [];
+
+  for (let company = 0; company < 3; company++) {
+    const firstPlatoon = company * 3 + 1;
+    const scores = [
+      platoonScores[firstPlatoon] ?? 0,
+      platoonScores[firstPlatoon + 1] ?? 0,
+      platoonScores[firstPlatoon + 2] ?? 0
+    ];
+
+    companyScores.push(average(scores));
+  }
+
+  return average(companyScores) ?? 0;
+}
+
+/* =====================================================
+   BIỂU ĐỒ TUẦN
+===================================================== */
+
+function getDailyChartData() {
+  const records = getValidRecords();
+  const monday = getMonday(today);
+  const labels = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
+  const values = [];
+
+  for (let offset = 0; offset < 7; offset++) {
+    const date = new Date(monday);
+    date.setDate(monday.getDate() + offset);
+
+    const platoonScores = {};
+
+    for (let platoon = 1; platoon <= 9; platoon++) {
+      platoonScores[platoon] =
+        getPlatoonDailyScore(records, platoon, date) ?? 0;
+    }
+
+    values.push(getOverallCompanyAverage(platoonScores));
+  }
+
+  return { labels, values };
+}
+
+/* =====================================================
+   BIỂU ĐỒ THÁNG
+===================================================== */
+
+function getMonthlyChartData() {
+  const records = getValidRecords().filter(record =>
+    record.date.getFullYear() === currentYear &&
+    record.date.getMonth() + 1 === currentMonth
+  );
+
+  const totalWeeks = competitionWeekCount(currentYear, currentMonth);
+  const labels = [];
+  const values = [];
+
+  for (let week = 1; week <= totalWeeks; week++) {
+    labels.push(`Tuần ${week}`);
+
+    const platoonScores = {};
+
+    for (let platoon = 1; platoon <= 9; platoon++) {
+      platoonScores[platoon] =
+        getPlatoonWeeklyScore(
+          records,
+          platoon,
+          week,
+          currentMonth,
+          currentYear
+        ) ?? 0;
+    }
+
+    values.push(getOverallCompanyAverage(platoonScores));
+  }
+
+  return { labels, values };
+}
+
+/* =====================================================
+   BIỂU ĐỒ NĂM
+===================================================== */
+
+function getYearChartData() {
+  const records = getValidRecords().filter(record =>
+    record.date.getFullYear() === currentYear
+  );
+
+  const labels = [];
+  const values = [];
+
+  for (let month = 1; month <= 12; month++) {
+    labels.push(`T${month}`);
+
+    const totalWeeks = competitionWeekCount(currentYear, month);
+    const platoonScores = {};
+
+    for (let platoon = 1; platoon <= 9; platoon++) {
+      const completedWeekScores = [];
+
+      for (let week = 1; week <= totalWeeks; week++) {
+        const weekScore = getPlatoonWeeklyScore(
+          records,
+          platoon,
+          week,
+          month,
+          currentYear
+        );
+
+        if (weekScore !== null) {
+          completedWeekScores.push(weekScore);
+        }
+      }
+
+      platoonScores[platoon] =
+        average(completedWeekScores) ?? 0;
+    }
+
+    values.push(getOverallCompanyAverage(platoonScores));
+  }
+
+  return { labels, values };
+}
+
+/* =====================================================
+   VẼ BIỂU ĐỒ
+===================================================== */
+
+function renderChart() {
+  const chartCanvas = $("scoreChart");
+
+  if (!recordsLoaded) return;
+
+  if (!window.Chart) {
+    $("updated").textContent =
+      "Không tải được thư viện biểu đồ.";
+    return;
+  }
+
+  const chartData = getChartData(chartPeriod);
+
+  if (chartInstance) {
+    chartInstance.destroy();
+  }
+
+  chartInstance = new Chart(chartCanvas, {
+    type: "line",
+    data: {
+      labels: chartData.labels,
+      datasets: [{
+        label: "Điểm trung bình các đại đội",
+        data: chartData.values,
+        borderColor: "#16845b",
+        backgroundColor: "rgba(33,153,105,.12)",
+        fill: true,
+        tension: .35,
+        borderWidth: 2,
+        pointRadius: 3,
+        pointBackgroundColor: "#08724f",
+        spanGaps: true
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: context =>
+              context.parsed.y === null
+                ? "0 điểm"
+                : context.parsed.y.toLocaleString("vi-VN", {
+                    maximumFractionDigits: 2
+                  }) + " điểm"
+          }
+        }
+      },
+      scales: {
+        y: {
+          min: 0,
+          max: 10,
+          ticks: {
+            stepSize: 2,
+            font: { size: 9 }
+          },
+          grid: { color: "#edf1ef" }
+        },
+        x: {
+          grid: { display: false },
+          ticks: { font: { size: 9 } }
+        }
+      }
+    }
+  });
+}
+
+function getChartData(period) {
+  if (period === "week") return getDailyChartData();
+  if (period === "month") return getMonthlyChartData();
+
+  return getYearChartData();
+}
+
+/* =====================================================
+   CHỌN BIỂU ĐỒ TUẦN / THÁNG / NĂM
+===================================================== */
+
+document.querySelectorAll("[data-period]").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll("[data-period]").forEach(item =>
+      item.classList.remove("active")
+    );
+
+    button.classList.add("active");
+    chartPeriod = button.dataset.period;
+
+    if (recordsLoaded) {
+      renderChart();
+    } else {
+      showNotice("Biểu đồ đang chờ tải dữ liệu lịch sử.");
+    }
+  });
+});
+
+/* =====================================================
+   BỘ LỌC THỜI GIAN
+===================================================== */
+
+$("dateFilter").addEventListener("change", event => {
+  updateActivityStats(event.target.value);
+
+  showNotice(
+    "Đã lọc số liệu theo " +
+    event.target.options[event.target.selectedIndex].text
+  );
+});
+
+/* =====================================================
+   KHỞI ĐỘNG TRANG CHỦ
+===================================================== */
+
+loadDashboard();
+
+/* =====================================================
+   CHỨC NĂNG CÀI ĐẶT ỨNG DỤNG
+===================================================== */
+
+let deferredInstallPrompt = null;
+
+const installBtn = document.getElementById("installBtn");
+
+window.addEventListener("beforeinstallprompt", event => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  installBtn.style.display = "flex";
+});
+
+installBtn.addEventListener("click", async () => {
+
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+
+    const result = await deferredInstallPrompt.userChoice;
+
+    if (result.outcome === "accepted") {
+      showNotice("Đã bắt đầu cài đặt ứng dụng.");
+    }
+
+    deferredInstallPrompt = null;
+    return;
+  }
+
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+  if (isIOS) {
+    showNotice("Trên iPhone: nhấn Chia sẻ → Thêm vào màn hình chính.");
+    return;
+  }
+
+  if (window.matchMedia("(display-mode: standalone)").matches) {
+    showNotice("Ứng dụng đã được cài đặt.");
+    return;
+  }
+
+  showNotice("Mở menu trình duyệt và chọn Cài đặt ứng dụng hoặc Thêm vào màn hình chính.");
+});
+
+window.addEventListener("appinstalled", () => {
+  installBtn.style.display = "none";
+  showNotice("Cài đặt ứng dụng thành công!");
+});
+
+/* =====================================================
+   CHỨC NĂNG PHÁT / TẠM DỪNG NHẠC
+===================================================== */
+
+const music = document.getElementById("backgroundMusic");
+const musicBtn = document.getElementById("musicBtn");
+
+musicBtn.addEventListener("click", async () => {
+
+  if (music.paused) {
+    try {
+      await music.play();
+
+      musicBtn.classList.add("playing");
+      musicBtn.innerHTML =
+        '<i class="fa-solid fa-pause"></i><span>TẠM DỪNG NHẠC</span>';
+
+    } catch (error) {
+      showNotice("Không phát được nhạc. Hãy kiểm tra tệp nhac-nen.mp3.");
+    }
+
+  } else {
+    music.pause();
+
+    musicBtn.classList.remove("playing");
+    musicBtn.innerHTML =
+      '<i class="fa-solid fa-play"></i><span>PHÁT NHẠC</span>';
+  }
+});
+
+/* =====================================================
+   ĐĂNG KÝ SERVICE WORKER
+===================================================== */
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js")
+      .then(() => {
+        console.log("Đã đăng ký Service Worker.");
+      })
+      .catch(error => {
+        console.error("Lỗi Service Worker:", error);
+      });
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1153 @@
+﻿
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#06483e">
+<title>Chấm điểm thi đua | Tiểu đoàn 2</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root{
+ --green:#075447;
+ --green2:#08775f;
+ --dark:#063b34;
+ --gold:#e6bd52;
+ --ink:#18312e;
+ --muted:#73827f;
+ --bg:#f1f6f4;
+ --line:#e1ebe7;
+ --red:#c83c3c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Be Vietnam Pro",Arial,sans-serif;font-size:13px}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.topbar{height:62px;background:linear-gradient(90deg,#063b34,#08705a);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 max(18px,calc((100% - 1440px)/2));box-shadow:0 3px 14px #062f2930}
+.brand{display:flex;align-items:center;gap:11px}
+.brandmark{width:39px;height:39px;border:1px solid #e8c65c;border-radius:50%;display:grid;place-items:center;color:#f2d36c;font-size:19px}
+.brand b{display:block;font-size:14px;letter-spacing:.3px}
+.brand small{display:block;color:#c9e0d8;font-size:10px;margin-top:2px}
+.top-actions{display:flex;align-items:center;gap:10px}
+.top-actions a{color:#e9f4f0;text-decoration:none;font-size:11px}
+.user{background:#ffffff18;border:1px solid #ffffff30;border-radius:20px;padding:7px 12px;font-size:11px}
+.wrap{max-width:1440px;margin:0 auto;padding:20px 22px 38px}
+.crumb{font-size:11px;color:#7a8c87;margin-bottom:12px}
+.crumb a{color:#14735c;text-decoration:none}
+.heading{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:17px}
+.heading h1{font-size:22px;margin:0;color:#123f36;font-weight:800}
+.heading p{margin:5px 0 0;color:var(--muted);font-size:11px}
+.heading-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid #d8e5df;background:#fff;color:#31524a;padding:9px 13px;border-radius:9px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:7px}
+.btn.primary{background:linear-gradient(100deg,#08745d,#075447);color:#fff;border-color:#08745d;box-shadow:0 4px 10px #08745d25}
+.btn.gold{background:#fff8e7;border-color:#efd99b;color:#87641b}
+.btn.danger{color:#b43d3d;background:#fff;border-color:#f0d6d6}
+.btn:hover{filter:brightness(.97);transform:translateY(-1px)}
+.card{background:#fff;border:1px solid var(--line);border-radius:13px;box-shadow:0 4px 16px #123e3509;margin-bottom:14px;overflow:hidden}
+.card-head{padding:13px 16px;border-bottom:1px solid #edf2ef;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.card-head h2{margin:0;font-size:13px;color:#17483d}
+.card-head h2 i{color:#168466;margin-right:7px}
+.card-body{padding:16px}
+.form-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.field label{display:block;font-size:10px;font-weight:700;color:#637771;margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;border:1px solid #dce7e2;border-radius:8px;background:#fbfdfc;padding:10px 11px;color:#24423b;outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#55a58c;box-shadow:0 0 0 3px #15966a16}
+.field textarea{min-height:75px;resize:vertical}
+.notice{padding:11px 13px;border-radius:9px;background:#eff7f3;border:1px solid #d8ebe1;color:#42685a;font-size:11px;line-height:1.8}
+.notice strong{color:#17644d}
+.pill{display:inline-block;padding:4px 7px;border-radius:20px;background:#e8f5ed;color:#18704f;font-size:9px;font-weight:700}
+.circle-section{padding:25px 15px 22px;background:radial-gradient(circle at center,#f4faf6 0,#fff 68%)}
+.circle-layout{max-width:620px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:115px 115px 115px;gap:5px;align-items:center;justify-items:center;position:relative}
+.circle-layout:before{content:"";position:absolute;width:250px;height:250px;border:1px dashed #c9ddd3;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.circle-cell{width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
+.circle-cell.top{grid-column:2;grid-row:1}
+.circle-cell.left{grid-column:1;grid-row:2}
+.circle-cell.center{grid-column:2;grid-row:2}
+.circle-cell.right{grid-column:3;grid-row:2}
+.circle-cell.bottom{grid-column:2;grid-row:3}
+.domain-circle{width:108px;height:108px;border-radius:50%;border:3px solid #dbe9e1;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#31584b;box-shadow:0 5px 15px #153e3012;transition:all .2s ease;position:relative;padding:8px;text-align:center}
+.domain-circle .circle-icon{font-size:21px}
+.domain-circle .circle-code{font-size:15px;font-weight:800}
+.domain-circle .circle-name{font-size:9px;font-weight:700;line-height:1.35}
+.domain-circle .circle-score{font-size:11px;font-weight:800;color:#087253}
+.domain-circle:hover{transform:scale(1.06);box-shadow:0 8px 20px #153e3020}
+.domain-circle.active{transform:scale(1.08);box-shadow:0 8px 22px #08745d35;color:#fff}
+.domain-circle.active .circle-score{color:#ffdf7b}
+.circle-A{border-color:#70b994;background:#f0faf4}
+.circle-A.active{background:linear-gradient(145deg,#16815c,#075447);border-color:#e3c15c}
+.circle-B{border-color:#d7b85e;background:#fff9e9}
+.circle-B.active{background:linear-gradient(145deg,#b58a2e,#765619);border-color:#f3d77d}
+.circle-C{border-color:#77a9d0;background:#f0f7fd}
+.circle-C.active{background:linear-gradient(145deg,#397cae,#245579);border-color:#a9d4f3}
+.circle-D{border-color:#d69a83;background:#fff4ef}
+.circle-D.active{background:linear-gradient(145deg,#b96648,#7b3c2b);border-color:#efb59e}
+.center-circle{width:116px;height:116px;border-radius:50%;background:linear-gradient(145deg,#075447,#06372f);border:4px solid #e4c15b;color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-shadow:0 8px 24px #063b3440;z-index:2}
+.center-circle i{font-size:25px;color:#f5d46e;margin-bottom:5px}
+.center-circle b{font-size:11px;letter-spacing:.4px}
+.center-circle small{font-size:8px;color:#cde2d8;margin-top:4px}
+.circle-guide{text-align:center;color:#81918a;font-size:10px;margin-top:12px}
+.score-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:15px}
+.sum-box{background:linear-gradient(135deg,#f5faf7,#fff);border:1px solid #e4eee8;border-radius:10px;padding:12px}
+.sum-box small{font-size:10px;color:#72827c;display:block}
+.sum-box strong{font-size:21px;color:#087253;display:block;margin-top:3px}
+.sum-box em{font-style:normal;font-size:9px;color:#8a9993}
+.domain{border:1px solid #e2ebe7;border-radius:12px;margin-bottom:12px;overflow:hidden;display:none}
+.domain.active{display:block;animation:showDomain .25s ease}
+@keyframes showDomain{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.domain-head{padding:12px 14px;background:linear-gradient(90deg,#f0f8f4,#fbfdfc);display:flex;justify-content:space-between;align-items:center;gap:10px}
+.domain-title{display:flex;align-items:center;gap:10px}
+.domain-icon{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:#e0f1e8;color:#16805e;font-size:15px}
+.domain-title b{font-size:12px}
+.domain-title small{display:block;color:#7b8b84;font-size:9px;margin-top:2px}
+.domain-score{font-size:17px;font-weight:800;color:#087253;white-space:nowrap}
+.domain-body{padding:12px 14px}
+.domain-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.domain-meta label{font-size:9px;color:#72817b;display:block;margin-bottom:4px}
+.domain-meta input{width:100%;border:1px solid #e0e9e4;border-radius:7px;padding:8px 9px;background:#fff}
+.deduct-table{width:100%;border-collapse:collapse;font-size:10px}
+.deduct-table th{text-align:left;background:#f5f8f6;color:#6b7d75;font-size:9px;padding:8px}
+.deduct-table td{border-top:1px solid #edf2ef;padding:7px 8px;vertical-align:middle}
+.deduct-table input,.deduct-table select{border:1px solid #dfe8e3;border-radius:6px;padding:6px;width:100%;background:white}
+.deduct-table .qty{max-width:75px}
+.deduct-table .amount{font-weight:800;color:#b83d3d;white-space:nowrap}
+.remove{border:0;background:#fff0f0;color:#c24b4b;border-radius:6px;width:27px;height:27px}
+.add-row{border:0;background:transparent;color:#08745c;font-weight:700;font-size:10px;padding:9px 0 0}
+.empty{color:#8b9994;text-align:center;padding:12px;font-size:10px}
+.domain-switch{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid #edf2ef}
+.domain-switch button{border:1px solid #dce9e2;border-radius:8px;background:#f6faf7;color:#17634d;padding:8px 12px;font-size:10px;font-weight:700}
+.domain-switch button:disabled{opacity:.35;cursor:not-allowed}
+.total-panel{background:linear-gradient(110deg,#063f36,#08745b);color:#fff;border-radius:13px;padding:16px;display:grid;grid-template-columns:1.2fr repeat(3,1fr);gap:12px;align-items:center;margin:14px 0}
+.total-panel small{display:block;color:#c8e1d7;font-size:10px}
+.total-panel strong{font-size:24px;color:#ffdb70;display:block;margin-top:3px}
+.total-panel .metric{border-left:1px solid #ffffff30;padding-left:14px}
+.total-panel .metric b{font-size:17px;display:block;margin-top:3px}
+.bottom-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+.savebar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.savebar .left,.savebar .right{display:flex;gap:8px;flex-wrap:wrap}
+.history-list{max-height:260px;overflow:auto}
+.history-item{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #edf2ef;font-size:10px}
+.history-item:last-child{border:0}
+.history-item b{display:block;color:#31554a}
+.history-item small{color:#87958f}
+.toast{position:fixed;right:20px;bottom:20px;background:#073f35;color:white;padding:12px 16px;border-radius:9px;box-shadow:0 8px 25px #0003;display:none;z-index:10;font-size:11px}
+.footer{text-align:center;color:#8a9a94;font-size:10px;padding:10px}
+@media(max-width:900px){
+ .form-grid{grid-template-columns:repeat(2,1fr)}
+ .score-summary{grid-template-columns:repeat(2,1fr)}
+ .total-panel{grid-template-columns:repeat(2,1fr)}
+ .bottom-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+ .topbar{padding:0 12px;height:56px}
+ .brand b{font-size:11px}
+ .brand small{font-size:8px}
+ .top-actions a{display:none}
+ .wrap{padding:14px 10px 28px}
+ .heading{display:block}
+ .heading h1{font-size:18px}
+ .heading-actions{margin-top:12px}
+ .form-grid{grid-template-columns:1fr 1fr;gap:9px}
+ .field input,.field select{padding:9px 8px;font-size:11px}
+ .card-body{padding:12px}
+ .circle-section{padding:17px 5px}
+ .circle-layout{grid-template-rows:94px 94px 94px;max-width:360px}
+ .circle-layout:before{width:205px;height:205px}
+ .domain-circle{width:88px;height:88px;padding:5px;gap:3px}
+ .domain-circle .circle-icon{font-size:17px}
+ .domain-circle .circle-code{font-size:13px}
+ .domain-circle .circle-name{font-size:8px}
+ .domain-circle .circle-score{font-size:10px}
+ .center-circle{width:96px;height:96px}
+ .center-circle i{font-size:20px}
+ .center-circle b{font-size:9px}
+ .center-circle small{font-size:7px}
+ .domain-head{padding:10px}
+ .domain-body{padding:9px}
+ .deduct-table{font-size:9px}
+ .deduct-table th:nth-child(2),.deduct-table td:nth-child(2){min-width:140px}
+ .domain-meta{grid-template-columns:1fr 1fr}
+ .total-panel{padding:12px;gap:10px}
+ .total-panel strong{font-size:20px}
+ .total-panel .metric{padding-left:9px}
+ .score-summary{gap:7px}
+ .sum-box{padding:9px}
+ .sum-box strong{font-size:18px}
+ .savebar{align-items:stretch}
+ .savebar .left,.savebar .right{width:100%}
+ .savebar .btn{flex:1;justify-content:center}
+}
+@media print{
+ .topbar,.heading-actions,.savebar,.history-card,.toast,.add-row,.remove,.circle-guide,.domain-switch{display:none!important}
+ body{background:#fff}
+ .wrap{max-width:none;padding:0}
+ .card{box-shadow:none;break-inside:avoid}
+ .domain{display:block!important;break-inside:avoid}
+ .circle-section{display:none}
+}
+</style>
+</head>
+
+<body>
+<header class="topbar">
+ <div class="brand">
+  <div class="brandmark"><i class="fa-solid fa-star"></i></div>
+  <div>
+   <b>THI ĐUA QUYẾT THẮNG</b>
+   <small>TIỂU ĐOÀN 2 – LỮ ĐOÀN 7 CÔNG BINH</small>
+  </div>
+ </div>
+ <div class="top-actions">
+  <a href="index.html"><i class="fa-solid fa-house"></i> Trang chủ</a>
+  <span class="user"><i class="fa-solid fa-user-shield"></i> Quản trị hệ thống</span>
+ </div>
+</header>
+
+<main class="wrap">
+ <div class="crumb"><a href="index.html">Trang chủ</a>　/　Chấm điểm thi đua</div>
+
+ <div class="heading">
+  <div>
+   <h1><i class="fa-solid fa-clipboard-check"></i> CHẤM ĐIỂM THI ĐUA</h1>
+   <p>Phiếu chấm của Tổ thi đua – áp dụng trực tiếp đối với 09 Trung đội</p>
+  </div>
+  <div class="heading-actions">
+   <button class="btn" id="printBtn"><i class="fa-solid fa-print"></i> In phiếu</button>
+   <button class="btn gold" id="clearBtn"><i class="fa-solid fa-rotate-left"></i> Làm mới</button>
+  </div>
+ </div>
+
+ <section class="card">
+  <div class="card-head">
+   <h2><i class="fa-solid fa-calendar-check"></i> THÔNG TIN PHIẾU CHẤM</h2>
+   <span class="pill">Thang điểm 10 / mặt công tác</span>
+  </div>
+  <div class="card-body">
+   <div class="form-grid">
+    <div class="field">
+     <label>NGÀY CHẤM</label>
+     <input type="date" id="date">
+    </div>
+    <div class="field">
+     <label>ĐỢT / TUẦN THI ĐUA</label>
+     <select id="week">
+      <option value="1">Tuần 1</option>
+      <option value="2">Tuần 2</option>
+      <option value="3">Tuần 3</option>
+      <option value="4">Tuần 4</option>
+      <option value="5">Tuần 5</option>
+     </select>
+    </div>
+    <div class="field">
+     <label>ĐƠN VỊ ĐƯỢC CHẤM</label>
+     <select id="unit">
+      <option value="Trung đội 1">Trung đội 1</option>
+      <option value="Trung đội 2">Trung đội 2</option>
+      <option value="Trung đội 3">Trung đội 3</option>
+      <option value="Trung đội 4">Trung đội 4</option>
+      <option value="Trung đội 5">Trung đội 5</option>
+      <option value="Trung đội 6">Trung đội 6</option>
+      <option value="Trung đội 7">Trung đội 7</option>
+      <option value="Trung đội 8">Trung đội 8</option>
+      <option value="Trung đội 9">Trung đội 9</option>
+     </select>
+    </div>
+    <div class="field">
+     <label>BỘ PHẬN CHẤM</label>
+     <input id="methodDisplay" value="Tổ thi đua" readonly>
+     <input type="hidden" id="method" value="inspection">
+    </div>
+    <div class="field">
+     <label>NGƯỜI / TỔ CHẤM</label>
+     <input id="rater" placeholder="Nhập họ tên người chấm">
+    </div>
+    <div class="field">
+     <label>NGƯỜI ĐẠI DIỆN ĐƠN VỊ</label>
+     <input id="representative" placeholder="Nhập họ tên (nếu có)">
+    </div>
+   </div>
+   <input type="hidden" id="level" value="platoon">
+   <div class="notice" style="margin-top:13px">
+    <strong>Quy định chấm điểm:</strong>
+    Tổ thi đua là bộ phận duy nhất thực hiện chấm điểm hằng ngày.
+    Chấm trực tiếp 09 Trung đội, không lập phiếu chấm Đại đội.
+    Điểm tổng hợp phiếu là trung bình cộng 04 mặt công tác.
+    Điểm Đại đội được hệ thống tự động tính từ 03 Trung đội trực thuộc.
+   </div>
+  </div>
+ </section>
+
+ <section class="card">
+  <div class="card-head">
+   <h2><i class="fa-solid fa-list-check"></i> NỘI DUNG CHẤM ĐIỂM</h2>
+   <span class="pill">04 mặt công tác</span>
+  </div>
+  <div class="circle-section">
+   <div class="circle-layout">
+    <div class="circle-cell top">
+     <button class="domain-circle circle-A" data-select-domain="A" type="button">
+      <i class="fa-solid fa-clipboard-list circle-icon"></i>
+      <span class="circle-code">A</span>
+      <span class="circle-name">CÔNG TÁC THAM MƯU</span>
+      <span class="circle-score" id="circleA">10,00</span>
+     </button>
+    </div>
+    <div class="circle-cell left">
+     <button class="domain-circle circle-B" data-select-domain="B" type="button">
+      <i class="fa-solid fa-landmark circle-icon"></i>
+      <span class="circle-code">B</span>
+      <span class="circle-name">CÔNG TÁC ĐẢNG, CTCT</span>
+      <span class="circle-score" id="circleB">10,00</span>
+     </button>
+    </div>
+    <div class="circle-cell center">
+     <div class="center-circle">
+      <i class="fa-solid fa-clipboard-check"></i>
+      <b>CHẤM ĐIỂM</b>
+      <small>04 MẶT CÔNG TÁC</small>
+     </div>
+    </div>
+    <div class="circle-cell right">
+     <button class="domain-circle circle-C" data-select-domain="C" type="button">
+      <i class="fa-solid fa-utensils circle-icon"></i>
+      <span class="circle-code">C</span>
+      <span class="circle-name">CÔNG TÁC HẬU CẦN</span>
+      <span class="circle-score" id="circleC">10,00</span>
+     </button>
+    </div>
+    <div class="circle-cell bottom">
+     <button class="domain-circle circle-D" data-select-domain="D" type="button">
+      <i class="fa-solid fa-screwdriver-wrench circle-icon"></i>
+      <span class="circle-code">D</span>
+      <span class="circle-name">CÔNG TÁC KỸ THUẬT</span>
+      <span class="circle-score" id="circleD">10,00</span>
+     </button>
+    </div>
+   </div>
+   <div class="circle-guide"><i class="fa-solid fa-hand-pointer"></i> Chọn một hình tròn để mở nội dung chấm điểm tương ứng</div>
+  </div>
+
+  <div class="card-body">
+   <div class="score-summary">
+    <div class="sum-box"><small>A. THAM MƯU</small><strong id="sumA">10,00</strong><em>Điểm sau cộng / trừ</em></div>
+    <div class="sum-box"><small>B. ĐẢNG, CTCT</small><strong id="sumB">10,00</strong><em>Điểm sau cộng / trừ</em></div>
+    <div class="sum-box"><small>C. HẬU CẦN</small><strong id="sumC">10,00</strong><em>Điểm sau cộng / trừ</em></div>
+    <div class="sum-box"><small>D. KỸ THUẬT</small><strong id="sumD">10,00</strong><em>Điểm sau cộng / trừ</em></div>
+   </div>
+   <div id="domainEmpty" class="notice" style="text-align:center">
+    <i class="fa-solid fa-circle-info"></i>
+    Hãy chọn một trong bốn hình tròn phía trên để bắt đầu nhập nội dung chấm điểm.
+   </div>
+   <div id="domains"></div>
+   <div class="notice" style="margin-top:12px">
+    Các mức cộng, trừ được lấy từ quy định chấm điểm.
+    Khi chọn lỗi, nhập số lần / người / khẩu / bài giảng tương ứng.
+    Trường hợp cán bộ, quân nhân hưởng lương vi phạm cùng lỗi với chiến sĩ,
+    quy chế quy định mức trừ gấp đôi — có thể chọn hệ số 2 cho từng dòng.
+   </div>
+  </div>
+ </section>
+
+ <section class="total-panel">
+  <div><small>ĐIỂM TỔNG HỢP 04 MẶT CÔNG TÁC</small><strong id="grandScore">10,00 / 10</strong></div>
+  <div class="metric"><small>TỔNG ĐIỂM TRỪ</small><b id="deductTotal">0,00</b></div>
+  <div class="metric"><small>TỔNG ĐIỂM THƯỞNG</small><b id="bonusTotal">0,00</b></div>
+  <div class="metric"><small>BỘ PHẬN CHẤM</small><b>Tổ thi đua</b></div>
+ </section>
+
+ <section class="card">
+  <div class="card-head"><h2><i class="fa-solid fa-award"></i> ĐIỂM THƯỞNG VÀ NHẬN XÉT</h2></div>
+  <div class="card-body">
+   <div class="form-grid">
+    <div class="field">
+     <label>ĐƠN VỊ TRIỂN KHAI TỐT TRONG TUẦN (+0,5)</label>
+     <select id="weeklyBonus"><option value="0">Không</option><option value="0.5">Có – cộng 0,5 điểm</option></select>
+    </div>
+    <div class="field">
+     <label>THÀNH TÍCH NỔI BẬT TRONG TUẦN (+1)</label>
+     <select id="achievementBonus"><option value="0">Không</option><option value="1">Có – cộng 1 điểm</option></select>
+    </div>
+    <div class="field">
+     <label>ĐIỂM THƯỞNG KHÁC (NẾU ĐƯỢC DUYỆT)</label>
+     <input id="otherBonus" type="number" min="0" step="0.01" value="0">
+    </div>
+    <div class="field">
+     <label>GHI CHÚ ĐIỂM THƯỞNG</label>
+     <input id="bonusNote" placeholder="Nêu thành tích / căn cứ">
+    </div>
+   </div>
+   <div class="field" style="margin-top:12px">
+    <label>NHẬN XÉT CHUNG / KIẾN NGHỊ</label>
+    <textarea id="comment" placeholder="Nhập nhận xét, nội dung cần khắc phục hoặc kiến nghị..."></textarea>
+   </div>
+  </div>
+ </section>
+
+ <div class="bottom-grid">
+  <section class="card">
+   <div class="card-head"><h2><i class="fa-solid fa-calculator"></i> NGUYÊN TẮC TỔNG HỢP ĐIỂM</h2></div>
+   <div class="card-body">
+    <div class="notice">
+     <strong>Điểm ngày:</strong> Là trung bình cộng điểm của 04 mặt công tác trong phiếu Tổ thi đua.<br>
+     <strong>Điểm tuần:</strong> Là trung bình cộng điểm các ngày có chấm trong tuần.<br>
+     <strong>Điểm tháng:</strong> Là trung bình cộng điểm các tuần có điểm trong tháng.<br>
+     <strong>Điểm Đại đội:</strong> Là trung bình cộng điểm của 03 Trung đội trực thuộc.
+     Trung đội chưa có điểm được tính là 0; Đại đội luôn chia cho 3.<br><br>
+     Việc tổng hợp điểm tuần, tháng và xếp hạng được thực hiện tự động
+     từ dữ liệu đã lưu trên Google Sheets.
+     Trang này chỉ lập phiếu chấm điểm hằng ngày cho Trung đội.
+    </div>
+   </div>
+  </section>
+
+  <section class="card history-card">
+   <div class="card-head">
+    <h2><i class="fa-solid fa-clock-rotate-left"></i> PHIẾU TỔ THI ĐUA ĐÃ LƯU</h2>
+    <span class="pill" id="savedCount">0 phiếu</span>
+   </div>
+   <div class="card-body">
+    <div class="history-list" id="history"><div class="empty">Đang tải dữ liệu phiếu chấm...</div></div>
+   </div>
+  </section>
+ </div>
+
+ <section class="card">
+  <div class="card-body savebar">
+   <div class="left">
+    <button class="btn" id="exportBtn"><i class="fa-solid fa-file-arrow-down"></i> Xuất dữ liệu JSON</button>
+    <button class="btn" id="printBottom"><i class="fa-solid fa-print"></i> In phiếu chấm</button>
+   </div>
+   <div class="right">
+    <button class="btn danger" id="deleteBtn"><i class="fa-solid fa-trash"></i> Xóa phiếu đang chọn</button>
+    <button class="btn primary" id="saveBtn"><i class="fa-solid fa-floppy-disk"></i> Lưu phiếu chấm</button>
+   </div>
+  </div>
+ </section>
+
+ <div class="footer">★　TIỂU ĐOÀN 2 – LỮ ĐOÀN 7 CÔNG BINH　★　|　HỆ THỐNG THI ĐUA QUYẾT THẮNG</div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbyqUwmHIaUE-mWl0BktkLlbGB-qomoPMCehHJUGzOoP9LwQWiFYYXDRdZOBO2y7giRU-Q/exec';
+const LOCAL_KEY = 'tdkt_records';
+
+const RULES = {
+ A:[
+  ["Cán bộ không bám nắm bộ đội huấn luyện theo kế hoạch","1","lần kiểm tra"],
+  ["Giáo án chưa phê duyệt đã tổ chức huấn luyện","1","lần"],
+  ["Giáo án cũ","1","bài giảng"],
+  ["Đăng ký thống kê huấn luyện không kịp thời, thiếu cột mục","0.5","lần kiểm tra"],
+  ["Không đăng ký thống kê huấn luyện","2","lần"],
+  ["Đăng ký thống kê huấn luyện trước","1","lần"],
+  ["Tiến trình biểu chưa phê duyệt đã tổ chức huấn luyện","1","lần"],
+  ["Quân nhân đào ngũ không trở lại đơn vị (cuối giai đoạn huấn luyện)","3","người"],
+  ["Quân nhân vắng mặt trái phép","1","người/lần"],
+  ["Chấp hành không nghiêm kế hoạch triển khai của Đại đội","1","nội dung"],
+  ["Ra ngoài đơn vị giờ hành chính không có lý do chính đáng","1","người"],
+  ["Vi phạm kỷ luật từ khiển trách trở lên (cuối tuần)","2","người"],
+  ["Vi phạm kỷ luật thông thường: bỏ gác, sai tác phong, mất đoàn kết...","1","người"],
+  ["Không đội mũ bảo hiểm / đội mũ sai quy định","1","người/lần"],
+  ["Chở 3 người khi tham gia giao thông","1","lần"],
+  ["Để xe máy sai quy định","0.5","lỗi"],
+  ["Thuê, mượn xe máy","1","lần"],
+  ["Uống rượu bia khi điều khiển xe tham gia giao thông","3","lần"],
+  ["Điều khiển xe máy gây tai nạn","5","vụ"],
+  ["Hàng chăn cong, chiếu không thẳng","0.5","hàng"],
+  ["Chăn xấu; giày dép, quần áo, đồ dùng, sách vở để sai","0.2","lỗi"],
+  ["Phản bẩn, chiếu trải ngược","0.2","cái"],
+  ["Dây phơi, khăn mặt hoặc mắc quần áo tập thể sai","0.5","lỗi"],
+  ["Khu vực vệ sinh công cộng bẩn","0.5","lần"],
+  ["Lễ tiết tác phong cá nhân sai quy định","0.2","lỗi"],
+  ["Chăn đẹp (điểm cộng)","-0.2","chăn"],
+  ["Tập thể chăn đẹp (điểm cộng)","-0.5","trung đội"],
+  ["Nội dung kiểm tra thực hiện kết quả không cao","1","lần kiểm tra"]
+ ],
+ B:[
+  ["Đăng ký sổ sách thống kê không thường xuyên","0.5","nội dung"],
+  ["Chấp hành kế hoạch báo cáo CTĐ, CTCT không nghiêm","0.5","lần"],
+  ["Chấp hành nguyên tắc lãnh đạo của Đảng không nghiêm","5","lần kiểm tra"],
+  ["Đảng viên có dấu hiệu vi phạm kỷ luật (cuối tuần)","3","người"],
+  ["Triển khai chậm các mặt hoạt động CTĐ, CTCT","0.5","nội dung"],
+  ["Cán bộ sử dụng xe máy sai quy định","0.5","người"],
+  ["Không thực hiện quy chế dân chủ","1","lần kiểm tra"],
+  ["Thành viên Tổ thi đua được thông báo đi chấm vắng không lý do","1","lần"]
+ ],
+ C:[
+  ["Quân số ốm","0.2","người/lần"],
+  ["Quân số ốm trên 7 ngày","1","người"],
+  ["Hiệu quả tăng gia thấp, không đủ chỉ tiêu (tổng kết thi đua)","2","lần tổng kết"],
+  ["Để dịch bệnh xảy ra","1","lần"]
+ ],
+ D:[
+  ["Thực hiện nội dung công tác kỹ thuật phải nhắc nhở","0.5","lần"],
+  ["Đã đôn đốc, nhắc nhở nhưng không làm hoặc làm chậm","1","lần chấm"],
+  ["Đăng ký sổ sách không thường xuyên, không đúng","0.5","lần kiểm tra"],
+  ["Vũ khí để han, bẩn","0.5","khẩu"],
+  ["Sắp đặt tủ súng không thống nhất, không gọn gàng","1","lần"],
+  ["Không thực hiện an toàn trong sắp đặt VKTB","0.5","lỗi"],
+  ["Hư hỏng vũ khí","2","khẩu"],
+  ["Mất mát trang bị / chi tiết","2","chi tiết"]
+ ]
+};
+
+const DOMAINS=[
+ {id:"A",title:"A. CÔNG TÁC THAM MƯU",sub:"Huấn luyện · Quản lý kỷ luật · Nề nếp chính quy · Nội vụ vệ sinh",icon:"fa-clipboard-list"},
+ {id:"B",title:"B. CÔNG TÁC ĐẢNG, CÔNG TÁC CHÍNH TRỊ",sub:"Sổ sách · Báo cáo · Nguyên tắc lãnh đạo · Hoạt động CTĐ, CTCT",icon:"fa-landmark"},
+ {id:"C",title:"C. CÔNG TÁC HẬU CẦN",sub:"Quân số ốm · Tăng gia · Phòng chống dịch bệnh",icon:"fa-utensils"},
+ {id:"D",title:"D. CÔNG TÁC KỸ THUẬT",sub:"Vũ khí · Trang bị · Sổ sách · An toàn kỹ thuật",icon:"fa-screwdriver-wrench"}
+];
+
+const UNITS=[
+ "Trung đội 1","Trung đội 2","Trung đội 3",
+ "Trung đội 4","Trung đội 5","Trung đội 6",
+ "Trung đội 7","Trung đội 8","Trung đội 9"
+];
+
+const $=id=>document.getElementById(id);
+const fmt=n=>Number(n||0).toFixed(2).replace(".",",");
+
+let selectedId=null;
+let serverRecords=[];
+let activeDomain=null;
+
+/*
+ * GHI NHỚ ĐƠN VỊ VÀ NGÀY CỦA PHIẾU ĐANG MỞ.
+ * Nếu người dùng đổi Trung đội hoặc ngày chấm,
+ * hệ thống phải tạo ID mới để không ghi đè phiếu cũ.
+ */
+let selectedRecordUnit='';
+let selectedRecordDate='';
+
+function localDate(){
+ const d=new Date();
+ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function escapeHtml(s){
+ return String(s??'').replace(/[&<>"']/g,c=>({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+ }[c]));
+}
+
+function toast(msg){
+ const t=$('toast');
+ t.textContent=msg;
+ t.style.display='block';
+ clearTimeout(window._toast);
+ window._toast=setTimeout(()=>t.style.display='none',3500);
+}
+
+function selectDomain(id){
+ activeDomain=id;
+ document.querySelectorAll('.domain').forEach(el=>{
+  el.classList.toggle('active',el.dataset.domain===id);
+ });
+ document.querySelectorAll('[data-select-domain]').forEach(btn=>{
+  btn.classList.toggle('active',btn.dataset.selectDomain===id);
+ });
+ $('domainEmpty').style.display=id?'none':'block';
+ if(id){
+  const panel=document.querySelector(`[data-domain="${id}"]`);
+  if(panel){
+   setTimeout(()=>panel.scrollIntoView({behavior:'smooth',block:'nearest'}),80);
+  }
+ }
+}
+
+function buildDomains(){
+ $('domains').innerHTML=DOMAINS.map(d=>`
+ <div class="domain" data-domain="${d.id}">
+  <div class="domain-head">
+   <div class="domain-title">
+    <div class="domain-icon"><i class="fa-solid ${d.icon}"></i></div>
+    <div><b>${d.title}</b><small>${d.sub}</small></div>
+   </div>
+   <div class="domain-score" id="score${d.id}">10,00</div>
+  </div>
+  <div class="domain-body">
+   <div class="domain-meta">
+    <div><label>ĐIỂM NỀN (TỐI ĐA 10)</label><input class="base" type="number" min="0" max="10" step="0.01" value="10"></div>
+    <div><label>GHI CHÚ RIÊNG MẶT CÔNG TÁC</label><input class="domain-note" placeholder="Ghi chú (nếu có)"></div>
+   </div>
+   <div style="overflow-x:auto">
+    <table class="deduct-table">
+     <thead><tr>
+      <th style="min-width:220px">NỘI DUNG VI PHẠM / THÀNH TÍCH</th>
+      <th style="width:75px">MỨC ĐIỂM</th>
+      <th style="width:78px">SỐ LƯỢNG</th>
+      <th style="width:85px">HỆ SỐ</th>
+      <th style="width:80px">THÀNH TIỀN</th>
+      <th style="width:35px"></th>
+     </tr></thead>
+     <tbody class="rows"></tbody>
+    </table>
+   </div>
+   <button class="add-row" type="button" data-add="${d.id}"><i class="fa-solid fa-plus-circle"></i> Thêm lỗi / thành tích</button>
+   <div class="domain-switch">
+    <button type="button" data-prev="${d.id}"><i class="fa-solid fa-arrow-left"></i> Mặt trước</button>
+    <span style="font-size:10px;color:#81918a">Mặt ${d.id} / 4</span>
+    <button type="button" data-next="${d.id}">Mặt tiếp theo <i class="fa-solid fa-arrow-right"></i></button>
+   </div>
+  </div>
+ </div>`).join('');
+
+ document.querySelectorAll('[data-add]').forEach(b=>{
+  b.addEventListener('click',()=>addRow(b.dataset.add));
+ });
+ document.querySelectorAll('.domain').forEach(el=>{
+  el.addEventListener('input',recalculate);
+ });
+ document.querySelectorAll('[data-select-domain]').forEach(btn=>{
+  btn.addEventListener('click',()=>selectDomain(btn.dataset.selectDomain));
+ });
+ document.querySelectorAll('[data-prev]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+   const order=['A','B','C','D'];
+   const index=order.indexOf(btn.dataset.prev);
+   if(index>0)selectDomain(order[index-1]);
+  });
+ });
+ document.querySelectorAll('[data-next]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+   const order=['A','B','C','D'];
+   const index=order.indexOf(btn.dataset.next);
+   if(index<3)selectDomain(order[index+1]);
+  });
+ });
+}
+
+function addRow(domainId,ruleIndex="",amount="",qty=1,mult=1,description=""){
+ const body=document.querySelector(`[data-domain="${domainId}"] .rows`);
+ const options=RULES[domainId].map((r,i)=>`
+  <option value="${i}" ${String(ruleIndex)===String(i)?'selected':''}>
+   ${escapeHtml(r[0])}
+   (${Number(r[1])>0?'-':'+'}${Math.abs(Number(r[1])).toFixed(2)} / ${r[2]})
+  </option>`).join('');
+ const tr=document.createElement('tr');
+ tr.innerHTML=`
+  <td>
+   <select class="rule"><option value="">-- Chọn nội dung --</option>${options}<option value="custom">Khác / nhập thủ công</option></select>
+   <input class="custom-desc" style="display:none;margin-top:5px" placeholder="Mô tả nội dung">
+  </td>
+  <td><input class="rate" type="number" step="0.01" value="${amount}" placeholder="0,00"></td>
+  <td><input class="qty" type="number" min="0" step="1" value="${qty}"></td>
+  <td><select class="mult"><option value="1" ${mult==1?'selected':''}>× 1</option><option value="2" ${mult==2?'selected':''}>× 2 (cán bộ)</option></select></td>
+  <td class="amount">0,00</td>
+  <td><button class="remove" type="button" title="Xóa dòng"><i class="fa-solid fa-xmark"></i></button></td>`;
+ body.appendChild(tr);
+
+ const rule=tr.querySelector('.rule');
+ const rate=tr.querySelector('.rate');
+ const custom=tr.querySelector('.custom-desc');
+
+ if(ruleIndex==="custom"){
+  rule.value="custom";
+  custom.style.display="block";
+  custom.value=description;
+  rate.value=amount;
+ }
+
+ function setRule(){
+  if(rule.value==="custom"){
+   custom.style.display="block";
+   rate.value=amount||0;
+  }else if(rule.value!==""){
+   custom.style.display="none";
+   rate.value=RULES[domainId][Number(rule.value)][1];
+  }
+  recalculate();
+ }
+
+ rule.addEventListener('change',setRule);
+ tr.querySelectorAll('input,select').forEach(x=>{
+  x.addEventListener('input',recalculate);
+  x.addEventListener('change',recalculate);
+ });
+ tr.querySelector('.remove').addEventListener('click',()=>{
+  tr.remove();
+  recalculate();
+ });
+ if(ruleIndex!==""&&ruleIndex!=="custom")setRule();
+ else recalculate();
+}
+
+function domainValues(id){
+ const el=document.querySelector(`[data-domain="${id}"]`);
+ const base=Math.max(0,Math.min(10,Number(el.querySelector('.base').value)||0));
+ let deduct=0,bonus=0,rows=[];
+
+ el.querySelectorAll('tbody tr').forEach(tr=>{
+  const r=tr.querySelector('.rule').value;
+  const rate=Number(tr.querySelector('.rate').value)||0;
+  const qty=Math.max(0,Number(tr.querySelector('.qty').value)||0);
+  const mult=Number(tr.querySelector('.mult').value)||1;
+  const val=rate*qty*mult;
+  if(rate>=0)deduct+=val;
+  else bonus+=Math.abs(val);
+  tr.querySelector('.amount').textContent=(rate>=0?'-':'+')+fmt(Math.abs(val));
+
+  if(r!==""&&(rate!==0||qty!==0)){
+   let ruleName;
+   if(r==="custom")ruleName=tr.querySelector('.custom-desc').value||"Khác";
+   else ruleName=RULES[id][Number(r)][0];
+   rows.push({rule:ruleName,rate,quantity:qty,multiplier:mult,total:val});
+  }
+ });
+
+ return {
+  base,deduct,bonus,
+  score:Math.max(0,Math.min(10,base-deduct+bonus)),
+  note:el.querySelector('.domain-note').value,
+  rows
+ };
+}
+
+function recalculate(){
+ let all={},deduct=0,bonus=0,total=0;
+ DOMAINS.forEach(d=>{
+  const v=domainValues(d.id);
+  all[d.id]=v;
+  deduct+=v.deduct;
+  bonus+=v.bonus;
+  $('score'+d.id).textContent=fmt(v.score);
+  $('sum'+d.id).textContent=fmt(v.score);
+  $('circle'+d.id).textContent=fmt(v.score);
+  total+=v.score;
+ });
+ const extra=Number($('weeklyBonus').value)+Number($('achievementBonus').value)+Math.max(0,Number($('otherBonus').value)||0);
+ $('grandScore').textContent=fmt(total/4)+' / 10';
+ $('deductTotal').textContent=fmt(deduct);
+ $('bonusTotal').textContent=fmt(bonus+extra);
+ return {domains:all,average:Number((total/4).toFixed(2)),deductions:deduct,domainBonuses:bonus};
+}
+
+function getData(){
+ const calc=recalculate();
+ return {
+  id:selectedId||('p_'+Date.now()),
+  date:$('date').value,
+  week:$('week').value,
+  level:'platoon',
+  unit:$('unit').value,
+  method:'inspection',
+  rater:$('rater').value,
+  representative:$('representative').value,
+  domains:calc.domains,
+  average:calc.average,
+  deductions:calc.deductions,
+  domainBonuses:calc.domainBonuses,
+  weeklyBonus:Number($('weeklyBonus').value),
+  achievementBonus:Number($('achievementBonus').value),
+  otherBonus:Number($('otherBonus').value)||0,
+  bonusNote:$('bonusNote').value,
+  comment:$('comment').value,
+  updatedAt:new Date().toISOString()
+ };
+}
+
+function getLocalRecords(){
+ try{return JSON.parse(localStorage.getItem(LOCAL_KEY)||'[]');}
+ catch(e){return [];}
+}
+function setLocalRecords(list){localStorage.setItem(LOCAL_KEY,JSON.stringify(list));}
+function methodToApi(){return 'TO_THI_DUA';}
+function methodFromApi(method){return /TRUC_BAN|duty|trực ban/i.test(String(method||''))?'duty':'inspection';}
+
+function scorePayload(d){
+ const details=[];
+ DOMAINS.forEach(domain=>{
+  (d.domains[domain.id]?.rows||[]).forEach(row=>{
+   details.push({
+    face:domain.id,code:row.rule,name:row.rule,quantity:row.quantity,
+    unitScore:row.rate,multiplier:row.multiplier,
+    totalDeduction:row.total,note:row.rate<0?'Thành tích cộng điểm':''
+   });
+  });
+ });
+ const bonus=Number(d.weeklyBonus||0)+Number(d.achievementBonus||0)+Number(d.otherBonus||0);
+ const noteParts=[d.comment,d.bonusNote?('Thưởng: '+d.bonusNote):''].filter(Boolean);
+ return {
+  action:'save',id:d.id,date:d.date,week:Number(d.week)||1,
+  month:d.date?Number(d.date.slice(5,7)):new Date().getMonth()+1,
+  year:d.date?Number(d.date.slice(0,4)):new Date().getFullYear(),
+  level:'TRUNG_DOI',unit:d.unit,method:methodToApi(),
+  scores:{A:d.domains.A.score,B:d.domains.B.score,C:d.domains.C.score,D:d.domains.D.score},
+  bonus,note:noteParts.join(' | '),scorer:d.rater,createdAt:d.updatedAt,details
+ };
+}
+
+async function apiGet(action,params={}){
+ const url=new URL(API_URL);
+ url.searchParams.set('action',action);
+ Object.entries(params).forEach(([k,v])=>{
+  if(v!==undefined&&v!==null&&v!=='')url.searchParams.set(k,v);
+ });
+ const response=await fetch(url.toString(),{method:'GET',redirect:'follow',cache:'no-store'});
+ if(!response.ok)throw new Error('Máy chủ trả về HTTP '+response.status);
+ return await response.json();
+}
+
+async function apiPost(payload){
+ const response=await fetch(API_URL,{
+  method:'POST',redirect:'follow',
+  headers:{'Content-Type':'text/plain;charset=utf-8'},
+  body:JSON.stringify(payload)
+ });
+ if(!response.ok)throw new Error('Máy chủ trả về HTTP '+response.status);
+ return await response.json();
+}
+
+function unwrapList(result){
+ if(Array.isArray(result))return result;
+ if(Array.isArray(result?.data))return result.data;
+ if(Array.isArray(result?.records))return result.records;
+ return [];
+}
+
+function mapServerRecord(r){
+ const get=(...keys)=>{
+  for(const k of keys)if(r?.[k]!==undefined&&r?.[k]!==null)return r[k];
+  return '';
+ };
+ const scores=r.scores||{};
+ const date=String(get('date','NGAY_CHAM')).slice(0,10);
+ return {
+  id:String(get('id','ID')),date,
+  week:String(get('week','TUAN')||'1'),
+  level:/TRUNG|platoon/i.test(String(get('level','CAP_DON_VI')))?'platoon':'company',
+  unit:get('unit','DON_VI'),method:methodFromApi(get('method','HINH_THUC')),
+  rater:get('scorer','NGUOI_CHAM'),
+  average:Number(get('average','DIEM_TONG_HOP')||
+   ((Number(scores.A||get('DIEM_A'))+Number(scores.B||get('DIEM_B'))+
+     Number(scores.C||get('DIEM_C'))+Number(scores.D||get('DIEM_D')))/4)||0),
+  raw:r
+ };
+}
+
+function normalizeServerDetail(item){
+ return {
+  face:item.face||item.domain||item.matCongTac||item.MAT_CONG_TAC||'A',
+  rule:item.name||item.rule||item.TEN_LOI||'Nội dung khác',
+  rate:Number(item.unitScore??item.rate??item.DIEM_MOI_LOI??0),
+  quantity:Number(item.quantity??item.qty??item.SO_LUONG??1),
+  multiplier:Number(item.multiplier??1),
+  total:Number(item.totalDeduction??item.total??item.TONG_DIEM_TRU??0)
+ };
+}
+
+function serverToForm(r){
+ const raw=r?.data||r?.record||r;
+ const rec=mapServerRecord(raw);
+ const scores=raw.scores||{};
+ const d={
+  id:rec.id,date:rec.date,week:rec.week,level:rec.level,unit:rec.unit,
+  method:rec.method,rater:rec.rater,representative:'',domains:{},
+  weeklyBonus:0,achievementBonus:0,
+  otherBonus:Number(raw.bonus??raw.DIEM_THUONG??0),
+  bonusNote:'',comment:raw.note||raw.GHI_CHU||''
+ };
+ DOMAINS.forEach(x=>{
+  const v=raw.domains?.[x.id];
+  const score=Number(scores[x.id]??raw['DIEM_'+x.id]??v?.score??10);
+  d.domains[x.id]={base:Number(v?.base??score),note:v?.note||'',rows:[]};
+ });
+ const details=Array.isArray(raw.details)?raw.details:Array.isArray(raw.chiTiet)?raw.chiTiet:[];
+ details.map(normalizeServerDetail).forEach(item=>{
+  const id=String(item.face).toUpperCase().replace('MAT_','').slice(0,1);
+  if(!d.domains[id])return;
+  d.domains[id].rows.push({
+   rule:item.rule,rate:item.rate,quantity:item.quantity,
+   multiplier:item.multiplier,total:item.total
+  });
+ });
+ return d;
+}
+
+function loadData(d){
+ const unitName=String(d.unit||'');
+ if(d.method==='duty'||d.level==='company'||unitName.startsWith('Đại đội')){
+  toast('Phiếu lịch sử Trực ban/Đại đội được giữ nguyên để bảo toàn dữ liệu, không mở chỉnh sửa tại trang chấm mới.');
+  return;
+ }
+ if(!UNITS.includes(unitName)){
+  toast('Không xác định được Trung đội của phiếu này.');
+  return;
+ }
+
+ selectedId=d.id;
+
+ $('date').value=d.date||localDate();
+ $('week').value=d.week||'1';
+ $('unit').value=unitName;
+ $('method').value='inspection';
+ $('rater').value=d.rater||'';
+ $('representative').value=d.representative||'';
+
+ /*
+  * LƯU LẠI ĐƠN VỊ VÀ NGÀY CỦA PHIẾU ĐANG MỞ.
+  * Dùng hai giá trị này để phát hiện khi người dùng đổi phiếu.
+  */
+ selectedRecordUnit=unitName;
+ selectedRecordDate=$('date').value;
+
+ DOMAINS.forEach(x=>{
+  const v=d.domains?.[x.id];
+  const el=document.querySelector(`[data-domain="${x.id}"]`);
+  el.querySelector('.base').value=v?.base??10;
+  el.querySelector('.domain-note').value=v?.note||'';
+  el.querySelector('.rows').innerHTML='';
+  (v?.rows||[]).forEach(row=>{
+   const idx=RULES[x.id].findIndex(r=>r[0]===row.rule);
+   addRow(x.id,idx<0?'custom':idx,row.rate,row.quantity,row.multiplier,row.rule);
+  });
+ });
+
+ $('weeklyBonus').value=d.weeklyBonus||0;
+ $('achievementBonus').value=d.achievementBonus||0;
+ $('otherBonus').value=d.otherBonus||0;
+ $('bonusNote').value=d.bonusNote||'';
+ $('comment').value=d.comment||'';
+ recalculate();
+ selectDomain(null);
+ toast('Đã mở phiếu chấm Trung đội.');
+}
+
+function records(){return serverRecords.length?serverRecords:getLocalRecords();}
+
+function renderHistory(){
+ const list=records().filter(d=>{
+  const method=d.method??d.HINH_THUC;
+  const unit=d.unit??d.DON_VI??'';
+  const level=d.level??d.CAP_DON_VI??'';
+  return methodFromApi(method)!=='duty'&&!String(unit).startsWith('Đại đội')&&/TRUNG|platoon/i.test(String(level));
+ });
+ $('savedCount').textContent=list.length+' phiếu';
+ $('history').innerHTML=list.length?list.slice(0,40).map(d=>{
+  const unit=d.unit||d.DON_VI||'Trung đội';
+  const date=d.date||d.NGAY_CHAM||'';
+  const week=d.week||d.TUAN||'';
+  const score=d.average??d.DIEM_TONG_HOP??0;
+  const id=d.id||d.ID;
+  return `
+   <div class="history-item">
+    <div><b>${escapeHtml(unit)} · Tổ thi đua</b><small>${escapeHtml(date)} · Tuần ${escapeHtml(week)}</small></div>
+    <div style="text-align:right">
+     <b>${fmt(score)} điểm</b><br>
+     <button class="btn" style="padding:4px 7px;margin-top:4px" data-open="${escapeHtml(id)}">Mở phiếu</button>
+    </div>
+   </div>`;
+ }).join(''):'<div class="empty">Chưa có phiếu Tổ thi đua nào được lưu.</div>';
+
+ document.querySelectorAll('[data-open]').forEach(b=>{
+  b.addEventListener('click',()=>openRecord(b.dataset.open));
+ });
+}
+
+async function refreshRecords(showMessage=false){
+ try{
+  const result=await apiGet('list');
+  if(result?.success===false)throw new Error(result.message||'Không lấy được danh sách phiếu.');
+  serverRecords=unwrapList(result);
+  renderHistory();
+  if(showMessage)toast('Đã đồng bộ dữ liệu từ Google Sheets.');
+ }catch(err){
+  console.error(err);
+  if(!serverRecords.length){
+   serverRecords=getLocalRecords();
+   renderHistory();
+  }
+  if(showMessage)toast('Chưa kết nối được Google Sheets: '+err.message);
+ }
+}
+
+async function openRecord(id){
+ try{
+  const result=await apiGet('get',{id});
+  if(result?.success===false)throw new Error(result.message||'Không tìm thấy phiếu.');
+  const data=result?.data||result?.record||result;
+  loadData(serverToForm(data));
+ }catch(err){
+  const local=getLocalRecords().find(x=>String(x.id)===String(id));
+  if(local){
+   loadData(local);
+   toast('Đang mở bản lưu trên thiết bị; máy chủ chưa phản hồi.');
+  }else{
+   toast('Không mở được phiếu: '+err.message);
+  }
+ }
+}
+
+async function save(){
+ /*
+  * KIỂM TRA ĐỔI TRUNG ĐỘI HOẶC NGÀY CHẤM.
+  * Nếu khác phiếu đang mở thì bỏ ID cũ.
+  * getData() sẽ tự tạo ID mới, tránh ghi đè phiếu trước.
+  */
+ const currentUnit=$('unit').value;
+ const currentDate=$('date').value;
+
+ if(
+  selectedId &&
+  (
+   currentUnit!==selectedRecordUnit ||
+   currentDate!==selectedRecordDate
+  )
+ ){
+  selectedId=null;
+ }
+
+ const d=getData();
+
+ if(!d.date){
+  toast('Bạn hãy chọn ngày chấm trước khi lưu phiếu.');
+  $('date').focus();
+  return;
+ }
+ if(!UNITS.includes(d.unit)){
+  toast('Chỉ được lập phiếu chấm cho 09 Trung đội.');
+  return;
+ }
+ if(!d.rater.trim()){
+  if(!confirm('Bạn chưa nhập người chấm. Bạn có muốn tiếp tục lưu phiếu không?')){
+   $('rater').focus();
+   return;
+  }
+ }
+
+ const btn=$('saveBtn');
+ btn.disabled=true;
+ btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Đang lưu...';
+
+ try{
+  const result=await apiPost(scorePayload(d));
+  if(result?.success===false)throw new Error(result.message||'Máy chủ từ chối lưu phiếu.');
+
+  if(result?.id)d.id=result.id;
+  selectedId=d.id;
+
+  /*
+   * CẬP NHẬT THÔNG TIN PHIẾU VỪA LƯU.
+   * Những lần lưu tiếp theo cùng Trung đội/ngày sẽ cập nhật đúng phiếu.
+   */
+  selectedRecordUnit=d.unit;
+  selectedRecordDate=d.date;
+
+  const local=getLocalRecords();
+  const i=local.findIndex(x=>String(x.id)===String(d.id));
+  if(i>=0)local[i]=d;
+  else local.unshift(d);
+  setLocalRecords(local);
+
+  await refreshRecords(false);
+  toast('Đã lưu phiếu Tổ thi đua lên Google Sheets.');
+ }catch(err){
+  console.error(err);
+  toast('Lưu lên máy chủ chưa thành công: '+err.message);
+ }finally{
+  btn.disabled=false;
+  btn.innerHTML='<i class="fa-solid fa-floppy-disk"></i> Lưu phiếu chấm';
+ }
+}
+
+function clearForm(){
+ selectedId=null;
+
+ /* Xóa thông tin nhận diện phiếu đang mở */
+ selectedRecordUnit='';
+ selectedRecordDate='';
+
+ $('date').value=localDate();
+ $('week').value='1';
+ $('unit').value='Trung đội 1';
+ $('method').value='inspection';
+ $('rater').value='';
+ $('representative').value='';
+
+ DOMAINS.forEach(d=>{
+  const e=document.querySelector(`[data-domain="${d.id}"]`);
+  e.querySelector('.base').value=10;
+  e.querySelector('.domain-note').value='';
+  e.querySelector('.rows').innerHTML='';
+ });
+
+ $('weeklyBonus').value='0';
+ $('achievementBonus').value='0';
+ $('otherBonus').value='0';
+ $('bonusNote').value='';
+ $('comment').value='';
+
+ selectDomain(null);
+ recalculate();
+}
+
+function exportData(){
+ const data=records().filter(d=>{
+  const method=d.method??d.HINH_THUC;
+  return methodFromApi(method)!=='duty';
+ });
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');
+ a.href=url;
+ a.download='du-lieu-phieu-to-thi-dua.json';
+ a.click();
+ URL.revokeObjectURL(url);
+}
+
+async function deleteCurrent(){
+ if(!selectedId){
+  toast('Chưa chọn phiếu đã lưu để xóa.');
+  return;
+ }
+ if(!confirm('Bạn chắc chắn muốn xóa phiếu Tổ thi đua này khỏi dữ liệu chung?'))return;
+
+ const btn=$('deleteBtn');
+ btn.disabled=true;
+ try{
+  const result=await apiPost({action:'delete',id:selectedId});
+  if(result?.success===false)throw new Error(result.message||'Máy chủ không xóa được phiếu.');
+
+  setLocalRecords(getLocalRecords().filter(x=>String(x.id)!==String(selectedId)));
+  selectedId=null;
+  selectedRecordUnit='';
+  selectedRecordDate='';
+  await refreshRecords(false);
+  clearForm();
+  toast('Đã xóa phiếu trên Google Sheets.');
+ }catch(err){
+  toast('Xóa chưa thành công: '+err.message);
+ }finally{
+  btn.disabled=false;
+ }
+}
+
+/* KHỞI TẠO TRANG */
+buildDomains();
+clearForm();
+renderHistory();
+refreshRecords(true);
+
+/* CẬP NHẬT ĐIỂM KHI THAY ĐỔI THÔNG TIN THƯỞNG */
+['weeklyBonus','achievementBonus','otherBonus'].forEach(id=>{
+ $(id).addEventListener('input',recalculate);
+ $(id).addEventListener('change',recalculate);
+});
+
+/* CÁC NÚT CHỨC NĂNG */
+$('saveBtn').addEventListener('click',save);
+$('clearBtn').addEventListener('click',()=>{
+ if(confirm('Làm mới phiếu đang nhập?'))clearForm();
+});
+$('deleteBtn').addEventListener('click',deleteCurrent);
+$('exportBtn').addEventListener('click',exportData);
+$('printBtn').addEventListener('click',()=>window.print());
+$('printBottom').addEventListener('click',()=>window.print());
+</script>
+</body>
+</html>

@@ -1,0 +1,1323 @@
+﻿
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#123d2b">
+<title>Báo cáo thi đua - Chấm thi đua</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root {
+    --green:#123d2b;
+    --green2:#1d563d;
+    --green3:#28734f;
+    --gold:#d6b45c;
+    --gold2:#f0d990;
+    --bg:#f3f6f3;
+    --white:#fff;
+    --text:#24352b;
+    --muted:#718078;
+    --border:#e1e9e3;
+    --red:#c0392b;
+    --shadow:0 5px 20px rgba(18,61,43,.07);
+}
+* {box-sizing:border-box}
+body {
+    margin:0;
+    font-family:'Be Vietnam Pro',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+header {
+    background:linear-gradient(120deg,var(--green),var(--green2));
+    color:white;
+    padding:24px 20px;
+    border-bottom:4px solid var(--gold);
+}
+.header-inner {max-width:1250px;margin:auto}
+.header-top {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+.brand {display:flex;align-items:center;gap:15px}
+.logo {
+    width:54px;height:54px;
+    border:2px solid var(--gold);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--gold2);font-size:25px;font-weight:800;
+    flex-shrink:0;
+}
+.brand h1 {margin:0;font-size:21px;font-weight:800;letter-spacing:.3px}
+.brand p {margin:5px 0 0;color:#d5e3d9;font-size:12px}
+.header-label {
+    color:var(--gold2);font-size:12px;font-weight:700;
+    text-align:right;text-transform:uppercase;letter-spacing:1px;
+}
+nav {
+    max-width:1250px;margin:18px auto 0;
+    display:flex;flex-wrap:wrap;gap:8px;
+}
+nav a {
+    text-decoration:none;color:#e0ebe4;
+    padding:9px 15px;border-radius:7px;
+    font-size:12px;font-weight:600;transition:.2s;
+}
+nav a:hover,nav a.active {
+    background:rgba(255,255,255,.15);color:var(--gold2);
+}
+.container {
+    max-width:1250px;margin:25px auto;
+    padding:0 18px 35px;
+}
+.page-heading {margin-bottom:20px}
+.page-heading h2 {
+    margin:0;color:var(--green);font-size:22px;font-weight:800;
+}
+.page-heading p {margin:7px 0 0;color:var(--muted);font-size:13px}
+.card {
+    background:white;border:1px solid var(--border);
+    border-radius:13px;box-shadow:var(--shadow);
+    padding:20px;margin-bottom:18px;
+}
+.card-title {
+    display:flex;align-items:center;justify-content:space-between;
+    gap:10px;margin-bottom:17px;
+}
+.card-title h3 {margin:0;color:var(--green);font-size:15px;font-weight:800}
+.card-title small {color:var(--muted);font-size:11px}
+.filter-grid {
+    display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:14px;align-items:end;
+}
+.form-group label {
+    display:block;margin-bottom:7px;color:#53645a;
+    font-size:12px;font-weight:700;
+}
+.form-group select,.form-group input {
+    width:100%;height:43px;border:1px solid #d8e2da;
+    border-radius:8px;padding:0 12px;background:#fff;
+    color:var(--text);font-family:inherit;font-size:13px;outline:none;
+}
+.form-group select:focus,.form-group input:focus {
+    border-color:var(--green3);
+    box-shadow:0 0 0 3px rgba(40,115,79,.1);
+}
+.filter-actions {display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}
+.btn {
+    border:0;border-radius:8px;padding:11px 17px;
+    font-family:inherit;font-size:12px;font-weight:700;
+    cursor:pointer;transition:.2s;
+}
+.btn-primary {color:white;background:var(--green)}
+.btn-primary:hover {background:var(--green2)}
+.btn-gold {color:#493914;background:var(--gold2)}
+.btn-light {color:var(--green);background:#edf3ef;border:1px solid var(--border)}
+.btn:disabled {opacity:.6;cursor:wait}
+.stats {
+    display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:14px;margin-bottom:18px;
+}
+.stat-card {
+    background:white;border:1px solid var(--border);
+    border-radius:12px;padding:17px;box-shadow:var(--shadow);
+    position:relative;overflow:hidden;
+}
+.stat-card:after {
+    content:"";position:absolute;right:-17px;top:-22px;
+    width:70px;height:70px;border-radius:50%;
+    background:rgba(214,180,92,.12);
+}
+.stat-label {color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase}
+.stat-value {margin-top:8px;color:var(--green);font-size:25px;font-weight:800}
+.stat-note {margin-top:4px;color:#8a978f;font-size:10px}
+.chart-wrap {height:340px;position:relative}
+.report-caption {
+    background:#f5f8f5;border-left:4px solid var(--gold);
+    border-radius:6px;padding:12px 14px;color:#526258;
+    font-size:12px;margin-bottom:16px;line-height:1.7;
+}
+.table-wrap {overflow-x:auto}
+table {width:100%;border-collapse:collapse;min-width:750px}
+thead th {
+    background:var(--green);color:white;padding:13px 11px;
+    font-size:11px;font-weight:700;text-align:center;white-space:nowrap;
+}
+thead th:first-child {border-radius:7px 0 0 0}
+thead th:last-child {border-radius:0 7px 0 0}
+tbody td {
+    padding:12px 11px;border-bottom:1px solid var(--border);
+    font-size:12px;text-align:center;
+}
+tbody tr:hover {background:#f7faf7}
+tbody tr.company-row {background:#f0f5f1;font-weight:700}
+tbody tr.company-row td:first-child {color:var(--green)}
+.unit-name {text-align:left;font-weight:700}
+.score {color:var(--green);font-size:15px;font-weight:800}
+.score-empty {color:#a2ada5;font-weight:500}
+.status {
+    display:inline-block;padding:5px 9px;border-radius:20px;
+    font-size:10px;font-weight:700;
+}
+.status-good {color:#17643b;background:#e2f3e8}
+.status-empty {color:#89938c;background:#eef1ee}
+.status-partial {color:#946b17;background:#fff3d4}
+.loading,.empty {
+    padding:35px 15px;text-align:center;color:var(--muted);font-size:13px;
+}
+.error {color:var(--red)}
+.summary-box {display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.summary-item {
+    padding:15px;border:1px solid var(--border);
+    border-radius:9px;background:#fbfcfb;
+}
+.summary-item strong {
+    display:block;color:var(--green);font-size:13px;margin-bottom:6px;
+}
+.summary-item span {color:var(--muted);font-size:12px;line-height:1.6}
+.print-footer {display:none}
+footer {text-align:center;padding:20px;color:#87948b;font-size:11px}
+
+@media(max-width:850px) {
+    .filter-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+    .stats {grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:520px) {
+    header {padding:18px 14px}
+    .brand h1 {font-size:16px}
+    .brand p {font-size:10px}
+    .logo {width:43px;height:43px;font-size:20px}
+    .header-label {display:none}
+    .container {padding:0 12px 25px;margin:18px auto}
+    .page-heading h2 {font-size:19px}
+    .filter-grid {grid-template-columns:1fr 1fr;gap:10px}
+    .card {padding:14px}
+    .chart-wrap {height:280px}
+    .summary-box {grid-template-columns:1fr}
+}
+@media print {
+    body {background:white}
+    header {
+        padding:12px 0;background:white !important;
+        color:#123d2b !important;border-bottom:2px solid #b99a45;
+    }
+    .logo,nav,.filter-card,.no-print,footer {display:none !important}
+    .brand h1,.brand p,.header-label {color:#123d2b !important}
+    .container {max-width:100%;margin:10px auto;padding:0}
+    .card,.stat-card {box-shadow:none;break-inside:avoid}
+    .stats {grid-template-columns:repeat(4,1fr)}
+    .chart-wrap {height:260px}
+    .print-footer {display:block;margin-top:45px}
+    .signature {
+        display:grid;grid-template-columns:1fr 1fr;
+        text-align:center;gap:40px;
+    }
+    .signature strong {font-size:12px}
+    .signature p {font-size:11px;margin-top:5px}
+    @page {size:A4 landscape;margin:12mm}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="header-top">
+            <div class="brand">
+                <div class="logo">H</div>
+                <div>
+                    <h1>PHẦN MỀM CHÍ THI ĐUA</h1>
+                    <p>Hệ thống quản lý và chấm điểm thi đua điện tử</p>
+                </div>
+            </div>
+            <div class="header-label">Báo cáo thi đua</div>
+        </div>
+    </div>
+    <nav>
+        <a href="index.html">Trang chủ</a>
+        <a href="cham-diem.html">Chấm điểm</a>
+        <a href="trungdoi.html">Trung đội</a>
+        <a href="xephang.html">Xếp hạng</a>
+        <a href="baocao.html" class="active">Báo cáo</a>
+    </nav>
+</header>
+
+<main class="container">
+    <div class="page-heading">
+        <h2>BÁO CÁO TỔNG HỢP KẾT QUẢ THI ĐUA</h2>
+        <p>Theo dõi, thống kê và tổng hợp kết quả thi đua của các Đại đội và Trung đội.</p>
+    </div>
+
+    <section class="card filter-card">
+        <div class="card-title">
+            <h3>ĐIỀU KIỆN LẬP BÁO CÁO</h3>
+            <small>Chọn kỳ báo cáo cần xem</small>
+        </div>
+
+        <div class="filter-grid">
+            <div class="form-group">
+                <label for="reportType">Loại báo cáo</label>
+                <select id="reportType">
+                    <option value="day">Theo ngày</option>
+                    <option value="week">Theo tuần</option>
+                    <option value="month" selected>Theo tháng</option>
+                    <option value="year">Theo năm</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="dayGroup" style="display:none">
+                <label for="dayPicker">Ngày báo cáo</label>
+                <input type="date" id="dayPicker">
+            </div>
+
+            <div class="form-group" id="weekGroup" style="display:none">
+                <label for="weekPicker">Tuần thi đua</label>
+                <select id="weekPicker">
+                    <option value="1">Tuần 1</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="monthGroup">
+                <label for="monthPicker">Tháng báo cáo</label>
+                <select id="monthPicker">
+                    <option value="1">Tháng 1</option>
+                    <option value="2">Tháng 2</option>
+                    <option value="3">Tháng 3</option>
+                    <option value="4">Tháng 4</option>
+                    <option value="5">Tháng 5</option>
+                    <option value="6">Tháng 6</option>
+                    <option value="7">Tháng 7</option>
+                    <option value="8">Tháng 8</option>
+                    <option value="9">Tháng 9</option>
+                    <option value="10">Tháng 10</option>
+                    <option value="11">Tháng 11</option>
+                    <option value="12">Tháng 12</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="yearGroup">
+                <label for="yearPicker">Năm báo cáo</label>
+                <select id="yearPicker"></select>
+            </div>
+
+            <div class="form-group" id="unitGroup">
+                <label for="unitFilter">Đối tượng thống kê</label>
+                <select id="unitFilter">
+                    <option value="ALL">Tất cả đơn vị</option>
+                    <option value="DAI_DOI">Các Đại đội</option>
+                    <option value="TRUNG_DOI">Các Trung đội</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="filter-actions">
+            <button class="btn btn-primary" id="loadBtn" onclick="loadReport()">XEM BÁO CÁO</button>
+            <button class="btn btn-light" onclick="printReport()">IN BÁO CÁO</button>
+            <button class="btn btn-gold" onclick="exportCSV()">XUẤT EXCEL (CSV)</button>
+        </div>
+    </section>
+
+    <div id="reportArea">
+        <section class="stats">
+            <div class="stat-card">
+                <div class="stat-label">Kỳ báo cáo</div>
+                <div class="stat-value" id="statPeriod" style="font-size:18px">--</div>
+                <div class="stat-note">Thời gian thống kê</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Số đơn vị</div>
+                <div class="stat-value" id="statUnits">0</div>
+                <div class="stat-note">Đơn vị trong báo cáo</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Đơn vị có điểm</div>
+                <div class="stat-value" id="statScored">0</div>
+                <div class="stat-note">Có kết quả trong kỳ</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Điểm trung bình</div>
+                <div class="stat-value" id="statAverage">--</div>
+                <div class="stat-note">Theo các đơn vị có kết quả</div>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-title">
+                <h3 id="chartTitle">BIỂU ĐỒ KẾT QUẢ THI ĐUA</h3>
+                <small>So sánh điểm giữa các đơn vị</small>
+            </div>
+            <div class="chart-wrap">
+                <canvas id="reportChart"></canvas>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-title">
+                <h3>THÔNG TIN TỔNG HỢP</h3>
+            </div>
+            <div class="report-caption" id="reportDescription">Đang chờ dữ liệu báo cáo...</div>
+            <div class="summary-box" id="summaryBox">
+                <div class="summary-item">
+                    <strong>Nguyên tắc tổng hợp</strong>
+                    <span>Điểm thi đua được tổng hợp theo quy định của hệ thống.</span>
+                </div>
+                <div class="summary-item">
+                    <strong>Phạm vi thống kê</strong>
+                    <span>Các Đại đội và Trung đội trực thuộc.</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-title">
+                <h3 id="tableTitle">BẢNG TỔNG HỢP KẾT QUẢ THI ĐUA</h3>
+                <small id="tablePeriod"></small>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:65px">STT</th>
+                            <th style="text-align:left">ĐƠN VỊ</th>
+                            <th>ĐIỂM THI ĐUA</th>
+                            <th id="countHeader">SỐ TUẦN CÓ ĐIỂM</th>
+                            <th>TRẠNG THÁI</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reportTable">
+                        <tr><td colspan="5" class="loading">Đang tải dữ liệu...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="print-footer">
+            <div class="signature">
+                <div>
+                    <strong>NGƯỜI LẬP BÁO CÁO</strong>
+                    <p>(Ký, ghi rõ họ tên)</p>
+                </div>
+                <div>
+                    <strong>CHỈ HUY ĐƠN VỊ</strong>
+                    <p>(Ký, ghi rõ họ tên)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>PHẦN MỀM CHẤM THI ĐUA ONLINE</footer>
+
+<script>
+/* =====================================================
+   CẤU HÌNH
+===================================================== */
+
+const API_URL = "https://script.google.com/macros/s/AKfycbyqUwmHIaUE-mWl0BktkLlbGB-qomoPMCehHJUGzOoP9LwQWiFYYXDRdZOBO2y7giRU-Q/exec";
+
+const COMPANIES = [
+    {name:"Đại đội 1",level:"DAI_DOI",teams:["Trung đội 1","Trung đội 2","Trung đội 3"]},
+    {name:"Đại đội 2",level:"DAI_DOI",teams:["Trung đội 4","Trung đội 5","Trung đội 6"]},
+    {name:"Đại đội 3",level:"DAI_DOI",teams:["Trung đội 7","Trung đội 8","Trung đội 9"]}
+];
+
+const TEAMS = COMPANIES.flatMap(company=>company.teams);
+
+let reportData = [];
+let allReportRows = [];
+let reportChart = null;
+let currentReportType = "month";
+let currentPeriodLabel = "";
+let currentCountLabel = "SỐ TUẦN CÓ ĐIỂM";
+
+/* =====================================================
+   HÀM CƠ BẢN
+===================================================== */
+
+function $(id) {
+    return document.getElementById(id);
+}
+
+function localDateString(date=new Date()) {
+    const y=date.getFullYear();
+    const m=String(date.getMonth()+1).padStart(2,"0");
+    const d=String(date.getDate()).padStart(2,"0");
+    return `${y}-${m}-${d}`;
+}
+
+function formatDate(date) {
+    if (!date) return "";
+    return date.split("-").reverse().join("/");
+}
+
+function roundScore(value) {
+    if (value===null || value===undefined || !Number.isFinite(Number(value))) return null;
+    return Math.round(Number(value)*100)/100;
+}
+
+function findNumber(value) {
+    if (value===null || value===undefined || value==="") return null;
+    const n=Number(value);
+    return Number.isFinite(n)?n:null;
+}
+
+function average(values) {
+    const valid=values.filter(v=>v!==null && v!==undefined && Number.isFinite(Number(v)));
+    if (!valid.length) return null;
+    return valid.reduce((sum,v)=>sum+Number(v),0)/valid.length;
+}
+
+function formatScore(value) {
+    return value===null || value===undefined ? "--" : Number(value).toFixed(2);
+}
+
+function escapeHTML(value) {
+    return String(value??"").replace(/[&<>"']/g,char=>({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    }[char]));
+}
+
+function getArray(result) {
+    if (Array.isArray(result)) return result;
+    if (Array.isArray(result?.data)) return result.data;
+    if (Array.isArray(result?.items)) return result.items;
+    return [];
+}
+
+function getUnitName(item) {
+    return String(item?.unit || item?.name || "").trim();
+}
+
+/* Lấy kỳ báo cáo trực tiếp từ các ô đang chọn */
+function getSelectedPeriodLabel() {
+    const type=$("reportType").value;
+    const year=$("yearPicker").value;
+    const month=String($("monthPicker").value).padStart(2,"0");
+
+    if (type==="day") {
+        return `Ngày ${formatDate($("dayPicker").value)}`;
+    }
+
+    if (type==="week") {
+        return `Tuần ${$("weekPicker").value} - Tháng ${month}/${year}`;
+    }
+
+    if (type==="month") {
+        return `Tháng ${month}/${year}`;
+    }
+
+    return `Năm ${year}`;
+}
+
+/* =====================================================
+   KHỞI TẠO
+===================================================== */
+
+function initPage() {
+    const now=new Date();
+
+    $("dayPicker").value=localDateString(now);
+    $("monthPicker").value=String(now.getMonth()+1);
+
+    const yearSelect=$("yearPicker");
+    const currentYear=now.getFullYear();
+
+    for (let y=currentYear-3;y<=currentYear+5;y++) {
+        const option=document.createElement("option");
+        option.value=y;
+        option.textContent=y;
+        yearSelect.appendChild(option);
+    }
+
+    yearSelect.value=String(currentYear);
+
+    $("reportType").addEventListener("change",updateFilters);
+    $("monthPicker").addEventListener("change",updateWeekOptions);
+    $("yearPicker").addEventListener("change",updateWeekOptions);
+
+    $("unitFilter").addEventListener("change",()=>{
+        if (allReportRows.length) {
+            reportData=applyUnitFilter(allReportRows);
+            renderTable();
+            renderChart();
+            updateStats();
+        }
+    });
+
+    updateFilters();
+    updateWeekOptions();
+    loadReport();
+}
+
+/* =====================================================
+   ĐIỀU KIỆN LỌC VÀ TUẦN THI ĐUA
+===================================================== */
+
+function updateFilters() {
+    const type=$("reportType").value;
+
+    $("dayGroup").style.display=type==="day"?"":"none";
+    $("weekGroup").style.display=type==="week"?"":"none";
+    $("monthGroup").style.display=(type==="week"||type==="month")?"":"none";
+    $("yearGroup").style.display="";
+    $("unitGroup").style.display="";
+
+    if (type==="day") {
+        $("unitFilter").value="ALL";
+    }
+}
+
+function getCompetitionWeekCount(year,month) {
+    const firstDay=new Date(year,month-1,1);
+    const weekday=firstDay.getDay();
+
+    let firstCompetitionDay;
+
+    if (weekday>=1 && weekday<=4) {
+        firstCompetitionDay=1;
+    } else {
+        firstCompetitionDay=weekday===0?2:9-weekday;
+    }
+
+    const daysInMonth=new Date(year,month,0).getDate();
+    return Math.ceil((daysInMonth-firstCompetitionDay+1)/7);
+}
+
+function updateWeekOptions() {
+    const month=Number($("monthPicker").value);
+    const year=Number($("yearPicker").value);
+    const count=getCompetitionWeekCount(year,month);
+    const select=$("weekPicker");
+    const oldValue=Number(select.value||1);
+
+    select.innerHTML="";
+
+    for (let i=1;i<=count;i++) {
+        const option=document.createElement("option");
+        option.value=i;
+        option.textContent=`Tuần ${i}`;
+        select.appendChild(option);
+    }
+
+    select.value=String(Math.min(oldValue,count));
+}
+
+/* =====================================================
+   GỌI API
+===================================================== */
+
+async function apiGet(params) {
+    const url=API_URL+"?"+new URLSearchParams(params).toString();
+
+    const response=await fetch(url,{method:"GET",redirect:"follow"});
+
+    if (!response.ok) {
+        throw new Error("Không thể kết nối máy chủ.");
+    }
+
+    const result=await response.json();
+
+    if (result && result.success===false) {
+        throw new Error(result.message||"Máy chủ trả về lỗi.");
+    }
+
+    return result;
+}
+
+/* =====================================================
+   XÂY DỰNG DỮ LIỆU ĐƠN VỊ
+===================================================== */
+
+function buildCompanyRows(teamScores,companyCounts={}) {
+    return COMPANIES.map(company=>{
+        const values=company.teams.map(name=>teamScores[name]??0);
+        const hasAny=company.teams.some(name=>
+            teamScores[name]!==null && teamScores[name]!==undefined
+        );
+
+        return {
+            unit:company.name,
+            level:"DAI_DOI",
+            score:hasAny?roundScore(values.reduce((a,b)=>a+b,0)/3):null,
+            count:companyCounts[company.name]??0,
+            total:3,
+            complete:hasAny
+        };
+    });
+}
+
+function buildTeamRows(teamScores,counts={},totals={}) {
+    return TEAMS.map(name=>{
+        const score=teamScores[name]??null;
+
+        return {
+            unit:name,
+            level:"TRUNG_DOI",
+            score:roundScore(score),
+            count:counts[name]??0,
+            total:totals[name]??0,
+            complete:score!==null
+        };
+    });
+}
+
+function applyUnitFilter(rows) {
+    const filter=$("unitFilter").value;
+
+    if (filter==="ALL") return [...rows];
+
+    return rows.filter(item=>item.level===filter);
+}
+
+/* =====================================================
+   BÁO CÁO THEO NGÀY
+===================================================== */
+
+async function loadDayReport() {
+    const date=$("dayPicker").value;
+
+    if (!date) throw new Error("Vui lòng chọn ngày báo cáo.");
+
+    const result=await apiGet({
+        action:"list",
+        date,
+        method:"TO_THI_DUA",
+        level:"TRUNG_DOI"
+    });
+
+    const records=getArray(result);
+    const teamScores={};
+    const teamCounts={};
+
+    TEAMS.forEach(name=>{
+        teamScores[name]=null;
+        teamCounts[name]=0;
+    });
+
+    TEAMS.forEach(name=>{
+        const values=records
+            .filter(item=>getUnitName(item)===name)
+            .map(item=>findNumber(item.average))
+            .filter(v=>v!==null);
+
+        if (values.length) {
+            teamScores[name]=roundScore(average(values));
+            teamCounts[name]=1;
+        }
+    });
+
+    return {
+        rows:[
+            ...buildCompanyRows(teamScores),
+            ...buildTeamRows(teamScores,teamCounts,{})
+        ],
+        period:`Ngày ${formatDate(date)}`,
+        countLabel:"SỐ NGÀY CÓ ĐIỂM",
+        description:
+            "Điểm ngày của Trung đội là trung bình cộng các phiếu chấm Tổ thi đua trong ngày. "+
+            "Điểm Đại đội bằng tổng điểm 3 Trung đội chia 3; Trung đội chưa có điểm được tính 0.",
+        details:[
+            ["Cách tính điểm","Trung bình các phiếu chấm trong ngày đối với từng Trung đội."],
+            ["Cách tính Đại đội","Trung bình cộng điểm của 3 Trung đội trực thuộc; Trung đội chưa có điểm tính 0."]
+        ]
+    };
+}
+
+/* =====================================================
+   BÁO CÁO THEO TUẦN
+===================================================== */
+
+function getWeeklyScoreValue(result) {
+    const values=[
+        result?.weeklyScore,
+        result?.data?.weeklyScore,
+        result?.result?.weeklyScore
+    ];
+
+    for (const value of values) {
+        const n=findNumber(value);
+        if (n!==null) return n;
+    }
+
+    return null;
+}
+
+function getWeeklyDayCount(result) {
+    const values=[
+        result?.dailyCount,
+        result?.data?.dailyCount,
+        result?.result?.dailyCount
+    ];
+
+    for (const value of values) {
+        const n=findNumber(value);
+        if (n!==null) return n;
+    }
+
+    return 0;
+}
+
+async function loadWeekReport() {
+    const week=Number($("weekPicker").value);
+    const month=Number($("monthPicker").value);
+    const year=Number($("yearPicker").value);
+
+    const results=await Promise.all(TEAMS.map(async name=>{
+        const result=await apiGet({
+            action:"weekly",
+            unit:name,
+            week,
+            month,
+            year
+        });
+
+        return {
+            name,
+            score:getWeeklyScoreValue(result),
+            count:getWeeklyDayCount(result)
+        };
+    }));
+
+    const teamScores={};
+    const teamCounts={};
+
+    results.forEach(item=>{
+        teamScores[item.name]=item.score;
+        teamCounts[item.name]=item.count;
+    });
+
+    const companyRows=buildCompanyRows(teamScores);
+    const teamRows=buildTeamRows(teamScores,teamCounts,{});
+
+    companyRows.forEach(row=>{
+        const company=COMPANIES.find(c=>c.name===row.unit);
+        // Số ngày có điểm của Đại đội không vượt quá 7 ngày.
+        row.count=Math.max(...company.teams.map(name=>teamCounts[name]||0));
+        row.total=7;
+    });
+
+    teamRows.forEach(row=>row.total=7);
+
+    return {
+        rows:[...companyRows,...teamRows],
+        period:`Tuần ${week} - Tháng ${String(month).padStart(2,"0")}/${year}`,
+        countLabel:"SỐ NGÀY CÓ ĐIỂM",
+        description:
+            "Điểm tuần của Trung đội là trung bình cộng điểm các ngày có kết quả trong tuần. "+
+            "Điểm Đại đội bằng tổng điểm 3 Trung đội chia 3; Trung đội chưa có điểm được tính 0.",
+        details:[
+            ["Cách tính điểm","Trung bình cộng các ngày có kết quả chấm điểm trong tuần."],
+            ["Cách tính Đại đội","Trung bình cộng điểm tuần của 3 Trung đội trực thuộc; Trung đội chưa có điểm tính 0."]
+        ]
+    };
+}
+
+/* =====================================================
+   BÁO CÁO THEO THÁNG
+===================================================== */
+
+async function loadMonthReport() {
+    const month=Number($("monthPicker").value);
+    const year=Number($("yearPicker").value);
+
+    const result=await apiGet({
+        action:"summary",
+        month,
+        year,
+        level:"ALL"
+    });
+
+    const items=getArray(result);
+    const rows=[];
+
+    items.forEach(item=>{
+        const name=getUnitName(item);
+        if (!name) return;
+
+        const level=item.level||(name.startsWith("Đại đội")?"DAI_DOI":"TRUNG_DOI");
+        if (level!=="DAI_DOI" && level!=="TRUNG_DOI") return;
+
+        const score=findNumber(item.monthlyScore);
+        const completed=findNumber(item.completedWeeks)??0;
+        const total=findNumber(item.totalWeeks)??0;
+
+        rows.push({
+            unit:name,
+            level,
+            score:roundScore(score),
+            count:completed,
+            total,
+            complete:typeof item.complete==="boolean"
+                ?item.complete
+                :(total>0 && completed>=total)
+        });
+    });
+
+    const existing=new Set(rows.map(item=>item.unit));
+    const totalWeeks=getCompetitionWeekCount(year,month);
+
+    COMPANIES.forEach(company=>{
+        if (!existing.has(company.name)) {
+            rows.push({
+                unit:company.name,level:"DAI_DOI",
+                score:null,count:0,total:totalWeeks,complete:false
+            });
+        }
+
+        company.teams.forEach(name=>{
+            if (!existing.has(name)) {
+                rows.push({
+                    unit:name,level:"TRUNG_DOI",
+                    score:null,count:0,total:totalWeeks,complete:false
+                });
+            }
+        });
+    });
+
+    return {
+        rows,
+        period:`Tháng ${String(month).padStart(2,"0")}/${year}`,
+        countLabel:"SỐ TUẦN CÓ ĐIỂM",
+        description:
+            "Điểm tháng của Trung đội là trung bình cộng điểm các tuần có kết quả trong tháng. "+
+            "Điểm Đại đội được tổng hợp từ 3 Trung đội trực thuộc; Trung đội chưa có điểm tính 0.",
+        details:[
+            ["Cách tính điểm","Trung bình cộng điểm các tuần có kết quả chấm điểm trong tháng."],
+            ["Cách tính Đại đội","Trung bình cộng điểm tháng của 3 Trung đội trực thuộc; Trung đội chưa có điểm tính 0."]
+        ]
+    };
+}
+
+/* =====================================================
+   BÁO CÁO THEO NĂM
+   Điểm năm = trung bình các tháng có kết quả.
+===================================================== */
+
+async function loadYearReport() {
+    const year=Number($("yearPicker").value);
+
+    const monthlyResults=await Promise.all(
+        Array.from({length:12},(_,i)=>i+1).map(async month=>{
+            try {
+                const result=await apiGet({
+                    action:"summary",
+                    month,
+                    year,
+                    level:"ALL"
+                });
+
+                return {month,items:getArray(result)};
+            } catch (error) {
+                console.warn("Không lấy được dữ liệu tháng",month,error);
+                return {month,items:[]};
+            }
+        })
+    );
+
+    const teamMonthScores={};
+    const teamMonthCounts={};
+
+    TEAMS.forEach(name=>{
+        teamMonthScores[name]=[];
+        teamMonthCounts[name]=0;
+    });
+
+    monthlyResults.forEach(monthResult=>{
+        TEAMS.forEach(name=>{
+            const item=monthResult.items.find(x=>getUnitName(x)===name);
+            const score=findNumber(item?.monthlyScore);
+
+            if (score!==null) {
+                teamMonthScores[name].push(score);
+                teamMonthCounts[name]++;
+            }
+        });
+    });
+
+    const teamAnnualScores={};
+
+    TEAMS.forEach(name=>{
+        teamAnnualScores[name]=roundScore(average(teamMonthScores[name]));
+    });
+
+    const companyRows=COMPANIES.map(company=>{
+        const scores=company.teams.map(name=>teamAnnualScores[name]??0);
+        const hasAny=company.teams.some(name=>teamAnnualScores[name]!==null);
+
+        // Đếm số tháng Đại đội có ít nhất một Trung đội có điểm.
+        const monthsWithData=monthlyResults.filter(monthResult=>
+            company.teams.some(name=>{
+                const item=monthResult.items.find(x=>getUnitName(x)===name);
+                return findNumber(item?.monthlyScore)!==null;
+            })
+        ).length;
+
+        return {
+            unit:company.name,
+            level:"DAI_DOI",
+            score:hasAny?roundScore(scores.reduce((a,b)=>a+b,0)/3):null,
+            count:monthsWithData,
+            total:12,
+            complete:hasAny
+        };
+    });
+
+    const teamRows=TEAMS.map(name=>({
+        unit:name,
+        level:"TRUNG_DOI",
+        score:teamAnnualScores[name],
+        count:teamMonthCounts[name],
+        total:12,
+        complete:teamAnnualScores[name]!==null
+    }));
+
+    return {
+        rows:[...companyRows,...teamRows],
+        period:`Năm ${year}`,
+        countLabel:"SỐ THÁNG CÓ ĐIỂM",
+        description:
+            "Điểm năm được tính bằng trung bình cộng điểm tháng của những tháng có kết quả. "+
+            "Tháng không có dữ liệu không đưa vào phép tính. Điểm Đại đội năm là trung bình cộng "+
+            "điểm năm của 3 Trung đội trực thuộc; Trung đội chưa có kết quả năm được tính 0.",
+        details:[
+            ["Cách tính điểm năm","Trung bình cộng điểm các tháng có kết quả; tháng chưa có dữ liệu không tính."],
+            ["Cách tính Đại đội","Trung bình cộng điểm năm của 3 Trung đội trực thuộc; Trung đội chưa có điểm năm tính 0."]
+        ]
+    };
+}
+
+/* =====================================================
+   TẢI VÀ HIỂN THỊ BÁO CÁO
+===================================================== */
+
+async function loadReport() {
+    const button=$("loadBtn");
+    button.disabled=true;
+    button.textContent="ĐANG TẢI...";
+
+    $("reportTable").innerHTML=
+        '<tr><td colspan="5" class="loading">Đang lấy dữ liệu từ máy chủ...</td></tr>';
+
+    try {
+        const type=$("reportType").value;
+        currentReportType=type;
+
+        let result;
+
+        if (type==="day") {
+            result=await loadDayReport();
+        } else if (type==="week") {
+            result=await loadWeekReport();
+        } else if (type==="month") {
+            result=await loadMonthReport();
+        } else {
+            result=await loadYearReport();
+        }
+
+        // Lưu toàn bộ dữ liệu trước khi lọc Đại đội/Trung đội.
+        allReportRows=result.rows;
+        reportData=applyUnitFilter(allReportRows);
+
+        currentPeriodLabel=getSelectedPeriodLabel();
+        currentCountLabel=result.countLabel;
+
+        renderReport(result);
+
+    } catch (error) {
+        console.error(error);
+
+        $("reportTable").innerHTML=
+            `<tr><td colspan="5" class="loading error">${escapeHTML(error.message||"Không thể tải dữ liệu báo cáo.")}</td></tr>`;
+
+        $("reportDescription").textContent=
+            "Không thể lấy dữ liệu. Vui lòng kiểm tra kết nối hoặc thử lại.";
+
+        $("statUnits").textContent="0";
+        $("statScored").textContent="0";
+        $("statAverage").textContent="--";
+
+        if (reportChart) {
+            reportChart.destroy();
+            reportChart=null;
+        }
+
+    } finally {
+        button.disabled=false;
+        button.textContent="XEM BÁO CÁO";
+    }
+}
+
+function updateStats() {
+    const scored=reportData.filter(item=>item.score!==null);
+    const avg=average(scored.map(item=>item.score));
+
+    $("statPeriod").textContent=currentPeriodLabel;
+    $("statUnits").textContent=reportData.length;
+    $("statScored").textContent=scored.length;
+    $("statAverage").textContent=formatScore(roundScore(avg));
+}
+
+function renderReport(result) {
+    // Luôn đọc kỳ báo cáo từ các ô điều kiện đang chọn.
+    currentPeriodLabel=getSelectedPeriodLabel();
+
+    updateStats();
+
+    // Cập nhật đồng thời tiêu đề bảng và thời gian bên phải.
+    $("tableTitle").textContent=
+        `BẢNG TỔNG HỢP KẾT QUẢ THI ĐUA - ${currentPeriodLabel.toUpperCase()}`;
+
+    $("tablePeriod").textContent=currentPeriodLabel.toUpperCase();
+
+    $("countHeader").textContent=result.countLabel;
+    $("reportDescription").textContent=result.description;
+
+    $("summaryBox").innerHTML=result.details.map(item=>`
+        <div class="summary-item">
+            <strong>${escapeHTML(item[0])}</strong>
+            <span>${escapeHTML(item[1])}</span>
+        </div>
+    `).join("");
+
+    $("chartTitle").textContent=
+        `BIỂU ĐỒ KẾT QUẢ THI ĐUA - ${currentPeriodLabel.toUpperCase()}`;
+
+    renderTable();
+    renderChart();
+}
+
+/* =====================================================
+   HIỂN THỊ BẢNG
+===================================================== */
+
+function getCountText(item) {
+    if (currentReportType==="day") {
+        return item.score===null?"0/1":"1/1";
+    }
+
+    if (currentReportType==="week") {
+        return `${item.count||0}/7`;
+    }
+
+    if (currentReportType==="month") {
+        return `${item.count||0}/${item.total||0}`;
+    }
+
+    return `${item.count||0}/12`;
+}
+
+function getStatusHTML(item) {
+    if (item.score===null) {
+        return '<span class="status status-empty">Chưa có điểm</span>';
+    }
+
+    if (currentReportType==="month" && item.total>0 && item.count<item.total) {
+        return '<span class="status status-partial">Chưa đủ tuần</span>';
+    }
+
+    if (currentReportType==="year" && item.count<12) {
+        return '<span class="status status-partial">Chưa đủ tháng</span>';
+    }
+
+    return '<span class="status status-good">Có kết quả</span>';
+}
+
+function sortRows(rows) {
+    return [...rows].sort((a,b)=>{
+        if (a.level!==b.level) return a.level==="DAI_DOI"?-1:1;
+
+        const av=a.score??-1;
+        const bv=b.score??-1;
+
+        return bv-av;
+    });
+}
+
+function renderTable() {
+    const tbody=$("reportTable");
+
+    if (!reportData.length) {
+        tbody.innerHTML='<tr><td colspan="5" class="empty">Không có đơn vị phù hợp.</td></tr>';
+        return;
+    }
+
+    const sorted=sortRows(reportData);
+
+    tbody.innerHTML=sorted.map((item,index)=>{
+        const isCompany=item.level==="DAI_DOI";
+
+        return `
+            <tr class="${isCompany?"company-row":""}">
+                <td>${index+1}</td>
+                <td class="unit-name">${escapeHTML(item.unit)}</td>
+                <td class="${item.score===null?"score-empty":"score"}">${formatScore(item.score)}</td>
+                <td>${getCountText(item)}</td>
+                <td>${getStatusHTML(item)}</td>
+            </tr>
+        `;
+    }).join("");
+}
+
+/* =====================================================
+   BIỂU ĐỒ CỘT - THANG ĐIỂM 10
+===================================================== */
+
+function renderChart() {
+    const canvas=$("reportChart");
+    const ctx=canvas.getContext("2d");
+
+    if (reportChart) {
+        reportChart.destroy();
+    }
+
+    const chartRows=sortRows(reportData);
+    const labels=chartRows.map(item=>item.unit);
+    const values=chartRows.map(item=>item.score);
+
+    reportChart=new Chart(ctx,{
+        type:"bar",
+        data:{
+            labels,
+            datasets:[{
+                label:"Điểm thi đua",
+                data:values,
+                backgroundColor:chartRows.map(item=>
+                    item.level==="DAI_DOI"
+                        ?"rgba(214,180,92,.85)"
+                        :"rgba(29,86,61,.82)"
+                ),
+                borderColor:chartRows.map(item=>
+                    item.level==="DAI_DOI"?"#b9953e":"#123d2b"
+                ),
+                borderWidth:1,
+                borderRadius:5,
+                maxBarThickness:42
+            }]
+        },
+        options:{
+            responsive:true,
+            maintainAspectRatio:false,
+            plugins:{
+                legend:{display:false},
+                tooltip:{
+                    callbacks:{
+                        label:context=>{
+                            const value=context.raw;
+                            return " Điểm: "+(value===null?"Chưa có điểm":Number(value).toFixed(2));
+                        }
+                    }
+                }
+            },
+            scales:{
+                y:{
+                    beginAtZero:true,
+                    min:0,
+                    max:10,
+                    ticks:{stepSize:1},
+                    title:{
+                        display:true,
+                        text:"Điểm thi đua (thang điểm 10)"
+                    }
+                },
+                x:{
+                    ticks:{
+                        autoSkip:false,
+                        maxRotation:45,
+                        minRotation:0,
+                        font:{size:10}
+                    }
+                }
+            }
+        }
+    });
+}
+
+/* =====================================================
+   IN BÁO CÁO
+===================================================== */
+
+function printReport() {
+    if (!reportData.length) {
+        alert("Chưa có dữ liệu để in báo cáo.");
+        return;
+    }
+
+    window.print();
+}
+
+/* =====================================================
+   XUẤT CSV MỞ BẰNG EXCEL
+===================================================== */
+
+function exportCSV() {
+    if (!reportData.length) {
+        alert("Chưa có dữ liệu để xuất.");
+        return;
+    }
+
+    const rows=[
+        ["BÁO CÁO TỔNG HỢP KẾT QUẢ THI ĐUA"],
+        ["Kỳ báo cáo",currentPeriodLabel],
+        [],
+        ["STT","Đơn vị","Cấp đơn vị","Điểm thi đua",currentCountLabel,"Trạng thái"]
+    ];
+
+    const sorted=sortRows(reportData);
+
+    sorted.forEach((item,index)=>{
+        let status="Có kết quả";
+
+        if (item.score===null) {
+            status="Chưa có điểm";
+        } else if (currentReportType==="month" && item.total>0 && item.count<item.total) {
+            status="Chưa đủ tuần";
+        } else if (currentReportType==="year" && item.count<12) {
+            status="Chưa đủ tháng";
+        }
+
+        rows.push([
+            index+1,
+            item.unit,
+            item.level==="DAI_DOI"?"Đại đội":"Trung đội",
+            item.score===null?"":Number(item.score).toFixed(2),
+            getCountText(item),
+            status
+        ]);
+    });
+
+    const csv="\uFEFF"+rows.map(row=>
+        row.map(value=>`"${String(value??"").replace(/"/g,'""')}"`).join(";")
+    ).join("\r\n");
+
+    const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+    const url=URL.createObjectURL(blob);
+
+    const link=document.createElement("a");
+    link.href=url;
+    link.download=`Bao_cao_thi_dua_${currentPeriodLabel.replace(/[\/\s-]+/g,"_")}.csv`;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+}
+
+/* =====================================================
+   CHẠY TRANG
+===================================================== */
+
+initPage();
+</script>
+
+</body>
+</html>

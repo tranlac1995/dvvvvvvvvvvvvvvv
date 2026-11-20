@@ -1,0 +1,1561 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#06483e">
+<title>Thi đua Đại đội | Tiểu đoàn 2</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root{
+  --green:#075447;
+  --green2:#08775f;
+  --dark:#063b34;
+  --gold:#e6bd52;
+  --ink:#18312e;
+  --muted:#73827f;
+  --bg:#f1f6f4;
+  --line:#e1ebe7;
+  --red:#c83c3c;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Be Vietnam Pro",Arial,sans-serif;font-size:13px
+}
+button,select,input{font:inherit}
+button{cursor:pointer}
+
+.topbar{
+  min-height:62px;background:linear-gradient(90deg,#063b34,#08705a);
+  color:#fff;display:flex;align-items:center;justify-content:space-between;
+  padding:0 max(18px,calc((100% - 1440px)/2));
+  box-shadow:0 3px 14px #062f2930
+}
+.brand{display:flex;align-items:center;gap:11px}
+.brandmark{
+  width:39px;height:39px;border:1px solid #e8c65c;border-radius:50%;
+  display:grid;place-items:center;color:#f2d36c;font-size:19px
+}
+.brand b{display:block;font-size:14px;letter-spacing:.3px}
+.brand small{display:block;color:#c9e0d8;font-size:10px;margin-top:2px}
+.top-actions{display:flex;align-items:center;gap:15px}
+.top-actions a{color:#e9f4f0;text-decoration:none;font-size:11px}
+.user{
+  background:#ffffff18;border:1px solid #ffffff30;
+  border-radius:20px;padding:7px 12px;font-size:11px
+}
+
+.wrap{max-width:1440px;margin:0 auto;padding:20px 22px 38px}
+.crumb{font-size:11px;color:#7a8c87;margin-bottom:12px}
+.crumb a{color:#14735c;text-decoration:none}
+.heading{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:15px;margin-bottom:17px
+}
+.heading h1{font-size:22px;margin:0;color:#123f36;font-weight:800}
+.heading p{margin:5px 0 0;color:var(--muted);font-size:11px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{
+  border:1px solid #d8e5df;background:#fff;color:#31524a;
+  padding:9px 13px;border-radius:9px;font-size:11px;font-weight:700;
+  display:inline-flex;align-items:center;gap:7px
+}
+.btn.primary{
+  background:linear-gradient(100deg,#08745d,#075447);
+  color:#fff;border-color:#08745d
+}
+.btn:hover{filter:brightness(.97);transform:translateY(-1px)}
+
+.card{
+  background:#fff;border:1px solid var(--line);border-radius:13px;
+  box-shadow:0 4px 16px #123e3509;margin-bottom:14px;overflow:hidden
+}
+.card-head{
+  padding:13px 16px;border-bottom:1px solid #edf2ef;
+  display:flex;justify-content:space-between;align-items:center;gap:10px
+}
+.card-head h2{margin:0;font-size:13px;color:#17483d}
+.card-head h2 i{color:#168466;margin-right:7px}
+.card-body{padding:16px}
+
+.period-tabs{display:flex;gap:7px;flex-wrap:wrap}
+.tab{
+  border:1px solid #dce8e2;background:#f9fcfa;color:#536d64;
+  border-radius:8px;padding:9px 15px;font-size:11px;font-weight:700
+}
+.tab.active{
+  background:#e7f5ee;color:#087052;border-color:#8fc9ae
+}
+.filters{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:11px;align-items:end
+}
+.field label{
+  display:block;font-size:10px;font-weight:700;
+  color:#637771;margin-bottom:6px
+}
+.field select,.field input{
+  width:100%;border:1px solid #dce7e2;border-radius:8px;
+  background:#fbfdfc;padding:10px 11px;color:#24423b;outline:none
+}
+.field select:focus,.field input:focus{
+  border-color:#65ad91;box-shadow:0 0 0 3px #08775f12
+}
+.period-range{
+  margin-top:13px;padding:11px 13px;border-radius:9px;
+  background:#eff7f3;border:1px solid #d8ebe1;
+  display:flex;align-items:center;gap:9px;flex-wrap:wrap;
+  color:#42685a;font-size:11px
+}
+.period-range i{color:#168466}
+.period-range strong{color:#17644d}
+.period-range span{color:#71877d}
+
+.stats{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:11px;margin-bottom:14px
+}
+.stat{
+  background:#fff;border:1px solid var(--line);border-radius:12px;
+  padding:14px 15px;box-shadow:0 4px 16px #123e3508
+}
+.stat small{font-size:10px;color:#72827c;display:block}
+.stat strong{
+  font-size:23px;color:#087253;display:block;margin-top:4px;
+  font-variant-numeric:tabular-nums
+}
+.stat em{font-style:normal;font-size:9px;color:#8a9993}
+.stat.gold strong{color:#9b741f}
+.stat.dark strong{color:#17483d}
+
+.rank-section{margin-bottom:14px}
+.rank-intro{
+  padding:13px 16px;background:linear-gradient(110deg,#f0f8f3,#fffaf0);
+  border-bottom:1px solid #edf2ef;color:#567166;
+  font-size:10px;line-height:1.7
+}
+.rank-intro strong{color:#17644d}
+.company-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;padding:16px
+}
+.company-card{
+  border:1px solid #e3ece7;border-radius:13px;
+  padding:15px;background:#fff;min-width:0;
+  transition:.2s
+}
+.company-card:hover{
+  transform:translateY(-2px);box-shadow:0 7px 20px #123e3510
+}
+.company-card.first{
+  border-color:#e8cf83;
+  background:linear-gradient(160deg,#fffdf5,#fff)
+}
+.company-top{
+  display:flex;justify-content:space-between;align-items:center;gap:8px;
+  margin-bottom:14px
+}
+.company-name{
+  display:flex;align-items:center;gap:9px;
+  color:#17483d;font-size:14px;font-weight:800
+}
+.company-symbol{
+  width:35px;height:35px;border-radius:10px;
+  display:grid;place-items:center;background:#eaf5ef;color:#087253;
+  font-size:15px
+}
+.company-card.first .company-symbol{
+  background:#fff1c8;color:#a47a1d
+}
+.rank-label{
+  font-size:9px;font-weight:800;color:#82918a;
+  background:#f1f5f2;padding:5px 8px;border-radius:20px
+}
+.company-card.first .rank-label{
+  color:#916b17;background:#fff1c8
+}
+.total-score{
+  display:flex;align-items:baseline;gap:6px;margin-bottom:9px
+}
+.total-score strong{
+  font-size:34px;line-height:1;color:#087253;
+  font-weight:800;font-variant-numeric:tabular-nums
+}
+.company-card.first .total-score strong{color:#9b741f}
+.total-score span{font-size:10px;color:#899790}
+.score-track{
+  height:11px;background:#edf3ef;border-radius:20px;
+  overflow:hidden;margin-bottom:15px
+}
+.score-fill{
+  height:100%;border-radius:20px;
+  background:linear-gradient(90deg,#0b745b,#c9a33c);
+  transition:width .35s
+}
+.platoon-breakdown{
+  border-top:1px solid #edf2ef;padding-top:11px;
+  display:grid;gap:8px
+}
+.platoon-line{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:8px;font-size:10px
+}
+.platoon-line span{color:#71827a}
+.platoon-line b{color:#31594b;font-variant-numeric:tabular-nums}
+.platoon-line b.missing{color:#a3ada8;font-weight:500}
+.company-foot{
+  margin-top:13px;padding-top:10px;border-top:1px dashed #e5ece8;
+  display:flex;justify-content:space-between;gap:8px;
+  font-size:9px;color:#81908a
+}
+.company-foot strong{color:#17644d}
+.company-total-label{
+  margin-top:14px;padding:12px;border-radius:9px;
+  background:#f1f7f3;display:flex;justify-content:space-between;
+  align-items:center;gap:8px;color:#547166;font-size:10px
+}
+.company-total-label strong{font-size:16px;color:#087253}
+
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th{
+  text-align:left;background:#f5f8f6;color:#6b7d75;
+  font-size:9px;padding:11px 12px;white-space:nowrap
+}
+td{
+  border-top:1px solid #edf2ef;padding:11px 12px;
+  font-size:11px;vertical-align:middle
+}
+tbody tr:hover{background:#fbfdfc}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.score{font-weight:800;color:#087253;font-size:13px}
+.rank{
+  width:28px;height:28px;display:inline-grid;place-items:center;
+  border-radius:8px;background:#edf5f1;color:#42695b;font-weight:800
+}
+.rank.first{background:#fff3cf;color:#986e14}
+.rank.second{background:#edf0f5;color:#647185}
+.rank.third{background:#f8e9dc;color:#9b6030}
+.status{
+  display:inline-block;padding:4px 8px;border-radius:20px;
+  background:#e8f5ed;color:#18704f;font-size:9px;font-weight:700
+}
+.status.wait{background:#fff5df;color:#99721c}
+.empty{
+  color:#8b9994;text-align:center;padding:28px 12px;font-size:11px
+}
+.muted{color:#81908a;font-size:10px}
+.notice{
+  padding:12px 14px;border-radius:9px;background:#eff7f3;
+  border:1px solid #d8ebe1;color:#42685a;
+  font-size:10px;line-height:1.8
+}
+.notice strong{color:#17644d}
+.detail-btn{
+  border:0;background:#edf6f1;color:#087052;
+  border-radius:7px;padding:6px 9px;font-size:10px;font-weight:700
+}
+.detail-panel{
+  display:none;background:#f8fbf9;
+  border-top:1px solid #e7efea;padding:13px 16px
+}
+.detail-panel.open{display:block}
+.detail-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.detail-chip{
+  border:1px solid #e2ebe6;background:#fff;
+  border-radius:8px;padding:9px
+}
+.detail-chip small{display:block;color:#7b8983;font-size:9px}
+.detail-chip b{display:block;color:#17654e;margin-top:3px}
+.toast{
+  position:fixed;right:20px;bottom:20px;background:#073f35;color:white;
+  padding:12px 16px;border-radius:9px;box-shadow:0 8px 25px #0003;
+  display:none;z-index:10;font-size:11px
+}
+.loading{padding:25px;text-align:center;color:#6f8279;font-size:11px}
+.footer{text-align:center;color:#8a9a94;font-size:10px;padding:10px}
+
+@media(max-width:950px){
+  .filters{grid-template-columns:repeat(2,1fr)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .company-grid{grid-template-columns:1fr}
+  .detail-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:600px){
+  .topbar{padding:0 12px;min-height:56px}
+  .brand b{font-size:11px}
+  .brand small{font-size:8px}
+  .top-actions a{display:none}
+  .wrap{padding:14px 10px 28px}
+  .heading{display:block}
+  .heading h1{font-size:18px}
+  .actions{margin-top:12px}
+  .filters{grid-template-columns:1fr 1fr}
+  .stats{gap:7px}
+  .stat{padding:10px}
+  .stat strong{font-size:19px}
+  .card-body{padding:12px}
+  .company-grid{padding:10px;gap:10px}
+  .company-card{padding:13px}
+  .total-score strong{font-size:30px}
+  .detail-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media print{
+  .topbar,.crumb,.actions,.filters-card,.detail-btn,.footer{display:none!important}
+  body{background:#fff}
+  .wrap{max-width:none;padding:0}
+  .card,.stat,.company-card{box-shadow:none;break-inside:avoid}
+  .heading{margin:0 0 12px}
+  .company-grid{grid-template-columns:repeat(3,1fr)}
+  .company-card{break-inside:avoid}
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brandmark"><i class="fa-solid fa-star"></i></div>
+    <div>
+      <b>THI ĐUA QUYẾT THẮNG</b>
+      <small>TIỂU ĐOÀN 2 – LỮ ĐOÀN 7 CÔNG BINH</small>
+    </div>
+  </div>
+
+  <div class="top-actions">
+    <a href="index.html"><i class="fa-solid fa-house"></i> Trang chủ</a>
+    <a href="cham-diem.html"><i class="fa-solid fa-clipboard-check"></i> Chấm điểm</a>
+    <span class="user"><i class="fa-solid fa-user-shield"></i> Quản trị hệ thống</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="crumb">
+    <a href="index.html">Trang chủ</a>　/　Thi đua giữa các Đại đội
+  </div>
+
+  <div class="heading">
+    <div>
+      <h1><i class="fa-solid fa-trophy"></i> THI ĐUA GIỮA CÁC ĐẠI ĐỘI</h1>
+      <p>Tổng hợp điểm, so sánh kết quả và xếp hạng 03 Đại đội trực thuộc Tiểu đoàn 2</p>
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="refreshBtn">
+        <i class="fa-solid fa-rotate"></i> Làm mới dữ liệu
+      </button>
+      <button class="btn primary" id="printBtn">
+        <i class="fa-solid fa-print"></i> In bảng thi đua
+      </button>
+    </div>
+  </div>
+
+  <section class="card filters-card">
+    <div class="card-head">
+      <h2><i class="fa-solid fa-calendar-days"></i> ĐIỀU KIỆN TỔNG HỢP</h2>
+      <span class="muted" id="periodLabel">Đang tổng hợp dữ liệu</span>
+    </div>
+
+    <div class="card-body">
+
+      <div class="period-tabs" style="margin-bottom:16px">
+        <button class="tab active" data-period="day">Theo ngày</button>
+        <button class="tab" data-period="week">Theo tuần</button>
+        <button class="tab" data-period="month">Theo tháng</button>
+        <button class="tab" data-period="year">Cả năm</button>
+      </div>
+
+      <div class="filters">
+
+        <div class="field" id="dayField">
+          <label>CHỌN NGÀY CHẤM</label>
+          <input type="date" id="day">
+        </div>
+
+        <div class="field" id="weekField" style="display:none">
+          <label>TUẦN THI ĐUA</label>
+          <select id="week">
+            <option value="1">Tuần 1</option>
+            <option value="2">Tuần 2</option>
+            <option value="3">Tuần 3</option>
+            <option value="4">Tuần 4</option>
+            <option value="5">Tuần 5</option>
+          </select>
+        </div>
+
+        <div class="field" id="monthField">
+          <label>THÁNG</label>
+          <select id="month">
+            <option value="1">Tháng 1</option>
+            <option value="2">Tháng 2</option>
+            <option value="3">Tháng 3</option>
+            <option value="4">Tháng 4</option>
+            <option value="5">Tháng 5</option>
+            <option value="6">Tháng 6</option>
+            <option value="7">Tháng 7</option>
+            <option value="8">Tháng 8</option>
+            <option value="9">Tháng 9</option>
+            <option value="10">Tháng 10</option>
+            <option value="11">Tháng 11</option>
+            <option value="12">Tháng 12</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>NĂM</label>
+          <select id="year"></select>
+        </div>
+
+      </div>
+
+      <div class="period-range">
+        <i class="fa-solid fa-calendar-check"></i>
+        <strong>Thời gian tổng hợp:</strong>
+        <span id="rangeText">Đang xác định khoảng thời gian...</span>
+      </div>
+
+      <div style="margin-top:13px;display:flex;justify-content:flex-end">
+        <button class="btn primary" id="applyBtn">
+          <i class="fa-solid fa-magnifying-glass"></i> Tổng hợp kết quả
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="stats">
+
+    <div class="stat">
+      <small>SỐ ĐẠI ĐỘI THAM GIA</small>
+      <strong id="unitCount">03</strong>
+      <em>Đại đội 1, Đại đội 2, Đại đội 3</em>
+    </div>
+
+    <div class="stat">
+      <small>ĐIỂM TRUNG BÌNH 03 ĐẠI ĐỘI</small>
+      <strong id="averageScore">—</strong>
+      <em>Thang điểm 10</em>
+    </div>
+
+    <div class="stat gold">
+      <small>ĐẠI ĐỘI DẪN ĐẦU</small>
+      <strong id="topUnit" style="font-size:16px">—</strong>
+      <em id="topScore">Chưa có kết quả</em>
+    </div>
+
+    <div class="stat dark">
+      <small>SỐ PHIẾU ĐƯỢC TỔNG HỢP</small>
+      <strong id="recordCount">0</strong>
+      <em>Phiếu Tổ thi đua của 09 Trung đội</em>
+    </div>
+
+  </section>
+
+  <section class="card rank-section">
+
+    <div class="card-head">
+      <h2><i class="fa-solid fa-ranking-star"></i> BẢNG XẾP HẠNG THI ĐUA ĐẠI ĐỘI</h2>
+      <span class="muted" id="rankCaption">So sánh điểm tổng hợp</span>
+    </div>
+
+    <div class="rank-intro">
+      <strong>Phạm vi xếp hạng:</strong>
+      Chỉ gồm Đại đội 1, Đại đội 2 và Đại đội 3.
+      Điểm mỗi Đại đội được tổng hợp từ 03 Trung đội trực thuộc.
+      Trung đội chưa có điểm được tính bằng 0 khi tính điểm Đại đội.
+    </div>
+
+    <div class="company-grid" id="companyGrid">
+      <div class="loading">Đang tải dữ liệu thi đua...</div>
+    </div>
+
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <h2><i class="fa-solid fa-table-list"></i> BẢNG ĐIỂM TỔNG HỢP CÁC ĐẠI ĐỘI</h2>
+      <span class="muted">Điểm tổng hợp theo kỳ đã chọn</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:65px">THỨ HẠNG</th>
+            <th>ĐẠI ĐỘI</th>
+            <th class="num">TRUNG ĐỘI 1</th>
+            <th class="num">TRUNG ĐỘI 2</th>
+            <th class="num">TRUNG ĐỘI 3</th>
+            <th class="num">TỔNG ĐIỂM ĐẠI ĐỘI</th>
+            <th>TRẠNG THÁI</th>
+          </tr>
+        </thead>
+        <tbody id="rankingBody">
+          <tr><td colspan="7" class="loading">Đang tải dữ liệu...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <h2><i class="fa-solid fa-circle-info"></i> NGUYÊN TẮC TỔNG HỢP ĐIỂM THI ĐUA</h2>
+    </div>
+
+    <div class="card-body">
+      <div class="notice">
+        <strong>1. Điểm Trung đội trong ngày:</strong>
+        Lấy điểm trung bình của 04 mặt công tác A, B, C, D trên phiếu chấm của Tổ thi đua.
+        <br>
+
+        <strong>2. Điểm Đại đội trong ngày:</strong>
+        Lấy tổng điểm của 03 Trung đội trực thuộc chia cho 3.
+        Trung đội chưa có điểm được tính là 0 điểm.
+        <br>
+
+        <strong>3. Điểm tuần:</strong>
+        Lấy trung bình cộng điểm Đại đội của các ngày có điểm trong tuần.
+        <br>
+
+        <strong>4. Điểm tháng:</strong>
+        Lấy trung bình cộng điểm các tuần có điểm trong tháng.
+        Tháng có thể có từ 4 đến 5 tuần thi đua.
+        <br>
+
+        <strong>5. Điểm năm:</strong>
+        Lấy trung bình cộng điểm các tháng có điểm trong năm.
+        <br>
+
+        <strong>6. Bộ phận chấm:</strong>
+        Chỉ có Tổ thi đua. Không sử dụng điểm Trực ban và không áp dụng hệ số 1:2.
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <h2><i class="fa-solid fa-file-lines"></i> PHIẾU CHẤM ĐƯỢC TỔNG HỢP TRONG KỲ</h2>
+      <span class="muted" id="detailCount">0 phiếu</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>NGÀY CHẤM</th>
+            <th>ĐẠI ĐỘI</th>
+            <th>TRUNG ĐỘI</th>
+            <th>TUẦN</th>
+            <th class="num">ĐIỂM 04 MẶT</th>
+            <th class="num">ĐIỂM THƯỞNG</th>
+            <th>NGƯỜI CHẤM</th>
+          </tr>
+        </thead>
+        <tbody id="recordsBody">
+          <tr><td colspan="7" class="loading">Đang tải dữ liệu...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="footer">
+    ★　TIỂU ĐOÀN 2 – LỮ ĐOÀN 7 CÔNG BINH　★　|　HỆ THỐNG THI ĐUA QUYẾT THẮNG
+  </div>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbyqUwmHIaUE-mWl0BktkLlbGB-qomoPMCehHJUGzOoP9LwQWiFYYXDRdZOBO2y7giRU-Q/exec";
+
+const $ = id => document.getElementById(id);
+const fmt = n => Number(n || 0).toFixed(2).replace(".", ",");
+
+const COMPANIES = [
+  {
+    name:"Đại đội 1",
+    platoons:["Trung đội 1","Trung đội 2","Trung đội 3"]
+  },
+  {
+    name:"Đại đội 2",
+    platoons:["Trung đội 4","Trung đội 5","Trung đội 6"]
+  },
+  {
+    name:"Đại đội 3",
+    platoons:["Trung đội 7","Trung đội 8","Trung đội 9"]
+  }
+];
+
+let allRecords = [];
+let period = "day";
+let currentRows = [];
+let currentStart = "";
+let currentEnd = "";
+
+function esc(s){
+  return String(s ?? "").replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[c]));
+}
+
+function pad(n){
+  return String(n).padStart(2,"0");
+}
+
+function localDateString(date){
+  return date.getFullYear()+"-"+pad(date.getMonth()+1)+"-"+pad(date.getDate());
+}
+
+function parseDate(value){
+  if(value === null || value === undefined || value === "") return null;
+
+  const s = String(value).slice(0,10);
+  const m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+
+  if(!m) return null;
+
+  const year = Number(m[1]);
+  const month = Number(m[2]);
+  const day = Number(m[3]);
+
+  const check = new Date(year,month-1,day);
+
+  if(
+    year < 2000 ||
+    month < 1 || month > 12 ||
+    day < 1 || day > 31 ||
+    check.getFullYear() !== year ||
+    check.getMonth() !== month-1 ||
+    check.getDate() !== day
+  ){
+    return null;
+  }
+
+  return {year,month,day};
+}
+
+function dateObject(value){
+  const p = parseDate(value);
+  if(!p) return null;
+  return new Date(p.year,p.month-1,p.day);
+}
+
+function formatDate(value){
+  const p = parseDate(value);
+  if(!p) return "—";
+  return pad(p.day)+"/"+pad(p.month)+"/"+p.year;
+}
+
+function addDays(date,days){
+  const d = new Date(date.getFullYear(),date.getMonth(),date.getDate());
+  d.setDate(d.getDate()+days);
+  return d;
+}
+
+/*
+ * Quy tắc tuần thi đua:
+ * - Nếu ngày đầu tháng từ thứ Hai đến thứ Năm:
+ *   Ngày 1 thuộc tuần 1.
+ * - Nếu ngày đầu tháng từ thứ Sáu đến Chủ nhật:
+ *   Tuần 1 bắt đầu từ thứ Hai kế tiếp.
+ * - Các tuần tiếp theo tính theo từng khoảng 7 ngày.
+ */
+function competitionWeek(year,month,day){
+  const firstDay = new Date(year,month-1,1).getDay();
+  const mondayFirstDay = firstDay === 0 ? 7 : firstDay;
+
+  if(mondayFirstDay <= 4){
+    return Math.floor((day-1+mondayFirstDay-1)/7)+1;
+  }
+
+  const firstMonday = 8-mondayFirstDay;
+
+  if(day < firstMonday) return 0;
+
+  return Math.floor((day-firstMonday)/7)+1;
+}
+
+function getWeekRange(year,month,week){
+  const firstDay = new Date(year,month-1,1).getDay();
+  const mondayFirstDay = firstDay === 0 ? 7 : firstDay;
+
+  let startDay;
+
+  if(mondayFirstDay <= 4){
+    startDay = 1+(week-1)*7;
+  }else{
+    startDay = (8-mondayFirstDay)+(week-1)*7;
+  }
+
+  const lastDay = new Date(year,month,0).getDate();
+
+  if(startDay > lastDay) return null;
+
+  const start = new Date(year,month-1,startDay);
+  const end = new Date(
+    year,month-1,Math.min(startDay+6,lastDay)
+  );
+
+  return {start,end};
+}
+
+function getWeeksInMonth(year,month){
+  const days = new Date(year,month,0).getDate();
+  let maxWeek = 0;
+
+  for(let day=1;day<=days;day++){
+    maxWeek = Math.max(
+      maxWeek,
+      competitionWeek(year,month,day)
+    );
+  }
+
+  return maxWeek;
+}
+
+/* Lấy ngày chấm từ các trường dữ liệu có thể có. */
+function getRecordDate(r){
+  const candidates = [
+    r.date,
+    r.NGAY_CHAM,
+    r.ngayCham,
+    r.ngay
+  ];
+
+  for(const value of candidates){
+    const p = parseDate(value);
+
+    if(p){
+      return p.year+"-"+pad(p.month)+"-"+pad(p.day);
+    }
+  }
+
+  return "";
+}
+
+function getRecordUnit(r){
+  return String(r.unit || r.DON_VI || "").trim();
+}
+
+function getRecordLevel(r){
+  const value = String(r.level || r.CAP_DON_VI || "").toUpperCase();
+
+  if(value === "DAI_DOI" || value === "COMPANY") return "company";
+  if(value === "TRUNG_DOI" || value === "PLATOON") return "platoon";
+
+  return value.toLowerCase();
+}
+
+function getRecordMethod(r){
+  const value = String(
+    r.method || r.HINH_THUC_CHAM || r.HINH_THUC || ""
+  ).toUpperCase();
+
+  if(value.includes("TRUC_BAN") || value.includes("TRỰC BAN")) return "duty";
+  if(value.includes("TO_THI_DUA") || value.includes("TỔ THI ĐUA")) return "inspection";
+
+  return value.toLowerCase();
+}
+
+function getRecordWeek(r){
+  const stored = Number(r.week ?? r.TUAN ?? 0);
+
+  if(stored >= 1 && stored <= 5) return stored;
+
+  const p = parseDate(getRecordDate(r));
+  return p ? competitionWeek(p.year,p.month,p.day) : 0;
+}
+
+function scoreOf(r){
+  if(r.average !== undefined && r.average !== null && r.average !== ""){
+    return Number(r.average) || 0;
+  }
+
+  if(r.totalScore !== undefined && r.totalScore !== null){
+    return Number(r.totalScore) || 0;
+  }
+
+  if(r.DIEM_TONG_HOP !== undefined && r.DIEM_TONG_HOP !== null){
+    return Number(r.DIEM_TONG_HOP) || 0;
+  }
+
+  const scores = r.scores || {};
+  const values = ["A","B","C","D"].map(k=>Number(scores[k] || 0));
+
+  return values.reduce((a,b)=>a+b,0)/4;
+}
+
+function bonusOf(r){
+  return Number(
+    r.bonus ?? r.DIEM_THUONG ?? r.TONG_DIEM_THUONG ?? 0
+  ) || 0;
+}
+
+function scorerOf(r){
+  return r.scorer || r.NGUOI_CHAM || "—";
+}
+
+function isNewScoringRecord(r){
+  // Chỉ nhận phiếu Trung đội do Tổ thi đua chấm.
+  // Phiếu Trực ban cũ và phiếu Đại đội cũ không được tính.
+  return getRecordLevel(r) === "platoon" &&
+         getRecordMethod(r) === "inspection" &&
+         /^Trung đội\s*[1-9]$/i.test(getRecordUnit(r));
+}
+
+function getCompanyForPlatoon(unit){
+  const name = String(unit || "").trim();
+
+  for(const company of COMPANIES){
+    if(company.platoons.includes(name)) return company.name;
+  }
+
+  return "";
+}
+
+function dateInRange(value,start,end){
+  const s = String(value || "").slice(0,10);
+  return s >= start && s <= end;
+}
+
+function updateWeekOptions(){
+  const year = Number($("year").value);
+  const month = Number($("month").value);
+
+  if(!year || !month) return;
+
+  const maxWeek = Math.max(1,getWeeksInMonth(year,month));
+  const oldWeek = Number($("week").value || 1);
+
+  $("week").innerHTML = Array.from(
+    {length:maxWeek},
+    (_,i)=>`<option value="${i+1}">Tuần ${i+1}</option>`
+  ).join("");
+
+  $("week").value = String(Math.min(oldWeek,maxWeek));
+}
+
+function getSelectedRange(){
+  const year = Number($("year").value);
+  const month = Number($("month").value);
+
+  if(period === "day"){
+    const day = $("day").value || localDateString(new Date());
+    return {start:day,end:day};
+  }
+
+  if(period === "week"){
+    const range = getWeekRange(
+      year,month,Number($("week").value)
+    );
+
+    if(!range) return null;
+
+    return {
+      start:localDateString(range.start),
+      end:localDateString(range.end)
+    };
+  }
+
+  if(period === "month"){
+    return {
+      start:year+"-"+pad(month)+"-01",
+      end:year+"-"+pad(month)+"-"+pad(new Date(year,month,0).getDate())
+    };
+  }
+
+  // Tổng hợp đúng từ ngày 01/01 đến ngày 31/12 của năm được chọn.
+  return {
+    start:year+"-01-01",
+    end:year+"-12-31"
+  };
+}
+
+function updateRangeText(){
+  const range = getSelectedRange();
+
+  if(!range){
+    $("rangeText").textContent = "Không xác định được khoảng thời gian.";
+    return;
+  }
+
+  currentStart = range.start;
+  currentEnd = range.end;
+
+  if(period === "day"){
+    $("rangeText").textContent =
+      "Ngày "+formatDate(range.start);
+  }else{
+    $("rangeText").textContent =
+      formatDate(range.start)+" đến "+formatDate(range.end);
+  }
+
+  $("periodLabel").textContent =
+    period === "day" ? "Tổng hợp theo ngày" :
+    period === "week" ? "Tổng hợp theo tuần" :
+    period === "month" ? "Tổng hợp theo tháng" :
+    "Tổng hợp cả năm";
+}
+
+/*
+ * Tạo danh sách năm độc lập với dữ liệu đã có.
+ * Nhờ vậy có thể chọn năm 2027 để tổng hợp ngay cả khi
+ * năm 2027 chưa phát sinh phiếu chấm nào.
+ */
+function initYearOptions(){
+  const currentYear = new Date().getFullYear();
+  const oldSelectedYear = Number($("year").value);
+
+  const years = new Set();
+
+  // Luôn tạo sẵn các năm từ 2026 trở đi.
+  const firstYear = Math.min(2026,currentYear-2);
+  const lastYear = Math.max(currentYear+9,2035);
+
+  for(let year=firstYear;year<=lastYear;year++){
+    years.add(year);
+  }
+
+  // Bổ sung các năm cũ có dữ liệu thực tế.
+  allRecords.forEach(r=>{
+    const p = parseDate(getRecordDate(r));
+    if(p) years.add(p.year);
+  });
+
+  const sorted = [...years].sort((a,b)=>b-a);
+
+  $("year").innerHTML = sorted
+    .map(y=>`<option value="${y}">${y}</option>`)
+    .join("");
+
+  // Giữ nguyên năm đang chọn khi tải lại dữ liệu.
+  if(years.has(oldSelectedYear)){
+    $("year").value = String(oldSelectedYear);
+  }else{
+    $("year").value = String(currentYear);
+  }
+}
+
+async function loadData(){
+  $("companyGrid").innerHTML =
+    '<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Đang kết nối Google Sheets...</div>';
+
+  $("rankingBody").innerHTML =
+    '<tr><td colspan="7" class="loading">Đang tải dữ liệu...</td></tr>';
+
+  $("recordsBody").innerHTML =
+    '<tr><td colspan="7" class="loading">Đang tải dữ liệu...</td></tr>';
+
+  try{
+    const response = await fetch(
+      API_URL+"?action=list&_="+Date.now(),
+      {method:"GET",cache:"no-store"}
+    );
+
+    if(!response.ok){
+      throw new Error("Máy chủ trả về HTTP "+response.status);
+    }
+
+    const result = await response.json();
+
+    if(!result.success){
+      throw new Error(result.message || "Không lấy được dữ liệu.");
+    }
+
+    allRecords = Array.isArray(result.data) ? result.data : [];
+
+    // Cập nhật danh sách năm nhưng không làm mất năm người dùng đang chọn.
+    initYearOptions();
+
+    updateWeekOptions();
+    updateRangeText();
+    render();
+
+    const validCount = allRecords.filter(isNewScoringRecord).length;
+    toast("Đã tải dữ liệu. Có "+validCount+" phiếu Tổ thi đua hợp lệ.");
+
+  }catch(err){
+    $("companyGrid").innerHTML =
+      `<div class="empty">Không tải được dữ liệu: ${esc(err.message)}</div>`;
+
+    $("rankingBody").innerHTML =
+      `<tr><td colspan="7" class="empty">Kiểm tra URL triển khai và quyền truy cập Web App.<br>${esc(err.message)}</td></tr>`;
+
+    $("recordsBody").innerHTML =
+      '<tr><td colspan="7" class="empty">Không có dữ liệu do kết nối thất bại.</td></tr>';
+
+    toast("Lỗi kết nối Google Sheets.");
+  }
+}
+
+/*
+ * Tạo dữ liệu điểm theo ngày.
+ * Mỗi ngày:
+ * - Tìm điểm của từng Trung đội.
+ * - Điểm Đại đội = (Trung đội 1 + Trung đội 2 + Trung đội 3) / 3.
+ * - Trung đội chưa có điểm được tính bằng 0.
+ */
+function buildDailyCompanyScores(records){
+  const daily = {};
+
+  records.forEach(r=>{
+    const date = getRecordDate(r);
+    const unit = getRecordUnit(r);
+    const companyName = getCompanyForPlatoon(unit);
+
+    if(!date || !companyName) return;
+
+    const key = date+"|"+companyName;
+
+    if(!daily[key]){
+      daily[key] = {
+        date,
+        company:companyName,
+        platoons:{},
+        records:[]
+      };
+    }
+
+    const group = daily[key];
+
+    if(!group.platoons[unit]){
+      group.platoons[unit] = [];
+    }
+
+    group.platoons[unit].push(scoreOf(r));
+    group.records.push(r);
+  });
+
+  const result = {};
+
+  Object.values(daily).forEach(item=>{
+    const company = COMPANIES.find(c=>c.name === item.company);
+
+    const platoonScores = {};
+
+    company.platoons.forEach(unit=>{
+      const values = item.platoons[unit] || [];
+
+      platoonScores[unit] = values.length
+        ? values.reduce((a,b)=>a+b,0)/values.length
+        : 0;
+    });
+
+    const total = company.platoons.reduce(
+      (sum,unit)=>sum+platoonScores[unit],0
+    )/3;
+
+    if(!result[item.company]) result[item.company] = {};
+
+    result[item.company][item.date] = {
+      date:item.date,
+      score:total,
+      platoons:platoonScores,
+      records:item.records
+    };
+  });
+
+  return result;
+}
+
+function average(values){
+  const valid = values.filter(v=>
+    v !== null &&
+    v !== undefined &&
+    Number.isFinite(Number(v))
+  );
+
+  if(!valid.length) return null;
+
+  return valid.reduce((a,b)=>a+Number(b),0)/valid.length;
+}
+
+function getDailyScoreMap(companyDaily){
+  return Object.values(companyDaily || {}).sort(
+    (a,b)=>a.date.localeCompare(b.date)
+  );
+}
+
+function calculateWeekScore(companyDaily,year,month,week){
+  const range = getWeekRange(year,month,week);
+  if(!range) return null;
+
+  const start = localDateString(range.start);
+  const end = localDateString(range.end);
+
+  const days = getDailyScoreMap(companyDaily).filter(
+    d=>dateInRange(d.date,start,end)
+  );
+
+  return average(days.map(d=>d.score));
+}
+
+function calculateMonthScore(companyDaily,year,month){
+  const maxWeek = getWeeksInMonth(year,month);
+  const scores = [];
+
+  for(let week=1;week<=maxWeek;week++){
+    const score = calculateWeekScore(
+      companyDaily,year,month,week
+    );
+
+    if(score !== null) scores.push(score);
+  }
+
+  return average(scores);
+}
+
+function calculateYearScore(companyDaily,year){
+  const monthScores = [];
+
+  for(let month=1;month<=12;month++){
+    const score = calculateMonthScore(
+      companyDaily,year,month
+    );
+
+    if(score !== null) monthScores.push(score);
+  }
+
+  return average(monthScores);
+}
+
+function calculateCompany(companyName,companyDaily){
+  if(period === "day"){
+    const date = $("day").value;
+    const item = companyDaily[date];
+
+    return {
+      score:item ? item.score : null,
+      platoons:item ? item.platoons : {},
+      records:item ? item.records : [],
+      ready:!!item,
+      detail:[]
+    };
+  }
+
+  if(period === "week"){
+    const year = Number($("year").value);
+    const month = Number($("month").value);
+    const week = Number($("week").value);
+    const range = getWeekRange(year,month,week);
+
+    const days = range
+      ? getDailyScoreMap(companyDaily).filter(
+          d=>dateInRange(
+            d.date,
+            localDateString(range.start),
+            localDateString(range.end)
+          )
+        )
+      : [];
+
+    return {
+      score:average(days.map(d=>d.score)),
+      platoons:{},
+      records:days.flatMap(d=>d.records),
+      ready:days.length>0,
+      detail:days
+    };
+  }
+
+  if(period === "month"){
+    const year = Number($("year").value);
+    const month = Number($("month").value);
+    const maxWeek = getWeeksInMonth(year,month);
+    const detail = [];
+
+    for(let w=1;w<=maxWeek;w++){
+      const score = calculateWeekScore(
+        companyDaily,year,month,w
+      );
+
+      detail.push({week:w,score});
+    }
+
+    const valid = detail.filter(x=>x.score !== null);
+
+    const start = year+"-"+pad(month)+"-01";
+    const end = year+"-"+pad(month)+"-"+pad(new Date(year,month,0).getDate());
+
+    const records = getDailyScoreMap(companyDaily)
+      .filter(d=>dateInRange(d.date,start,end))
+      .flatMap(d=>d.records);
+
+    return {
+      score:average(valid.map(x=>x.score)),
+      platoons:{},
+      records,
+      ready:valid.length>0,
+      detail
+    };
+  }
+
+  const year = Number($("year").value);
+  const detail = [];
+
+  for(let month=1;month<=12;month++){
+    const score = calculateMonthScore(
+      companyDaily,year,month
+    );
+
+    detail.push({month,score});
+  }
+
+  const valid = detail.filter(x=>x.score !== null);
+
+  const records = getDailyScoreMap(companyDaily)
+    .filter(d=>String(d.date).startsWith(String(year)+"-"))
+    .flatMap(d=>d.records);
+
+  return {
+    score:average(valid.map(x=>x.score)),
+    platoons:{},
+    records,
+    ready:valid.length>0,
+    detail
+  };
+}
+
+function aggregate(){
+  const validRecords = allRecords.filter(isNewScoringRecord);
+  const range = getSelectedRange();
+
+  if(!range) return [];
+
+  const inRange = validRecords.filter(
+    r=>dateInRange(getRecordDate(r),range.start,range.end)
+  );
+
+  const allDaily = buildDailyCompanyScores(validRecords);
+
+  return COMPANIES.map(company=>{
+    const companyDaily = allDaily[company.name] || {};
+    const calculated = calculateCompany(
+      company.name,companyDaily
+    );
+
+    const records = calculated.records || [];
+
+    const bonus = records.reduce(
+      (sum,r)=>sum+bonusOf(r),0
+    );
+
+    let platoonScores = calculated.platoons || {};
+
+    if(period === "day"){
+      company.platoons.forEach(unit=>{
+        if(platoonScores[unit] === undefined){
+          platoonScores[unit] = 0;
+        }
+      });
+    }
+
+    return {
+      name:company.name,
+      platoons:company.platoons,
+      score:calculated.score,
+      ready:calculated.ready,
+      platoonScores,
+      bonus,
+      records,
+      detail:calculated.detail || []
+    };
+  }).map(x=>({
+    ...x,
+    records:x.records.filter(r=>
+      inRange.some(item=>item.id && item.id === r.id) ||
+      dateInRange(getRecordDate(r),range.start,range.end)
+    )
+  }));
+}
+
+function render(){
+  updateRangeText();
+
+  const rows = aggregate().sort(
+    (a,b)=>(b.score ?? -1)-(a.score ?? -1)
+  );
+
+  currentRows = rows;
+
+  const ranked = rows.filter(
+    x=>x.ready && x.score !== null
+  );
+
+  const avgScore = average(ranked.map(x=>x.score));
+
+  $("unitCount").textContent = "03";
+  $("averageScore").textContent =
+    avgScore === null ? "—" : fmt(avgScore);
+
+  $("recordCount").textContent = rows.reduce(
+    (sum,x)=>sum+x.records.length,0
+  );
+
+  $("topUnit").textContent = ranked.length
+    ? ranked[0].name
+    : "—";
+
+  $("topScore").textContent = ranked.length
+    ? fmt(ranked[0].score)+" điểm"
+    : "Chưa có kết quả";
+
+  $("rankCaption").textContent =
+    period === "day" ? "Xếp hạng theo điểm ngày" :
+    period === "week" ? "Xếp hạng theo điểm tuần" :
+    period === "month" ? "Xếp hạng theo điểm tháng" :
+    "Xếp hạng theo điểm năm";
+
+  renderCompanyCards(rows);
+  renderRankingTable(rows);
+  renderRecords(rows);
+}
+
+function renderCompanyCards(rows){
+  const sorted = rows.slice().sort(
+    (a,b)=>(b.score ?? -1)-(a.score ?? -1)
+  );
+
+  $("companyGrid").innerHTML = sorted.map((x,index)=>{
+    const hasScore = x.score !== null && x.score !== undefined;
+    const scoreText = hasScore ? fmt(x.score) : "—";
+    const width = hasScore
+      ? Math.max(0,Math.min(100,x.score*10))
+      : 0;
+
+    const platoonHtml = x.platoons.map(unit=>{
+      const value = x.platoonScores[unit];
+      const hasValue = value !== undefined;
+
+      return `
+        <div class="platoon-line">
+          <span>${esc(unit)}</span>
+          <b class="${hasValue ? "" : "missing"}">
+            ${hasValue ? fmt(value)+" điểm" : "Chưa có điểm · tính 0"}
+          </b>
+        </div>
+      `;
+    }).join("");
+
+    const rankText = hasScore
+      ? "HẠNG "+(index+1)
+      : "CHƯA CÓ ĐIỂM";
+
+    return `
+      <div class="company-card ${index===0 && hasScore ? "first" : ""}">
+        <div class="company-top">
+          <div class="company-name">
+            <div class="company-symbol">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            ${esc(x.name)}
+          </div>
+          <span class="rank-label">${rankText}</span>
+        </div>
+
+        <div class="total-score">
+          <strong>${scoreText}</strong>
+          <span>/ 10 điểm</span>
+        </div>
+
+        <div class="score-track">
+          <div class="score-fill" style="width:${width}%"></div>
+        </div>
+
+        <div class="platoon-breakdown">
+          ${platoonHtml}
+        </div>
+
+        <div class="company-foot">
+          <span>Điểm thưởng riêng</span>
+          <strong>${fmt(x.bonus)} điểm</strong>
+        </div>
+
+        <div class="company-total-label">
+          <span>TỔNG ĐIỂM ${esc(x.name.toUpperCase())}</span>
+          <strong>${scoreText}</strong>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderRankingTable(rows){
+  const sorted = rows.slice().sort(
+    (a,b)=>(b.score ?? -1)-(a.score ?? -1)
+  );
+
+  $("rankingBody").innerHTML = sorted.map((x,index)=>{
+    const hasScore = x.score !== null && x.score !== undefined;
+
+    const rankClass = index===0 ? "first" :
+                      index===1 ? "second" :
+                      index===2 ? "third" : "";
+
+    const status = hasScore
+      ? '<span class="status">Có kết quả</span>'
+      : '<span class="status wait">Chưa có điểm</span>';
+
+    const platoonCells = x.platoons.map(unit=>{
+      const value = x.platoonScores[unit];
+      return `<td class="num">${value === undefined ? "0,00" : fmt(value)}</td>`;
+    }).join("");
+
+    return `
+      <tr>
+        <td><span class="rank ${rankClass}">${hasScore ? index+1 : "—"}</span></td>
+        <td><b>${esc(x.name)}</b></td>
+        ${platoonCells}
+        <td class="num">
+          <span class="score">${hasScore ? fmt(x.score) : "—"}</span>
+        </td>
+        <td>${status}</td>
+      </tr>
+    `;
+  }).join("");
+
+  if(!sorted.length){
+    $("rankingBody").innerHTML =
+      '<tr><td colspan="7" class="empty">Chưa có dữ liệu.</td></tr>';
+  }
+}
+
+function renderRecords(rows){
+  const records = rows.flatMap(x=>x.records).filter(isNewScoringRecord);
+
+  const unique = [];
+  const seen = new Set();
+
+  records.forEach(r=>{
+    const key = String(
+      r.id || [
+        getRecordDate(r),
+        getRecordUnit(r),
+        getRecordMethod(r)
+      ].join("|")
+    );
+
+    if(!seen.has(key)){
+      seen.add(key);
+      unique.push(r);
+    }
+  });
+
+  unique.sort((a,b)=>
+    String(getRecordDate(b)).localeCompare(String(getRecordDate(a)))
+  );
+
+  $("detailCount").textContent = unique.length+" phiếu";
+
+  $("recordsBody").innerHTML = unique.length
+    ? unique.map(r=>{
+        const unit = getRecordUnit(r);
+        return `
+          <tr>
+            <td>${formatDate(getRecordDate(r))}</td>
+            <td><b>${esc(getCompanyForPlatoon(unit))}</b></td>
+            <td>${esc(unit)}</td>
+            <td>Tuần ${getRecordWeek(r) || "—"}</td>
+            <td class="num">${fmt(scoreOf(r))}</td>
+            <td class="num">${fmt(bonusOf(r))}</td>
+            <td>${esc(scorerOf(r))}</td>
+          </tr>
+        `;
+      }).join("")
+    : '<tr><td colspan="7" class="empty">Chưa có phiếu Tổ thi đua trong khoảng thời gian đã chọn.</td></tr>';
+}
+
+function setPeriod(value){
+  period = value;
+
+  document.querySelectorAll("[data-period]").forEach(button=>{
+    button.classList.toggle(
+      "active",
+      button.dataset.period === value
+    );
+  });
+
+  $("dayField").style.display =
+    value === "day" ? "block" : "none";
+
+  $("weekField").style.display =
+    value === "week" ? "block" : "none";
+
+  $("monthField").style.display =
+    value === "year" ? "none" : "block";
+
+  updateRangeText();
+  render();
+}
+
+function toast(message){
+  const t = $("toast");
+  t.textContent = message;
+  t.style.display = "block";
+
+  clearTimeout(window._toastTimer);
+
+  window._toastTimer = setTimeout(()=>{
+    t.style.display = "none";
+  },2800);
+}
+
+document.querySelectorAll("[data-period]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    setPeriod(button.dataset.period);
+  });
+});
+
+$("applyBtn").addEventListener("click",()=>{
+  updateRangeText();
+  render();
+  toast("Đã tổng hợp lại kết quả theo thời gian đã chọn.");
+});
+
+$("refreshBtn").addEventListener("click",loadData);
+
+$("printBtn").addEventListener("click",()=>{
+  window.print();
+});
+
+$("day").addEventListener("change",render);
+
+$("week").addEventListener("change",render);
+
+$("month").addEventListener("change",()=>{
+  updateWeekOptions();
+  render();
+});
+
+$("year").addEventListener("change",()=>{
+  updateWeekOptions();
+  render();
+});
+
+const today = new Date();
+$("day").value = localDateString(today);
+$("month").value = String(today.getMonth()+1);
+
+// Tạo sẵn danh sách năm trước khi tải dữ liệu.
+initYearOptions();
+updateWeekOptions();
+updateRangeText();
+
+loadData();
+</script>
+
+</body>
+</html>
