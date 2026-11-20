@@ -1,9 +1,9 @@
 
 {
   "id": "./",
-  "name": "Hệ thống điều hành thi đua quyết thắng",
-  "short_name": "Thi đua quyết thắng",
-  "description": "Hệ thống điều hành thi đua quyết thắng - Bộ CHQS tỉnh Hưng Yên",
+  "name": "Phần mềm chấm thi đua",
+  "short_name": "Phần mềm chấm thi đua",
+  "description": "Phần mềm chấm thi đua - Bộ CHQS tỉnh Hưng Yên",
   "lang": "vi",
   "start_url": "./index.html",
   "scope": "./",
