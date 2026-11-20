@@ -1,0 +1,28 @@
+
+{
+  "id": "./",
+  "name": "Hệ thống điều hành thi đua quyết thắng",
+  "short_name": "Thi đua quyết thắng",
+  "description": "Hệ thống điều hành thi đua quyết thắng - Bộ CHQS tỉnh Hưng Yên",
+  "lang": "vi",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#092f27",
+  "theme_color": "#092f27",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
