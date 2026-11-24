@@ -375,6 +375,22 @@ th{background:#f0f4ee}
 @media(max-width:700px){
   .app-tools{right:10px;bottom:48px;gap:7px}
   .app-tool-btn{padding:9px 12px;font-size:10px}
+}.emblem{
+  overflow: hidden;
+  padding: 0;
+}
+
+.emblem img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 50%;
+}
+
+.emblem::before,
+.emblem::after{
+  display: none;
 }
 </style>
 </head>
@@ -384,8 +400,9 @@ th{background:#f0f4ee}
 
   <aside class="sidebar">
     <div class="brand">
-      <div class="emblem"><span class="emblem-ring"><i class="fa-solid fa-star"></i></span><small>QUYẾT THẮNG</small></div>
-      <h2>BỘ CHQS TỈNH</h2>
+     <div class="emblem">
+  <img src="./logo.jpg" alt="Logo Bộ CHQS tỉnh Hưng Yên">
+</div>      <h2>BỘ CHQS TỈNH</h2>
       <p>HƯNG YÊN</p>
       <div class="stars">— ★ —</div>
     </div>
